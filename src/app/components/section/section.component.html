@@ -1,0 +1,17 @@
+<div [id]="section?.id" class="section">
+  <div class="section__name">
+    {{ section?.name }}
+  </div>
+  <div [ngClass]="{ 'section__visual': section?.type === 'visual', 'section__normal': section?.type === 'normal' }">
+    <ng-container *ngFor="let product of section?.products">
+      <ng-container *ngIf="section?.type === 'visual'">
+        <app-visual-card [product]="product"></app-visual-card>
+      </ng-container>
+      <ng-container *ngIf="section?.type === 'normal'">
+        <app-simple-card [product]="product"></app-simple-card>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+

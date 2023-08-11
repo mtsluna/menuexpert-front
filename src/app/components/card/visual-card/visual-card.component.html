@@ -1,0 +1,13 @@
+<div (click)="redirectToDetail()" class="visual-card">
+  <div class="visual-card__resource">
+    <img class="visual-card__resource__image" alt="sarasa" src="{{ product?.image }}">
+  </div>
+  <div class="visual-card__data">
+    <div class="visual-card__data__title">
+      {{ product?.title }}
+    </div>
+    <div class="visual-card__data__price">
+      {{ product?.price?.amount | currency }}
+    </div>
+  </div>
+</div>

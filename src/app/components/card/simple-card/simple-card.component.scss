@@ -1,0 +1,51 @@
+.simple-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.25rem;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 0.5rem;
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &__title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &__price {
+      font-size: 12px;
+    }
+
+    &__description {
+      font-size: 12px;
+      color: #989292;
+    }
+
+    &__badges {
+      display: flex;
+      flex-direction: row;
+      gap: 0.25rem;
+      font-size: 12px;
+
+      &__item {
+        color: #FFFFFF;
+        border-radius: 10px;
+        padding: 0.20rem 0.50rem;
+        background-color: #21A300;
+      }
+    }
+  }
+
+  &__resource {
+    &__image {
+      border-radius: 10px;
+      height: 104px;
+      width: 104px;
+    }
+  }
+}

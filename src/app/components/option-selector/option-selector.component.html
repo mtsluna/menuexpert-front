@@ -1,0 +1,25 @@
+<div class="option-selector">
+  <div class="option-selector__header">
+    <div class="option-selector__header__title">
+      {{ answer?.name }}
+    </div>
+    <div class="option-selector__header__description">
+      Elige hasta {{ answer?.max }}
+    </div>
+  </div>
+  <div class="option-selector__options">
+    <div *ngFor="let option of answer?.options" class="option-selector__options__item  option-selector__options__divider">
+      <div>
+        <div class="option-selector__options__item__name">
+          {{ option?.name }}
+        </div>
+        <div *ngIf="option?.price !== 0" class="option-selector__options__item__price">
+          + {{ option?.price | currency }}
+        </div>
+      </div>
+      <div class="option-selector__options__item__field">
+        <mat-radio-button></mat-radio-button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.section-selector::-webkit-scrollbar {
+  display: none;
+}
+
+.section-selector {
+  padding: 1rem;
+  background-color: #FFFFFF;
+  position: sticky;
+  top: 60px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  gap: 1rem;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.5rem;
+
+    &__name {
+      padding: 0 0.10rem;
+    }
+
+    &__line-active {
+      width: 100%;
+      height: 0.15rem;
+      background-color: #000000;
+    }
+
+    &__line-inactive {
+      width: 100%;
+      height: 0.15rem;
+      background-color: #949494;
+    }
+  }
+
+}

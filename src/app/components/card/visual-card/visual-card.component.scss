@@ -1,0 +1,32 @@
+.visual-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+
+    &__title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &__price {
+      font-size: 12px;
+    }
+  }
+
+  &__resource {
+    &__image {
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      height: 120px;
+      width: 100%;
+    }
+  }
+}
