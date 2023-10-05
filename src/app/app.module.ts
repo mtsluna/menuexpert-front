@@ -15,6 +15,8 @@ import { BannerComponent } from './components/banner/banner.component';
 import { OptionSelectorComponent } from './components/option-selector/option-selector.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -29,13 +31,15 @@ import {MatRadioModule} from "@angular/material/radio";
     BannerComponent,
     OptionSelectorComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterOutlet,
-    MatSelectModule,
-    MatRadioModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterOutlet,
+        MatSelectModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

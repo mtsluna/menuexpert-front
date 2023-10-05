@@ -1,5 +1,5 @@
 <div class="detail">
-  <app-banner></app-banner>
-  <app-option-selector *ngFor="let answer of answers" [answer]="answer"></app-option-selector>
+  <app-banner (click)="show()"></app-banner>
+  <app-option-selector *ngFor="let answer of answers; index as i" [form]="getFormElement(i)" [answer]="answer"></app-option-selector>
 </div>
 

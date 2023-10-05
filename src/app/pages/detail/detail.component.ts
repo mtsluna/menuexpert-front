@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Answer} from "../../interfaces/answer";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {reduce, retry} from "rxjs";
 
 @Component({
   selector: 'app-detail',
@@ -8,11 +10,12 @@ import {Answer} from "../../interfaces/answer";
 })
 export class DetailComponent implements OnInit {
 
+  form!: FormGroup;
   answers: Array<Answer> = [
     {
       id: 'abc1234',
       name: 'Elige tu tipo de arroz',
-      max: 2,
+      max: 1,
       options: [
         {
           id: 'abc1234a',
@@ -55,9 +58,30 @@ export class DetailComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.form = this.initForm();
+  }
+
+  initForm() {
+    return this.formBuilder.group({
+      comment: [''],
+      selections: this.formBuilder.array(this.answers?.map((answer) => {
+        return this.formBuilder.group({
+          id: [answer?.id],
+          selected: [[answer?.options[0]?.id || '']]
+        });
+      }))
+    });
+  }
+
+  getFormElement(index: number) {
+    return (this.form.get('selections') as FormArray).at(index) as FormGroup;
+  }
+
+  show() {
+    console.log(this.form.getRawValue())
   }
 
 }
