@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Answer} from "../../interfaces/answer";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {reduce, retry} from "rxjs";
+import {Product} from "../../interfaces/product";
 
 @Component({
   selector: 'app-detail',
@@ -65,12 +66,20 @@ export class DetailComponent implements OnInit {
   }
 
   initForm() {
+    const selected = (answer: Answer) => {
+      return answer.max === 1 ? {
+        selected: this.formBuilder.control(answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false))
+      } : {
+        selected: this.formBuilder.array(answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false))
+      }
+    }
+
     return this.formBuilder.group({
       comment: [''],
       selections: this.formBuilder.array(this.answers?.map((answer) => {
         return this.formBuilder.group({
           id: [answer?.id],
-          selected: [[answer?.options[0]?.id || '']]
+          ...selected(answer)
         });
       }))
     });

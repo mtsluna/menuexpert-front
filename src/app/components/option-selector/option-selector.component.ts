@@ -21,12 +21,18 @@ export class OptionSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeSelection(id: string) {
-
-  }
-
   show() {
     console.log(this.form?.getRawValue())
   }
 
+  changePick(event: any, index: number, option: Option) {
+    const newValue = (event.checked) ? option : false;
+    (this.form.get('selected') as FormArray).at(index).setValue(newValue)
+  }
+
+  makeOption(index: number, option: Option) {
+    return this.answer?.options.map((k, internalIndex) => {
+      return (internalIndex === index) ? option : false
+    })
+  }
 }
