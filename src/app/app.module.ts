@@ -15,8 +15,15 @@ import { BannerComponent } from './components/banner/banner.component';
 import { OptionSelectorComponent } from './components/option-selector/option-selector.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { FloatingButtonComponent } from './components/floating-button/floating-button.component';
+import { ImageComponent } from './components/image/image.component';
+import { ObservationComponent } from './observation/observation.component';
+import {MatInputModule} from "@angular/material/input";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -29,17 +36,26 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     SectionSelectorComponent,
     DetailComponent,
     BannerComponent,
-    OptionSelectorComponent
+    OptionSelectorComponent,
+    FloatingButtonComponent,
+    ImageComponent,
+    ObservationComponent,
+    CartComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        RouterOutlet,
-        MatSelectModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterOutlet,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

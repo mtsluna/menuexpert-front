@@ -2,14 +2,14 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Product} from "../../interfaces/product";
 
 @Component({
-  selector: 'app-banner',
-  templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  selector: 'app-image',
+  templateUrl: './image.component.html',
+  styleUrls: ['./image.component.scss']
 })
-export class BannerComponent implements OnInit {
+export class ImageComponent implements OnInit {
 
   @Input()
-  product!:Product
+  product!:Product;
 
   constructor() { }
 

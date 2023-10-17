@@ -1,15 +1,12 @@
 <div class="banner">
-  <div>
-    <img src="">
-  </div>
   <div class="banner__data__title">
-    Menu Burrito
+    {{ product.title }}
   </div>
   <div class="banner__data__price">
-    15,95$
+    {{ product.price.amount | currency }}
   </div>
   <div class="banner__data__description">
-    Tu burrito con chips y bebida incluida
+    {{ product.description }}
   </div>
   <div class="banner__data__badges">
     <div class="banner__data__badges__item">

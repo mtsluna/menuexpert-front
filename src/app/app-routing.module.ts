@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {MenuComponent} from "./pages/menu/menu.component";
 import {DetailComponent} from "./pages/detail/detail.component";
+import {CartComponent} from "./pages/cart/cart.component";
 
 const routes: Routes = [
-  { path: 'menu', component: MenuComponent },
-  { path: 'detail', component: DetailComponent }
+  { path: 'menu/:menuId', component: MenuComponent },
+  { path: 'menu/:menuId/detail/:detailId', component: DetailComponent },
+  { path: 'cart/:cartId', component: CartComponent },
 ]
 
 @NgModule({
