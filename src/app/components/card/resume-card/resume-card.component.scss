@@ -1,0 +1,48 @@
+.resume-card {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #FFFFFF;
+
+  &__clickable {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  &__product {
+
+    &__title {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    &__options {
+      font-size: 0.75rem;
+      color: #696969;
+    }
+
+  }
+
+  &__price {
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: space-between;
+
+    &__amount {
+      text-align: right;
+
+    }
+
+  }
+
+  &__image {
+    height: 3.125rem;
+    width: 3.125rem;
+    border-radius: 0.625rem;
+  }
+}

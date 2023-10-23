@@ -19,11 +19,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { FloatingButtonComponent } from './components/floating-button/floating-button.component';
 import { ImageComponent } from './components/image/image.component';
-import { ObservationComponent } from './observation/observation.component';
+import { ObservationComponent } from './components/observation/observation.component';
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { CartComponent } from './pages/cart/cart.component';
+import { QuantitySelectorComponent } from './components/quantity-selector/quantity-selector.component';
+import {MatIconModule} from "@angular/material/icon";
+import { ResumeCardComponent } from './components/card/resume-card/resume-card.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { CartComponent } from './pages/cart/cart.component';
     FloatingButtonComponent,
     ImageComponent,
     ObservationComponent,
-    CartComponent
+    CartComponent,
+    QuantitySelectorComponent,
+    ResumeCardComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,9 @@ import { CartComponent } from './pages/cart/cart.component';
     BrowserAnimationsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    BrowserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

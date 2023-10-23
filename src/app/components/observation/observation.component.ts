@@ -10,7 +10,8 @@ export class ObservationComponent implements OnInit {
 
   @Input()
   form: FormGroup = this.formBuilder.group({
-    comment: ['']
+    comment: [''],
+    quantity: [1]
   });
 
   constructor(private formBuilder: FormBuilder) { }

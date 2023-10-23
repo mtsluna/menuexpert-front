@@ -1,0 +1,50 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$monochrome-palette: (
+  50: #ffffff,  // Blanco
+  100: #000000, // Gris claro
+  200: #000000, // Gris
+  300: #000000, // Gris medio
+  400: #000000, // Gris oscuro
+  500: #000000, // Gris muy oscuro
+  600: #000000, // Gris más oscuro
+  700: #000000, // Gris profundo
+  800: #000000, // Gris casi negro
+  900: #000000, // Negro
+  A100: #000000, // Tono A100
+  A200: #000000, // Tono A200
+  A400: #000000, // Tono A400
+  A700: #000000, // Tono A700
+  contrast: (
+    50: #000000,  // Contraste para blanco
+    100: #000000, // Contraste para gris claro
+    200: #000000, // Contraste para gris
+    300: #000000, // Contraste para gris medio
+    400: #ffffff, // Contraste para gris oscuro
+    500: #ffffff, // Contraste para gris muy oscuro
+    600: #ffffff, // Contraste para gris más oscuro
+    700: #ffffff, // Contraste para gris profundo
+    800: #ffffff, // Contraste para gris casi negro
+    900: #ffffff, // Contraste para negro
+    A100: #000000, // Contraste para Tono A100
+    A200: #000000, // Contraste para Tono A200
+    A400: #ffffff, // Contraste para Tono A400
+    A700: #ffffff  // Contraste para Tono A700
+  )
+);
+
+$my-primary: mat.define-palette($monochrome-palette, 500);
+$my-accent: mat.define-palette($monochrome-palette, A200, A100, A400);
+
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($my-theme);

@@ -1,0 +1,19 @@
+<div class="resume-card">
+  <div class="resume-card__clickable" (click)="edit()">
+    <img class="resume-card__image" src="{{cartItem.product?.image}}" alt="{{cartItem.product?.title}}">
+    <div class="resume-card__product">
+      <div class="resume-card__product__title">
+        {{cartItem.product?.title}}
+      </div>
+      <div class="resume-card__product__options">
+        {{optionsSelected}}
+      </div>
+    </div>
+  </div>
+  <div class="resume-card__price">
+    <div class="resume-card__price__amount">
+      {{productPrice}} {{cartItem.product?.price?.currency}}
+    </div>
+    <app-quantity-selector (quantityEvent)="listenQuantityUpdate($event)" [form]="form"></app-quantity-selector>
+  </div>
+</div>

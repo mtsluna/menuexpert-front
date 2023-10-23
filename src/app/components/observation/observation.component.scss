@@ -20,11 +20,13 @@
   }
 
   &__content {
+    resize: none;
     width: 100%;
     box-sizing: border-box;
     background-color: #F6F6F6;
     border-radius: 10px;
     padding: 0.5rem;
+    border: none;
   }
 
   &__content:focus {

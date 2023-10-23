@@ -1,3 +1,12 @@
-<div>
-  {{ this.viewCart | json }}
+<div class="cart">
+  <div class="cart__header">
+    <div class="cart__header__title">
+      Tu pedido
+    </div>
+    <div class="cart__header__subtitle">
+      Estas a un paso de disfrutar tu pedido!
+    </div>
+  </div>
+  <app-resume-card *ngFor="let item of items" [cartItem]="item"></app-resume-card>
+  <app-floating-button title="IR AL CHECKOUT · {{ price }}"></app-floating-button>
 </div>

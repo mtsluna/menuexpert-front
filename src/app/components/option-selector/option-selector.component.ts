@@ -26,8 +26,22 @@ export class OptionSelectorComponent implements OnInit {
   }
 
   changePick(event: any, index: number, option: Option) {
+    const formArray = (this.form.get('selected') as FormArray)
+
     const newValue = (event.checked) ? option : false;
-    (this.form.get('selected') as FormArray).at(index).setValue(newValue)
+    formArray.at(index).setValue(newValue)
+
+    const array = formArray.getRawValue();
+
+    const optionsSelected = array.filter((value) => value != false).length;
+
+    array.forEach((value, index) => {
+      if(optionsSelected == this.answer.max && value == false) {
+        formArray.at(index).disable();
+      } else {
+        formArray.at(index).enable();
+      }
+    })
   }
 
   makeOption(index: number, option: Option) {

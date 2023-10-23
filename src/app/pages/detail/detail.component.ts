@@ -113,14 +113,17 @@ export class DetailComponent implements OnInit {
   initForm() {
     const selected = (answer: Answer) => {
       return answer.max === 1 ? {
-        selected: this.formBuilder.control(answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false))
+        selected: this.formBuilder.control({
+          value: answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false),
+          disabled: false
+        })
       } : {
-        selected: this.formBuilder.array(answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false))
+        selected: this.formBuilder.array(answer.options.map((option, index) => this.formBuilder.control({value: (answer.max === 1 && index == 0) ? option : false, disabled: false })))
       }
     }
 
     return this.formBuilder.group({
-      quantity: 1,
+      quantity: [1],
       product: this.product,
       comment: [''],
       selections: this.formBuilder.array(this.product?.answers?.map((answer) => {
@@ -137,6 +140,7 @@ export class DetailComponent implements OnInit {
   }
 
   addItems() {
+    console.log(this.form.getRawValue())
     this.cartService.addItem(this.form.getRawValue());
     this.router.navigate([`/menu/${this.menuId}`])
   }
