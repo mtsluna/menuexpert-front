@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SectionType} from "../../interfaces/section";
 import {Menu} from "../../interfaces/menu";
 import {Router} from "@angular/router";
+import {CartService} from "../../services/cart.service";
 
 @Component({
   selector: 'app-menu',
@@ -159,13 +160,17 @@ export class MenuComponent implements OnInit {
     ]
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
   }
 
   viewCart() {
     this.router.navigate([`/cart/${this.cartId}`])
+  }
+
+  get hiddenCart() {
+    return this.cartService.getItems().length === 0;
   }
 
 }

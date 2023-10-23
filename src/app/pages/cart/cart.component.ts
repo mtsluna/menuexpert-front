@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
           .reduce((acc, next) => acc + next, 0)
       }).reduce((acc, next) => acc + next, 0);
 
-      return (item.product?.price.amount || 0) + extras;
+      return ((item.product?.price.amount || 0) + extras) * item.quantity;
     }).reduce((acc, next) => acc + next, 0);
   }
 
