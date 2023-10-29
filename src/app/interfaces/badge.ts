@@ -1,5 +1,5 @@
 
 export interface Badge {
-  text: string;
+  name: string;
   color: string;
 }

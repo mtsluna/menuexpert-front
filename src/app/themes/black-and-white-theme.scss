@@ -35,8 +35,41 @@ $monochrome-palette: (
   )
 );
 
+$monochrome-palette-v2: (
+  50: #000000,  // Blanco
+  100: #ffffff, // Gris claro
+  200: #ffffff, // Gris
+  300: #ffffff, // Gris medio
+  400: #ffffff, // Gris oscuro
+  500: #ffffff, // Gris muy oscuro
+  600: #ffffff, // Gris más oscuro
+  700: #ffffff, // Gris profundo
+  800: #ffffff, // Gris casi negro
+  900: #ffffff, // Negro
+  A100: #ffffff, // Tono A100
+  A200: #ffffff, // Tono A200
+  A400: #ffffff, // Tono A400
+  A700: #ffffff, // Tono A700
+  contrast: (
+    50: #ffffff,  // Contraste para blanco
+    100: #ffffff, // Contraste para gris claro
+    200: #ffffff, // Contraste para gris
+    300: #ffffff, // Contraste para gris medio
+    400: #000000, // Contraste para gris oscuro
+    500: #000000, // Contraste para gris muy oscuro
+    600: #000000, // Contraste para gris más oscuro
+    700: #000000, // Contraste para gris profundo
+    800: #000000, // Contraste para gris casi negro
+    900: #000000, // Contraste para negro
+    A100: #ffffff, // Contraste para Tono A100
+    A200: #ffffff, // Contraste para Tono A200
+    A400: #000000, // Contraste para Tono A400
+    A700: #000000  // Contraste para Tono A700
+  )
+);
+
 $my-primary: mat.define-palette($monochrome-palette, 500);
-$my-accent: mat.define-palette($monochrome-palette, A200, A100, A400);
+$my-accent: mat.define-palette($monochrome-palette-v2, A200, A100, A400);
 
 $my-theme: mat.define-light-theme((
   color: (

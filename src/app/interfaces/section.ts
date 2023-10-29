@@ -1,8 +1,8 @@
 import {Product} from "./product";
 
 export enum SectionType {
-  VISUAL = 'visual',
-  NORMAL = 'normal'
+  VISUAL = 'VISUAL',
+  NORMAL = 'NORMAL'
 }
 
 export interface Section {

@@ -1,0 +1,10 @@
+<div class="tips-selector">
+  <div class="tips-selector__title">
+    Propina para el mozo
+  </div>
+  <div class="tips-selector__options">
+    <button [ngClass]="{'tips-selector__options__button__black': tip === selectedTip, 'tips-selector__options__button__gray': tip !== selectedTip}" (click)="onChange(tip)" class="tips-selector__options__button" *ngFor="let tip of tipsTypes">
+      {{ (tip.price.amount === 0) ? 'Ahora no' : tip.price.amount | currency: tip.price.currency }}
+    </button>
+  </div>
+</div>

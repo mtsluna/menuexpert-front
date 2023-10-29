@@ -1,0 +1,20 @@
+<div class="payments-selector">
+  <div class="payments-selector__title">
+    Medios de pago
+  </div>
+  <div class="payments-selector__options">
+    <mat-radio-group>
+      <div *ngFor="let paymentType of paymentTypes; index as i" class="payments-selector__options__item  payments-selector__options__divider">
+        <div class="payments-selector__options__item__group">
+          <img src="{{paymentType.icon}}" class="payments-selector__options__item__group__icon">
+          <div class="payments-selector__options__item__group__name">
+            {{ paymentType.name }}
+          </div>
+        </div>
+        <div class="payments-selector__options__item__field">
+          <mat-radio-button [checked]="i == 0" color="primary" [value]="paymentType.id"></mat-radio-button>
+        </div>
+      </div>
+    </mat-radio-group>
+  </div>
+</div>

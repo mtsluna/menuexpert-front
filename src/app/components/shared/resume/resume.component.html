@@ -1,0 +1,31 @@
+<div class="resume">
+  <div class="resume__title">
+    Resumen
+  </div>
+  <div class="resume__detail">
+    <div class="resume__detail__item">
+      <div>
+        Productos
+      </div>
+      <div>
+        {{ productsAmount | currency: currency }}
+      </div>
+    </div>
+    <div class="resume__detail__item">
+      <div>
+        Propina
+      </div>
+      <div>
+        {{ tip.price.amount | currency: tip.price.currency }}
+      </div>
+    </div>
+  </div>
+  <div class="resume__total">
+    <div>
+      Total
+    </div>
+    <div>
+      {{ productsAmount + tip.price.amount | currency: currency }}
+    </div>
+  </div>
+</div>

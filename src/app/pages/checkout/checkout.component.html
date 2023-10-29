@@ -1,0 +1,18 @@
+<div class="checkout">
+  <app-navigator></app-navigator>
+  <div class="checkout__holder"></div>
+  <div class="checkout__cards">
+    <div class="checkout__cards__header">
+      <div class="checkout__cards__header__title">
+        Checkout
+      </div>
+      <div class="checkout__cards__header__subtitle">
+        Kebab Madrid
+      </div>
+    </div>
+    <app-payments-selector></app-payments-selector>
+    <app-tips-selector (amountEvent)="changeTip($event)"></app-tips-selector>
+    <app-resume [tip]="tip"></app-resume>
+  </div>
+  <app-floating-button title="ir a pagar"></app-floating-button>
+</div>

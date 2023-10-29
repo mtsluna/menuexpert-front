@@ -3,6 +3,8 @@ import {CartItem} from "../../../interfaces/cart-item";
 import {Option} from "../../../interfaces/option";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Answer} from "../../../interfaces/answer";
+import {CartService} from "../../../services/cart.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-resume-card',
@@ -13,9 +15,10 @@ export class ResumeCardComponent implements OnInit {
 
   @Input()
   cartItem!: CartItem;
+  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
   form!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -33,6 +36,7 @@ export class ResumeCardComponent implements OnInit {
     }
 
     return this.formBuilder.group({
+      id: [''],
       quantity: [this.cartItem.quantity],
       product: this.cartItem.product,
       comment: [this.cartItem.comment],
@@ -58,20 +62,30 @@ export class ResumeCardComponent implements OnInit {
     const extras = this.cartItem.selections.map((value) => {
       return (value.selected.filter((value) => value !== false) as Array<Option>)
         .map((value) => value.price)
-        .reduce((acc, next) => acc + next, 0)
+        .reduce((acc, next) => acc + next.amount, 0)
     }).reduce((acc, next) => acc + next, 0);
 
     return ((this.cartItem.product?.price.amount || 0) + extras) * this.cartItem.quantity;
   }
 
   listenQuantityUpdate(formEvent: FormGroup) {
+    const cartItem = this.form.getRawValue();
+    if(cartItem.quantity == 0) {
+      this.cartService.removeItem(cartItem);
+      return;
+    }
+
     this.form = formEvent
     this.cartItem = this.form.getRawValue()
+    this.cartService.updateItem(cartItem);
   }
 
-  edit() {
-    console.log("hello")
-
+  async edit() {
+    await this.router.navigate([`/menu/${this.menuId}/detail/${this.cartItem?.product?.id}`], {
+      queryParams: {
+        cartItem: this.cartItem.id
+      }
+    })
   }
 
 }

@@ -30,7 +30,6 @@
   }
 
   &__content:focus {
-    outline: none !important;
-    border:2px solid #000000;
+    outline: 2px solid #000000 !important;
   }
 }

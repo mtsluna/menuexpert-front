@@ -1,8 +1,7 @@
 <div class="section-selector">
-  <div (click)="onClick(section.id)" class="section-selector__item" *ngFor="let section of sections">
+  <div [ngClass]="section?.id === selected ? 'section-selector__item__line-active' : 'section-selector__item__line-inactive' " (click)="onClick(section.id)" class="section-selector__item" *ngFor="let section of sections">
     <div class="section-selector__item__name">
       {{ section?.name }}
     </div>
-    <div [ngClass]="section?.id === selected ? 'section-selector__item__line-active' : 'section-selector__item__line-inactive' " class="section-selector__item__line"></div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CartService} from "../../services/cart.service";
 import {Option} from "../../interfaces/option";
-import {FormArray, FormGroup} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +10,9 @@ import {FormArray, FormGroup} from "@angular/forms";
 })
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService) { }
+  cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('cartId') || undefined;
+
+  constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -19,16 +21,20 @@ export class CartComponent implements OnInit {
     return this.cartService.getItems();
   }
 
-  get price() {
-    return this.items.map((item) => {
-      const extras = item.selections.map((value) => {
-        return (value.selected.filter((value) => value !== false) as Array<Option>)
-          .map((value) => value.price)
-          .reduce((acc, next) => acc + next, 0)
-      }).reduce((acc, next) => acc + next, 0);
+  get currency() {
+    if(this.items.length > 0) {
+      // @ts-ignore
+      return this.items[0].product.price.currency;
+    }
+    return ''
+  }
 
-      return ((item.product?.price.amount || 0) + extras) * item.quantity;
-    }).reduce((acc, next) => acc + next, 0);
+  get price() {
+    return this.cartService.getTotal();
+  }
+
+  checkout() {
+    this.router.navigate([`/checkout/${this.cartId}`])
   }
 
 }

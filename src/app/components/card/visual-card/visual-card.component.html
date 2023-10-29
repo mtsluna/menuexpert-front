@@ -1,13 +1,18 @@
 <div (click)="redirectToDetail()" class="visual-card">
   <div class="visual-card__resource">
-    <img class="visual-card__resource__image" alt="sarasa" src="{{ product?.image }}">
+    <img class="visual-card__resource__image" alt="sarasa" src="{{ product.image }}">
   </div>
   <div class="visual-card__data">
     <div class="visual-card__data__title">
-      {{ product?.title }}
+      {{ product.title }}
     </div>
     <div class="visual-card__data__price">
-      {{ product?.price?.amount | currency }}
+      {{ product.price.amount | currency: product.price.currency }}
+    </div>
+  </div>
+  <div *ngIf="primaryBadge != null" class="visual-card__badge">
+    <div class="visual-card__badge__item">
+      {{ primaryBadge.name }}
     </div>
   </div>
 </div>

@@ -10,5 +10,6 @@ export interface Product {
   badges?: Array<Badge>;
   image?: string;
   answers?: Array<Answer>;
+  sectionId?: string;
 }
 

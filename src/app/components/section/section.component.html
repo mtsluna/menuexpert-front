@@ -2,12 +2,12 @@
   <div class="section__name">
     {{ section?.name }}
   </div>
-  <div [ngClass]="{ 'section__visual': section?.type === 'visual', 'section__normal': section?.type === 'normal' }">
+  <div [ngClass]="{ 'section__visual': section?.type === 'VISUAL', 'section__normal': section?.type === 'NORMAL' }">
     <ng-container *ngFor="let product of section?.products">
-      <ng-container *ngIf="section?.type === 'visual'">
+      <ng-container *ngIf="section?.type === 'VISUAL'">
         <app-visual-card [product]="product"></app-visual-card>
       </ng-container>
-      <ng-container *ngIf="section?.type === 'normal'">
+      <ng-container *ngIf="section?.type === 'NORMAL'">
         <app-simple-card [product]="product"></app-simple-card>
       </ng-container>
     </ng-container>

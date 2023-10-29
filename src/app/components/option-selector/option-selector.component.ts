@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Answer} from "../../interfaces/answer";
 import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Option} from "../../interfaces/option";
+import {CartItem} from "../../interfaces/cart-item";
 
 @Component({
   selector: 'app-option-selector',
@@ -48,5 +49,9 @@ export class OptionSelectorComponent implements OnInit {
     return this.answer?.options.map((k, internalIndex) => {
       return (internalIndex === index) ? option : false
     })
+  }
+
+  getChecked(index: number) {
+    return !!this.form.getRawValue().selected[index]
   }
 }

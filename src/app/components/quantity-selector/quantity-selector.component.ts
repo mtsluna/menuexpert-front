@@ -13,6 +13,9 @@ export class QuantitySelectorComponent {
     quantity: [1]
   });
 
+  @Input()
+  origin: string = 'other';
+
   @Output()
   quantityEvent = new EventEmitter<FormGroup>();
 
@@ -28,7 +31,7 @@ export class QuantitySelectorComponent {
   }
 
   remove() {
-    if(this.quantity > 1) {
+    if(this.quantity > 0) {
       const actual = this.form.get('quantity')?.getRawValue() - 1;
       this.form.get('quantity')?.setValue(actual);
       this.quantityEvent.emit(this.form)

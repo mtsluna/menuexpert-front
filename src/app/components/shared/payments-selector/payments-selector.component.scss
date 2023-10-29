@@ -1,0 +1,44 @@
+.payments-selector {
+  padding: 1rem 1rem 0.5rem 1rem;
+  background: #FFFFFF;
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+
+    &__divider:not(:last-child) {
+      border-bottom: #EBEBEB solid 1px;
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+
+      &__group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+        &__icon {
+          object-fit: cover;
+          width: 20px;
+          height: 20px;
+        }
+
+        &__name {
+
+        }
+      }
+
+    }
+
+  }
+}

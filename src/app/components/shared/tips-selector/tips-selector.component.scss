@@ -1,0 +1,37 @@
+.tips-selector {
+  padding: 1rem;
+  background: #FFFFFF;
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 1rem 0 0.5rem 0;
+    overflow: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+
+    &__button {
+      all: unset;
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      background: #CECECE;
+      font-size: 0.75rem;
+
+      &__black {
+        background: #000000;
+        color: #FFFFFF;
+      }
+
+      &__gray {
+        background: #CECECE;
+        color: #000000;
+      }
+    }
+
+  }
+}

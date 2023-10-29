@@ -3,14 +3,14 @@
     {{ product.title }}
   </div>
   <div class="banner__data__price">
-    {{ product.price.amount | currency }}
+    {{ product.price.amount | currency: product.price.currency }}
   </div>
   <div class="banner__data__description">
     {{ product.description }}
   </div>
   <div class="banner__data__badges">
-    <div class="banner__data__badges__item">
-      Popular
+    <div *ngFor="let badge of product.badges" class="banner__data__badges__item">
+      {{ badge.name }}
     </div>
   </div>
 </div>

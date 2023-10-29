@@ -1,5 +1,5 @@
 <app-section-selector [sections]="menu.sections"></app-section-selector>
 <div class="menu">
-  <app-section *ngFor="let section of menu?.sections || []" [section]="section"></app-section>
+  <app-section *ngFor="let section of menu.sections" [section]="section"></app-section>
 </div>
 <app-floating-button [hidden]="hiddenCart" (click)="viewCart()" title="KEBAB MADRID" subtitle="Ver pedido"></app-floating-button>

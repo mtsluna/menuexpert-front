@@ -1,0 +1,30 @@
+.checkout {
+  display: flex;
+  flex-direction: column;
+
+  &__holder {
+    background: #FFFFFF;
+    height: 3.75rem;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &__header {
+      padding: 1rem;
+      background-color: #FFFFFF;
+
+      &__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      &__subtitle {
+
+      }
+    }
+  }
+
+}

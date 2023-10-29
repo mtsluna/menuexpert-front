@@ -12,8 +12,8 @@
   </div>
   <div class="resume-card__price">
     <div class="resume-card__price__amount">
-      {{productPrice}} {{cartItem.product?.price?.currency}}
+      {{productPrice | currency: cartItem.product?.price?.currency }}
     </div>
-    <app-quantity-selector (quantityEvent)="listenQuantityUpdate($event)" [form]="form"></app-quantity-selector>
+    <app-quantity-selector origin="cart" (quantityEvent)="listenQuantityUpdate($event)" [form]="form"></app-quantity-selector>
   </div>
 </div>

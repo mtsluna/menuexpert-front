@@ -1,0 +1,38 @@
+.resume {
+  padding: 1rem;
+  background: #FFFFFF;
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &__detail {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    gap: 0.25rem;
+
+    &__item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      font-size: 0.75rem;
+    }
+
+    &__item:last-child {
+      padding-bottom: 0.5rem;
+      border-bottom: #EBEBEB solid 1px;
+    }
+
+  }
+
+  &__total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+    font-weight: 600;
+  }
+
+}

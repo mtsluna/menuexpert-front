@@ -9,13 +9,15 @@ import {Section} from "../../interfaces/section";
 export class SectionSelectorComponent implements OnInit {
 
   @Input()
-  sections: Array<Section> = [];
+  sections: Array<Section> | undefined;
   selected: string = '';
 
   constructor() { }
 
   ngOnInit(): void {
-    this.selected = this?.sections[0]?.id;
+    if(this.sections && this.sections[0]) {
+      this.selected = this?.sections[0]?.id;
+    }
   }
 
   onClick(id: string) {

@@ -1,6 +1,8 @@
 <div class="quantity-selector">
-  <button (click)="remove()" class="quantity-selector__button">
-    <mat-icon class="quantity-selector__button__icon">remove</mat-icon>
+  <button [disabled]="quantity == 1 && origin != 'cart'" (click)="remove()" class="quantity-selector__button">
+    <mat-icon *ngIf="quantity >= 1 && origin != 'cart'" class="quantity-selector__button__icon">remove</mat-icon>
+    <mat-icon *ngIf="quantity > 1 && origin == 'cart'" class="quantity-selector__button__icon">remove</mat-icon>
+    <mat-icon  *ngIf="quantity == 1 && origin == 'cart'" class="quantity-selector__button__icon__remove">delete_outlined</mat-icon>
   </button>
   <div class="quantity-selector__amount">{{quantity}}</div>
   <button (click)="add()" class="quantity-selector__button">

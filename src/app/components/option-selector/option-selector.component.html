@@ -14,12 +14,12 @@
           <div class="option-selector__options__item__name">
             {{ option?.name }}
           </div>
-          <div *ngIf="option?.price !== 0" class="option-selector__options__item__price">
-            + {{ option?.price | currency }}
+          <div *ngIf="option?.price?.amount !== 0" class="option-selector__options__item__price">
+            + {{ option?.price?.amount | currency: option?.price?.currency }}
           </div>
         </div>
         <div class="option-selector__options__item__field">
-          <mat-radio-button [checked]="i === 0" [value]="makeOption(i, option)"></mat-radio-button>
+          <mat-radio-button [checked]="getChecked(i)" color="primary" [value]="makeOption(i, option)"></mat-radio-button>
         </div>
       </div>
     </mat-radio-group>
@@ -31,12 +31,12 @@
           <div class="option-selector__options__item__name">
             {{ option?.name }}
           </div>
-          <div *ngIf="option?.price !== 0" class="option-selector__options__item__price">
-            + {{ option?.price | currency }}
+          <div *ngIf="option?.price?.amount !== 0" class="option-selector__options__item__price">
+            + {{ option?.price?.amount | currency: option?.price?.currency }}
           </div>
         </div>
         <div class="option-selector__options__item__field">
-          <mat-checkbox [formControlName]="i" (change)="changePick($event, i, option)"></mat-checkbox>
+          <mat-checkbox color="primary" [formControlName]="i" (change)="changePick($event, i, option)"></mat-checkbox>
         </div>
       </div>
     </ng-container>

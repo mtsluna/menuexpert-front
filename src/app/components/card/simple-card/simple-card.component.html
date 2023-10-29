@@ -1,21 +1,21 @@
 <div (click)="redirectToDetail()" class="simple-card">
   <div class="simple-card__data">
     <div class="simple-card__data__title">
-      {{ product?.title }}
+      {{ product.title }}
     </div>
     <div class="simple-card__data__price">
-      {{ product?.price?.amount | currency }}
+      {{ product.price.amount | currency: product.price.currency }}
     </div>
     <div class="simple-card__data__description">
-      {{ product?.description }}
-    </div>
-    <div class="simple-card__data__badges">
-      <div *ngFor="let badge of product?.badges || []"  class="simple-card__data__badges__item">
-        {{ badge?.text }}
-      </div>
+      {{ product.description }}
     </div>
   </div>
-  <div *ngIf="product?.image" class="simple-card__resource">
-    <img class="simple-card__resource__image" alt="sarasa" src="{{product?.image}}">
+  <div *ngIf="product.image" class="simple-card__resource">
+    <img class="simple-card__resource__image" alt="sarasa" src="{{product.image}}">
+  </div>
+  <div *ngIf="primaryBadge != null" class="simple-card__badge">
+    <div class="simple-card__badge__item">
+      {{ primaryBadge.name }}
+    </div>
   </div>
 </div>

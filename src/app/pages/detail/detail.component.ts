@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { Answer } from "../../interfaces/answer";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Product } from "../../interfaces/product";
 import { CartService } from "../../services/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ProductService} from "../../services/product/product.service";
+import {CartItem} from "../../interfaces/cart-item";
+import {Option} from "../../interfaces/option";
 
 @Component({
   selector: 'app-detail',
@@ -12,102 +15,61 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class DetailComponent implements OnInit {
 
-  form!: FormGroup;
+  form: FormGroup = this.formBuilder.group({
+    quantity: [1],
+    product: null,
+    comment: [''],
+    selections: []
+  });
+
   menuId: string | undefined = this.activatedRoute.snapshot.paramMap.get('menuId') || undefined;
+  productId: string | undefined = this.activatedRoute.snapshot.paramMap.get('productId') || undefined;
+  cartItem: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('cartItem') || undefined;
   product: Product = {
-    id: 'abc1234',
-    title: 'Bocadillo Kebab de Ternera Espanola ',
+    id: '',
+    title: '',
     price: {
-      amount: 6.00,
-      currency: 'US'
+      amount: 0,
+      currency: ''
     },
-    description: 'Carne de ternera, pollo, lechuga, tomate y mayonesa casera',
-    badges: [
-      {
-        text: 'Popular',
-        color: '21A300'
-      }
-    ],
-    image: 'https://cn-geo1.uber.com/image-proc/resize/eats/format=webp/width=550/height=440/quality=70/srcb64=aHR0cHM6Ly90Yi1zdGF0aWMudWJlci5jb20vcHJvZC9pbWFnZS1wcm9jL3Byb2Nlc3NlZF9pbWFnZXMvODE5ZDQ4YTM0ZDE2ZTYyNzk5NmU4ODRhZDdlOWJkZWUvNDIxOGNhMWQwOTE3NDIxODM2NDE2MmNkMGIxYThjYzEuanBlZw==',
-    answers: [
-      {
-        id: 'abc1234',
-        name: 'Elige tu tipo de arroz',
-        max: 1,
-        options: [
-          {
-            id: 'abc1234a',
-            name: 'Normal',
-            price: 0
-          },
-          {
-            id: 'abc1234b',
-            name: 'Integral',
-            price: 0
-          },
-          {
-            id: 'abc1234b',
-            name: 'Mixto',
-            price: 0
-          }
-        ]
-      },
-      {
-        id: 'abc1234',
-        name: 'Elige la proteina',
-        max: 2,
-        options: [
-          {
-            id: 'abc1234a',
-            name: 'Carne',
-            price: 0
-          },
-          {
-            id: 'abc1234b',
-            name: 'Pollo',
-            price: 0
-          },
-          {
-            id: 'abc1234b',
-            name: 'Cerdo',
-            price: 1.99
-          }
-        ]
-      },
-      {
-        id: 'abc1234',
-        name: 'Elige el condimento',
-        max: 2,
-        options: [
-          {
-            id: 'abc1234a',
-            name: 'Curcuma',
-            price: 0
-          },
-          {
-            id: 'abc1234b',
-            name: 'Pimenton',
-            price: 0
-          },
-          {
-            id: 'abc1234b',
-            name: 'Polluelo',
-            price: 1.99
-          }
-        ]
-      }
-    ]
+    description: '',
+    badges: [],
+    image: '',
+    answers: []
   };
 
   constructor(
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService
   ) { }
 
   ngOnInit(): void {
-    this.form = this.initForm();
+    if(!this.menuId || !this.productId) {
+      return;
+    }
+
+    if(!this.cartItem) {
+      this.productService.getProduct(this.menuId, this.productId)
+        .subscribe({
+          next: (product) => {
+            this.product = product;
+            this.form = this.initForm();
+          }
+        })
+    } else {
+
+      const cartItem = this.cartService.getItem(this.cartItem);
+
+      if(cartItem.product) {
+        this.product = cartItem.product;
+      }
+
+      this.form = this.initForm();
+      this.form.patchValue(cartItem);
+    }
   }
 
   initForm() {
@@ -123,6 +85,7 @@ export class DetailComponent implements OnInit {
     }
 
     return this.formBuilder.group({
+      id: '',
       quantity: [1],
       product: this.product,
       comment: [''],
@@ -139,10 +102,25 @@ export class DetailComponent implements OnInit {
     return (this.form.get('selections') as FormArray).at(index) as FormGroup;
   }
 
-  addItems() {
-    console.log(this.form.getRawValue())
+  addItem() {
     this.cartService.addItem(this.form.getRawValue());
     this.router.navigate([`/menu/${this.menuId}`])
+  }
+
+  updateItem() {
+    this.cartService.updateItem(this.form.getRawValue())
+    this.router.navigate([`/menu/${this.menuId}`])
+  }
+
+  get price() {
+    const data = (this.form.getRawValue() as CartItem);
+
+    const extras = data?.selections?.map((value) => {
+      return (value.selected.filter((value) => value !== false) as Array<Option>)
+        .map((value) => value.price)
+        .reduce((acc, next) => acc + next.amount, 0)
+    }).reduce((acc, next) => acc + next, 0);
+    return (this.product.price.amount + extras) * data.quantity;
   }
 
 }

@@ -1,0 +1,13 @@
+.navigator {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+
+  &__button {
+
+    &__icon {
+      transform: scale(0.80);
+    }
+
+  }
+}

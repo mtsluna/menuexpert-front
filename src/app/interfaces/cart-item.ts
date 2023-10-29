@@ -2,6 +2,7 @@ import {Product} from "./product";
 import {Option} from "./option";
 
 export interface CartItem {
+  id?:string;
   product?:Product;
   comment: string;
   quantity: number;

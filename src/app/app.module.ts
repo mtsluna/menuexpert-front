@@ -27,6 +27,16 @@ import { CartComponent } from './pages/cart/cart.component';
 import { QuantitySelectorComponent } from './components/quantity-selector/quantity-selector.component';
 import {MatIconModule} from "@angular/material/icon";
 import { ResumeCardComponent } from './components/card/resume-card/resume-card.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {PascalToCamelInterceptor} from "./middlewares/pascal-to-camel.interceptor";
+import { NavigatorComponent } from './components/shared/navigator/navigator.component';
+import {MatButtonModule} from "@angular/material/button";
+import { LoaderComponent } from './components/shared/loader/loader.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { PaymentsSelectorComponent } from './components/shared/payments-selector/payments-selector.component';
+import { TipsSelectorComponent } from './components/shared/tips-selector/tips-selector.component';
+import { ResumeComponent } from './components/shared/resume/resume.component';
 
 @NgModule({
   declarations: [
@@ -45,25 +55,40 @@ import { ResumeCardComponent } from './components/card/resume-card/resume-card.c
     ObservationComponent,
     CartComponent,
     QuantitySelectorComponent,
-    ResumeCardComponent
+    ResumeCardComponent,
+    NavigatorComponent,
+    LoaderComponent,
+    CheckoutComponent,
+    PaymentsSelectorComponent,
+    TipsSelectorComponent,
+    ResumeComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterOutlet,
-    MatSelectModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    BrowserModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterOutlet,
+        MatSelectModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        BrowserModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatProgressSpinnerModule
+    ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: PascalToCamelInterceptor,
+      multi: true,
+    }
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

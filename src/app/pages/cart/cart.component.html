@@ -1,12 +1,16 @@
 <div class="cart">
-  <div class="cart__header">
-    <div class="cart__header__title">
-      Tu pedido
-    </div>
-    <div class="cart__header__subtitle">
-      Estas a un paso de disfrutar tu pedido!
+  <app-navigator></app-navigator>
+  <div class="cart__holder"></div>
+  <div class="cart__cards">
+    <div class="cart__cards__header">
+      <div class="cart__cards__header__title">
+        Tu pedido
+      </div>
+      <div class="cart__cards__header__subtitle">
+        Estas a un paso de disfrutar tu pedido!
+      </div>
     </div>
   </div>
   <app-resume-card *ngFor="let item of items" [cartItem]="item"></app-resume-card>
-  <app-floating-button title="IR AL CHECKOUT · {{ price }}"></app-floating-button>
+  <app-floating-button (click)="checkout()" *ngIf="price > 0" title="ir al checkout · {{ price | currency: currency }}"></app-floating-button>
 </div>

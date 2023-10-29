@@ -1,19 +1,30 @@
 .cart {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 
-  &__header {
-    padding: 1rem;
-    background-color: #FFFFFF;
+  &__holder {
+    background: #FFFFFF;
+    height: 3.75rem;
+  }
 
-    &__title {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
-    &__subtitle {
+    &__header {
+      padding: 1rem;
+      background-color: #FFFFFF;
 
+      &__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      &__subtitle {
+
+      }
     }
   }
+
 }

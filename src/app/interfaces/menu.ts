@@ -1,5 +1,9 @@
 import {Section} from "./section";
+import {Product} from "./product";
 
 export interface Menu {
-  sections: Array<Section>;
+  id?: string;
+  name?: string;
+  sections?: Array<Section>;
+  products?: Array<Product>;
 }
