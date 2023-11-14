@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {Tip} from "../../../interfaces/tip";
+import {PaymentType} from "../../../interfaces/payment-type";
 
 @Component({
   selector: 'app-payments-selector',
@@ -7,17 +9,24 @@ import {Component} from '@angular/core';
 })
 export class PaymentsSelectorComponent {
 
-  paymentTypes = [
+  @Output()
+  paymentTypeEvent = new EventEmitter<PaymentType>();
+
+  paymentTypes: Array<PaymentType> = [
     {
-      id: 1,
+      id: '1',
       name: 'Efectivo',
       icon: 'assets/icons/efectivo.png'
     },
     {
-      id: 2,
+      id: '2',
       name: 'Mercadopago',
       icon: 'assets/icons/mercado-pago.png'
     },
   ]
+
+  onChange(paymentType: PaymentType) {
+    this.paymentTypeEvent.emit(paymentType);
+  }
 
 }

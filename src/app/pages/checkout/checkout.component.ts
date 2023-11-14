@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Tip} from "../../interfaces/tip";
+import {CheckoutService} from "../../services/checkout/checkout.service";
+import {PaymentType} from "../../interfaces/payment-type";
+import {CartService} from "../../services/cart.service";
 
 @Component({
   selector: 'app-checkout',
@@ -17,11 +20,31 @@ export class CheckoutComponent {
     }
   };
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  paymentType: PaymentType = {
+    id: '1'
+  };
+
+  constructor(private activatedRoute: ActivatedRoute, private checkoutService: CheckoutService, private cartService: CartService) {
   }
 
   changeTip(tip: Tip) {
     this.tip = tip;
+  }
+
+  goToMercadoPago() {
+    this.checkoutService.postCheckout(
+      this.cartId || '',
+      this.cartService.getRawItems(),
+      this.tip
+    ).subscribe({
+      next: (checkout) => {
+        window.location.href = checkout.initPoint;
+      }
+    })
+  }
+
+  paymentTypeEvent(paymentType: PaymentType) {
+    this.paymentType = paymentType;
   }
 
 }

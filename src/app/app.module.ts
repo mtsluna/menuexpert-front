@@ -37,6 +37,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { PaymentsSelectorComponent } from './components/shared/payments-selector/payments-selector.component';
 import { TipsSelectorComponent } from './components/shared/tips-selector/tips-selector.component';
 import { ResumeComponent } from './components/shared/resume/resume.component';
+import {LoadingInterceptor} from "./middlewares/loading.interceptor";
 
 @NgModule({
   declarations: [
@@ -87,6 +88,11 @@ import { ResumeComponent } from './components/shared/resume/resume.component';
       provide: HTTP_INTERCEPTORS,
       useClass: PascalToCamelInterceptor,
       multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

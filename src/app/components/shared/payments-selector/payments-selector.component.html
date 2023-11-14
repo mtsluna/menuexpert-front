@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="payments-selector__options__item__field">
-          <mat-radio-button [checked]="i == 0" color="primary" [value]="paymentType.id"></mat-radio-button>
+          <mat-radio-button (change)="onChange(paymentType)" [checked]="i == 0" color="primary" [value]="paymentType.id"></mat-radio-button>
         </div>
       </div>
     </mat-radio-group>

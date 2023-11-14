@@ -29,6 +29,16 @@ export class CartService {
     return this.items[index];
   }
 
+  getRawItems() {
+    return this.items.map((cartItem) => ({
+      ...cartItem,
+      selections: cartItem.selections.map((selection) => ({
+        ...selection,
+        selected: selection.selected.filter((selected) => selected != false)
+      }))
+    }))
+  }
+
   updateItem(cartItem: CartItem) {
     const index = this.items.findIndex((cart) => cart.id == cartItem.id);
     this.items[index] = cartItem;
