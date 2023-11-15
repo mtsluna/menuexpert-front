@@ -28,7 +28,6 @@ import { QuantitySelectorComponent } from './components/quantity-selector/quanti
 import {MatIconModule} from "@angular/material/icon";
 import { ResumeCardComponent } from './components/card/resume-card/resume-card.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {PascalToCamelInterceptor} from "./middlewares/pascal-to-camel.interceptor";
 import { NavigatorComponent } from './components/shared/navigator/navigator.component';
 import {MatButtonModule} from "@angular/material/button";
 import { LoaderComponent } from './components/shared/loader/loader.component';
@@ -84,11 +83,6 @@ import {LoadingInterceptor} from "./middlewares/loading.interceptor";
         MatProgressSpinnerModule
     ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: PascalToCamelInterceptor,
-      multi: true,
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,

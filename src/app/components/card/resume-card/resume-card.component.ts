@@ -50,12 +50,17 @@ export class ResumeCardComponent implements OnInit {
   }
 
   get optionsSelected() {
-    return this.cartItem.selections.map((value) => {
+    const data = this.cartItem.selections.map((value) => {
       return (value.selected.filter((value) => value !== false) as Array<Option>)
         .map((value) => value.name)
         .join(', ')
-    }).join(', ')
+    }).filter((v) => v !== '');
 
+    if (this.cartItem.comment !== '') {
+      data.push(this.cartItem.comment)
+    }
+
+    return data.join(', ');
   }
 
   get productPrice() {
@@ -70,7 +75,7 @@ export class ResumeCardComponent implements OnInit {
 
   listenQuantityUpdate(formEvent: FormGroup) {
     const cartItem = this.form.getRawValue();
-    if(cartItem.quantity == 0) {
+    if (cartItem.quantity == 0) {
       this.cartService.removeItem(cartItem);
       return;
     }

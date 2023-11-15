@@ -1,6 +1,7 @@
 import {Price} from "./price";
 import {Badge} from "./badge";
 import {Answer} from "./answer";
+import {Section} from "./section";
 
 export interface Product {
   id: string;
@@ -11,5 +12,6 @@ export interface Product {
   image?: string;
   answers?: Array<Answer>;
   sectionId?: string;
+  section?: Section;
 }
 

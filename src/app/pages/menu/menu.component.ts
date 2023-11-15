@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {SectionType} from "../../interfaces/section";
+import {Section, SectionType} from "../../interfaces/section";
 import {Menu} from "../../interfaces/menu";
 import {Router} from "@angular/router";
 import {CartService} from "../../services/cart.service";
 import {MenuService} from "../../services/menu/menu.service";
+import {Product} from "../../interfaces/product";
 
 @Component({
   selector: 'app-menu',
@@ -30,7 +31,9 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.menuService.getMenu('97e9b9ad-391d-4507-a357-3db9d7c9f130')
       .subscribe({
-        next: (value) => this.menu = value
+        next: (value) => {
+          this.menu = value
+        }
       })
   }
 
