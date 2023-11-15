@@ -2,4 +2,4 @@
 <div class="menu">
   <app-section *ngFor="let section of menu.sections" [section]="section"></app-section>
 </div>
-<app-floating-button [hidden]="hiddenCart" (click)="viewCart()" title="KEBAB MADRID" subtitle="Ver pedido"></app-floating-button>
+<app-floating-button [hidden]="hiddenCart" (click)="viewCart()" title="{{restaurant.name}}" subtitle="Ver pedido"></app-floating-button>

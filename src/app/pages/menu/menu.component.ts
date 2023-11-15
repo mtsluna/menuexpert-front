@@ -5,6 +5,9 @@ import {Router} from "@angular/router";
 import {CartService} from "../../services/cart.service";
 import {MenuService} from "../../services/menu/menu.service";
 import {Product} from "../../interfaces/product";
+import {RestaurantService} from "../../services/restaurant/restaurant.service";
+import {zip} from "rxjs";
+import {Restaurant} from "../../interfaces/restaurant";
 
 @Component({
   selector: 'app-menu',
@@ -22,19 +25,28 @@ export class MenuComponent implements OnInit {
     products: []
   };
 
+  restaurant: Restaurant = {
+    id: '',
+    name: ''
+  }
+
   constructor(
     private router: Router,
     private cartService: CartService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
-    this.menuService.getMenu('97e9b9ad-391d-4507-a357-3db9d7c9f130')
-      .subscribe({
-        next: (value) => {
-          this.menu = value
-        }
-      })
+    zip(
+      this.menuService.getMenu('97e9b9ad-391d-4507-a357-3db9d7c9f130'),
+      this.restaurantService.getRestaurantByMenu('97e9b9ad-391d-4507-a357-3db9d7c9f130')
+    ).subscribe({
+      next: ([menu, restaurant]) => {
+        this.menu = menu;
+        this.restaurant = restaurant;
+      }
+    })
   }
 
   viewCart() {
