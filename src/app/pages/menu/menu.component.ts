@@ -27,7 +27,9 @@ export class MenuComponent implements OnInit {
 
   restaurant: Restaurant = {
     id: '',
-    name: ''
+    name: '',
+    description: '',
+    image: undefined
   }
 
   constructor(

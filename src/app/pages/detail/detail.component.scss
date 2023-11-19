@@ -6,6 +6,11 @@
 
   &__image {
     height: 12.5rem;
+
+    &__empty {
+      background-color: #FFFFFF;
+      height: 3.5rem;
+    }
   }
 
   &__content {

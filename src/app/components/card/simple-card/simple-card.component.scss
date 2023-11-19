@@ -12,7 +12,7 @@
 
   &__badge {
     position: absolute;
-    top: 0.5rem;
+    top: 0;
     right: 0;
 
     display: flex;
@@ -22,7 +22,7 @@
 
     &__item {
       color: #FFFFFF;
-      border-radius: 10px 0 0 10px;
+      border-radius: 0 10px 0 10px;
       padding: 0.20rem 0.50rem;
       background-color: #21A300;
     }

@@ -1,0 +1,9 @@
+<div class="brand">
+  <div class="brand__banner">
+    <img *ngIf="restaurant.image" class="brand__banner__image" src="{{restaurant.image}}" alt="Banner of {{restaurant.name}}">
+  </div>
+  <div class="brand__header">
+    <div class="brand__header__title">{{restaurant.name}}</div>
+    <div class="brand__header__subtitle">{{restaurant.description}}</div>
+  </div>
+</div>

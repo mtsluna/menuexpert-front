@@ -1,6 +1,7 @@
 <div class="detail">
   <app-navigator></app-navigator>
-  <app-image class="detail__image" [product]="product"></app-image>
+  <app-image *ngIf="product.image" class="detail__image" [product]="product"></app-image>
+  <div class="detail__image__empty" *ngIf="!product.image"></div>
   <div class="detail__content">
     <app-banner [product]="product"></app-banner>
     <app-option-selector *ngFor="let answer of product.answers; index as i" [form]="getFormElement(i)" [answer]="answer"></app-option-selector>

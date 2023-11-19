@@ -1,3 +1,3 @@
 export default {
-  baseUrl: 'http://localhost:8080'
+  baseUrl: 'https://menuexpert-back-production.up.railway.app/'
 }

@@ -6,11 +6,13 @@ import {DetailComponent} from "./pages/detail/detail.component";
 import {CartComponent} from "./pages/cart/cart.component";
 import {LoaderComponent} from "./components/shared/loader/loader.component";
 import {CheckoutComponent} from "./pages/checkout/checkout.component";
+import {ConfirmationComponent} from "./pages/checkout/confirmation/confirmation.component";
 
 const routes: Routes = [
   { path: 'menu/:menuId', component: MenuComponent },
   { path: 'menu/:menuId/detail/:productId', component: DetailComponent },
   { path: 'cart/:cartId', component: CartComponent },
+  { path: 'checkout/:cartId/confirmation', component: ConfirmationComponent },
   { path: 'checkout/:cartId', component: CheckoutComponent },
   { path: 'loader', component: LoaderComponent },
 ]

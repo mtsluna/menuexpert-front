@@ -10,4 +10,5 @@ export interface Section {
   name: string;
   products: Array<Product>;
   type: SectionType;
+  order: number;
 }

@@ -1,5 +1,7 @@
+<app-navbar></app-navbar>
+<app-brand [restaurant]="restaurant"></app-brand>
 <app-section-selector [sections]="menu.sections"></app-section-selector>
-<div class="menu">
+<div class="menu" [ngClass]="(hiddenCart) ? 'menu__none-white-space' : 'menu__white-space'">
   <app-section *ngFor="let section of menu.sections" [section]="section"></app-section>
 </div>
 <app-floating-button [hidden]="hiddenCart" (click)="viewCart()" title="{{restaurant.name}}" subtitle="Ver pedido"></app-floating-button>

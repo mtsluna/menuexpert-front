@@ -37,6 +37,9 @@ import { PaymentsSelectorComponent } from './components/shared/payments-selector
 import { TipsSelectorComponent } from './components/shared/tips-selector/tips-selector.component';
 import { ResumeComponent } from './components/shared/resume/resume.component';
 import {LoadingInterceptor} from "./middlewares/loading.interceptor";
+import { BrandComponent } from './components/shared/brand/brand.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { ConfirmationComponent } from './pages/checkout/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -61,26 +64,29 @@ import {LoadingInterceptor} from "./middlewares/loading.interceptor";
     CheckoutComponent,
     PaymentsSelectorComponent,
     TipsSelectorComponent,
-    ResumeComponent
+    ResumeComponent,
+    BrandComponent,
+    ConfirmationComponent,
   ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        RouterOutlet,
-        MatSelectModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        MatCheckboxModule,
-        MatInputModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        BrowserModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatProgressSpinnerModule
+      BrowserModule,
+      AppRoutingModule,
+      RouterOutlet,
+      MatSelectModule,
+      MatRadioModule,
+      ReactiveFormsModule,
+      MatCheckboxModule,
+      MatInputModule,
+      BrowserAnimationsModule,
+      FormsModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatIconModule,
+      BrowserModule,
+      HttpClientModule,
+      MatButtonModule,
+      MatProgressSpinnerModule,
+      MatSidenavModule
     ],
   providers: [
     {

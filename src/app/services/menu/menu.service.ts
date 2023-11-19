@@ -37,7 +37,7 @@ export class MenuService {
 
           return  {
             ...menu,
-            sections: uniqueSections
+            sections: uniqueSections.sort((a, b) => a.order - b.order)
           }
         }
       ));
