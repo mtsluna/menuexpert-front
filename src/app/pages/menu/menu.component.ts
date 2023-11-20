@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Section, SectionType} from "../../interfaces/section";
 import {Menu} from "../../interfaces/menu";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../services/cart.service";
 import {MenuService} from "../../services/menu/menu.service";
 import {Product} from "../../interfaces/product";
@@ -17,6 +17,7 @@ import {Restaurant} from "../../interfaces/restaurant";
 export class MenuComponent implements OnInit {
 
   cartId: string = 'caf6647b-e32d-4629-9d29-e283a570ddfd';
+  menuId: string | undefined = this.activatedRoute.snapshot.paramMap.get('menuId') || undefined;
 
   menu: Menu = {
     id: '',
@@ -36,23 +37,27 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private cartService: CartService,
     private menuService: MenuService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     zip(
-      this.menuService.getMenu('97e9b9ad-391d-4507-a357-3db9d7c9f130'),
-      this.restaurantService.getRestaurantByMenu('97e9b9ad-391d-4507-a357-3db9d7c9f130')
+      this.menuService.getMenu(this.menuId || ''),
+      this.restaurantService.getRestaurantByMenu(this.menuId || '')
     ).subscribe({
       next: ([menu, restaurant]) => {
         this.menu = menu;
         this.restaurant = restaurant;
+      },
+      error: (e) => {
+        this.router.navigate(['not-found'])
       }
     })
   }
 
   viewCart() {
-    this.router.navigate([`/cart/${this.cartId}`], {
+    this.router.navigate([`/cart/${this.cartService.getCartId(this.menuId)}`], {
       queryParams: {
         menuId: this.menu.id
       }
@@ -60,7 +65,7 @@ export class MenuComponent implements OnInit {
   }
 
   get hiddenCart() {
-    return this.cartService.getItems().length === 0;
+    return this.cartService.getItems(this.menuId).length === 0;
   }
 
 }

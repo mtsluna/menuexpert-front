@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class CartComponent implements OnInit {
 
   cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('cartId') || undefined;
+  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
 
   constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -18,7 +19,7 @@ export class CartComponent implements OnInit {
   }
 
   get items() {
-    return this.cartService.getItems();
+    return this.cartService.getItems(this.menuId);
   }
 
   get currency() {
@@ -30,11 +31,15 @@ export class CartComponent implements OnInit {
   }
 
   get price() {
-    return this.cartService.getTotal();
+    return this.cartService.getTotal(this.menuId);
   }
 
   checkout() {
-    this.router.navigate([`/checkout/${this.cartId}`])
+    this.router.navigate([`/checkout/${this.cartId}`], {
+      queryParams: {
+        menuId: this.menuId
+      }
+    })
   }
 
 }

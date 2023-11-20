@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {Tip} from "../../../interfaces/tip";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-resume',
@@ -17,15 +18,17 @@ export class ResumeComponent {
     }
   };
 
-  constructor(private cartService: CartService) {
+  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
+
+  constructor(private cartService: CartService, private activatedRoute: ActivatedRoute) {
   }
 
   get productsAmount() {
-    return this.cartService.getTotal();
+    return this.cartService.getTotal(this.menuId);
   }
 
   get currency() {
-    return this.cartService.getCurrency();
+    return this.cartService.getCurrency(this.menuId);
   }
 
 }

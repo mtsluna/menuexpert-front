@@ -22,6 +22,7 @@ export class DetailComponent implements OnInit {
     selections: []
   });
 
+  error: boolean = false;
   menuId: string | undefined = this.activatedRoute.snapshot.paramMap.get('menuId') || undefined;
   productId: string | undefined = this.activatedRoute.snapshot.paramMap.get('productId') || undefined;
   cartItem: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('cartItem') || undefined;
@@ -57,11 +58,14 @@ export class DetailComponent implements OnInit {
           next: (product) => {
             this.product = product;
             this.form = this.initForm();
+          },
+          error: () => {
+            this.router.navigate(['not-found'])
           }
         })
     } else {
 
-      const cartItem = this.cartService.getItem(this.cartItem);
+      const cartItem = this.cartService.getItem(this.cartItem, this.menuId);
 
       if(cartItem.product) {
         this.product = cartItem.product;
@@ -103,12 +107,12 @@ export class DetailComponent implements OnInit {
   }
 
   addItem() {
-    this.cartService.addItem(this.form.getRawValue());
+    this.cartService.addItem(this.form.getRawValue(), this.menuId);
     this.router.navigate([`/menu/${this.menuId}`])
   }
 
   updateItem() {
-    this.cartService.updateItem(this.form.getRawValue())
+    this.cartService.updateItem(this.form.getRawValue(), this.menuId)
     this.router.navigate([`/menu/${this.menuId}`])
   }
 

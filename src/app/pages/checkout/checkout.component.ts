@@ -13,6 +13,7 @@ import {CartService} from "../../services/cart.service";
 export class CheckoutComponent {
 
   cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('cartId') || undefined;
+  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
   tip: any = {
     price: {
       amount: 0,
@@ -34,7 +35,7 @@ export class CheckoutComponent {
   goToMercadoPago() {
     this.checkoutService.postCheckout(
       this.cartId || '',
-      this.cartService.getRawItems(),
+      this.cartService.getRawItems(this.menuId),
       this.tip
     ).subscribe({
       next: (checkout) => {

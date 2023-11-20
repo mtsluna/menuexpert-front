@@ -7,6 +7,7 @@ import {CartComponent} from "./pages/cart/cart.component";
 import {LoaderComponent} from "./components/shared/loader/loader.component";
 import {CheckoutComponent} from "./pages/checkout/checkout.component";
 import {ConfirmationComponent} from "./pages/checkout/confirmation/confirmation.component";
+import {NotFoundComponent} from "./components/shared/not-found/not-found.component";
 
 const routes: Routes = [
   { path: 'menu/:menuId', component: MenuComponent },
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'cart/:cartId', component: CartComponent },
   { path: 'checkout/:cartId/confirmation', component: ConfirmationComponent },
   { path: 'checkout/:cartId', component: CheckoutComponent },
-  { path: 'loader', component: LoaderComponent },
+  { path: '**', component: NotFoundComponent },
 ]
 
 @NgModule({

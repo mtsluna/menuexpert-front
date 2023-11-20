@@ -40,6 +40,7 @@ import {LoadingInterceptor} from "./middlewares/loading.interceptor";
 import { BrandComponent } from './components/shared/brand/brand.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import { ConfirmationComponent } from './pages/checkout/confirmation/confirmation.component';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ConfirmationComponent } from './pages/checkout/confirmation/confirmatio
     ResumeComponent,
     BrandComponent,
     ConfirmationComponent,
+    NotFoundComponent,
   ],
     imports: [
       BrowserModule,

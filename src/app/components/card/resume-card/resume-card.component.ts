@@ -76,13 +76,13 @@ export class ResumeCardComponent implements OnInit {
   listenQuantityUpdate(formEvent: FormGroup) {
     const cartItem = this.form.getRawValue();
     if (cartItem.quantity == 0) {
-      this.cartService.removeItem(cartItem);
+      this.cartService.removeItem(cartItem, this.menuId);
       return;
     }
 
     this.form = formEvent
     this.cartItem = this.form.getRawValue()
-    this.cartService.updateItem(cartItem);
+    this.cartService.updateItem(cartItem, this.menuId);
   }
 
   async edit() {
