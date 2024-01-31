@@ -1,5 +1,7 @@
+import {Currency} from "./currency";
+
 export interface Price {
   amount: number;
-  currency: string;
+  currency: Currency;
 }
 

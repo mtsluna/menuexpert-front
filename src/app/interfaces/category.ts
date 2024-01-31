@@ -5,10 +5,10 @@ export enum SectionType {
   NORMAL = 'NORMAL'
 }
 
-export interface Section {
+export interface Category {
   id: string;
   name: string;
   products: Array<Product>;
-  type: SectionType;
+  categoryType: SectionType;
   order: number;
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Product} from "../../interfaces/product";
-import {Section} from "../../interfaces/section";
+import {Category} from "../../interfaces/category";
 
 @Component({
   selector: 'app-section',
@@ -13,7 +13,7 @@ export class SectionComponent implements OnInit {
   type: string = 'VISUAL';
 
   @Input()
-  section: Section | undefined;
+  category: Category | undefined;
 
   constructor() { }
 

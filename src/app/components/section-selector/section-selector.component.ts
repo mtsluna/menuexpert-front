@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Section} from "../../interfaces/section";
+import {Category} from "../../interfaces/category";
 
 @Component({
   selector: 'app-section-selector',
@@ -9,7 +9,7 @@ import {Section} from "../../interfaces/section";
 export class SectionSelectorComponent implements OnInit {
 
   @Input()
-  sections: Array<Section> | undefined;
+  sections: Array<Category> | undefined;
   selected: string = '';
 
   constructor() { }

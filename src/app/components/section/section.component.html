@@ -1,13 +1,13 @@
-<div [id]="section?.id" class="section">
+<div [id]="category?.id" class="section">
   <div class="section__name">
-    {{ section?.name }}
+    {{ category?.name }}
   </div>
-  <div [ngClass]="{ 'section__visual': section?.type === 'VISUAL', 'section__normal': section?.type === 'NORMAL' }">
-    <ng-container *ngFor="let product of section?.products">
-      <ng-container *ngIf="section?.type === 'VISUAL'">
+  <div [ngClass]="{ 'section__visual': category?.categoryType === 'VISUAL', 'section__normal': category?.categoryType === 'NORMAL' }">
+    <ng-container *ngFor="let product of category?.products">
+      <ng-container *ngIf="category?.categoryType === 'VISUAL'">
         <app-visual-card [product]="product"></app-visual-card>
       </ng-container>
-      <ng-container *ngIf="section?.type === 'NORMAL'">
+      <ng-container *ngIf="category?.categoryType === 'NORMAL'">
         <app-simple-card [product]="product"></app-simple-card>
       </ng-container>
     </ng-container>

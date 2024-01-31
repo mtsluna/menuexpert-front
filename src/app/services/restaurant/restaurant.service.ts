@@ -12,6 +12,6 @@ export class RestaurantService {
   constructor(private httpClient: HttpClient) { }
 
   getRestaurantByMenu(id: string): Observable<Restaurant> {
-    return this.httpClient.get<Restaurant>(`${backendConstants.baseUrl}/restaurant/${id}`)
+    return this.httpClient.get<Restaurant>(`${backendConstants.baseUrl}/stores/by-catalog/${id}`)
   }
 }

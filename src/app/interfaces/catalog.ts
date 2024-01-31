@@ -1,9 +1,9 @@
-import {Section} from "./section";
+import {Category} from "./category";
 import {Product} from "./product";
 
-export interface Menu {
+export interface Catalog {
   id?: string;
   name?: string;
-  sections?: Array<Section>;
+  categories?: Array<Category>;
   products?: Array<Product>;
 }

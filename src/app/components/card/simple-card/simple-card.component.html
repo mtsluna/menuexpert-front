@@ -4,7 +4,7 @@
       {{ product.title }}
     </div>
     <div class="simple-card__data__price">
-      {{ product.price.amount | currency: product.price.currency }}
+      {{ product.price.amount | currency: product.price.currency.code }}
     </div>
     <div class="simple-card__data__description">
       {{ product.description }}

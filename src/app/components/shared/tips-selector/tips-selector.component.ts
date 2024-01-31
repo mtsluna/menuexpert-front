@@ -13,31 +13,51 @@ export class TipsSelectorComponent {
     {
       price: {
         amount: 0,
-        currency: 'EUR'
+        currency: {
+          code: 'EUR',
+          symbol: '',
+          name: 'Euro'
+        }
       }
     },
     {
       price: {
         amount: 1,
-        currency: 'EUR'
+        currency: {
+          code: 'EUR',
+          symbol: '',
+          name: 'Euro'
+        }
       }
     },
     {
       price: {
         amount: 2,
-        currency: 'EUR'
+        currency: {
+          code: 'EUR',
+          symbol: '',
+          name: 'Euro'
+        }
       }
     },
     {
       price: {
         amount: 3,
-        currency: 'EUR'
+        currency: {
+          code: 'EUR',
+          symbol: '',
+          name: 'Euro'
+        }
       }
     },
     {
       price: {
         amount: 4,
-        currency: 'EUR'
+        currency: {
+          code: 'EUR',
+          symbol: '',
+          name: 'Euro'
+        }
       }
     }
   ]

@@ -3,7 +3,7 @@
     {{ product.title }}
   </div>
   <div class="banner__data__price">
-    {{ product.price.amount | currency: product.price.currency }}
+    {{ product.price.amount | currency: product.price.currency.code }}
   </div>
   <div class="banner__data__description">
     {{ product.description }}

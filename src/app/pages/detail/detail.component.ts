@@ -31,7 +31,11 @@ export class DetailComponent implements OnInit {
     title: '',
     price: {
       amount: 0,
-      currency: ''
+      currency: {
+        code: '',
+        name: '',
+        symbol: ''
+      }
     },
     description: '',
     badges: [],

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Section, SectionType} from "../../interfaces/section";
-import {Menu} from "../../interfaces/menu";
+import {Category, SectionType} from "../../interfaces/category";
+import {Catalog} from "../../interfaces/catalog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../services/cart.service";
-import {MenuService} from "../../services/menu/menu.service";
+import {CatalogService} from "../../services/menu/catalog.service";
 import {Product} from "../../interfaces/product";
 import {RestaurantService} from "../../services/restaurant/restaurant.service";
 import {zip} from "rxjs";
@@ -19,10 +19,10 @@ export class MenuComponent implements OnInit {
   cartId: string = 'caf6647b-e32d-4629-9d29-e283a570ddfd';
   menuId: string | undefined = this.activatedRoute.snapshot.paramMap.get('menuId') || undefined;
 
-  menu: Menu = {
+  catalog: Catalog = {
     id: '',
     name: '',
-    sections: [],
+    categories: [],
     products: []
   };
 
@@ -36,18 +36,18 @@ export class MenuComponent implements OnInit {
   constructor(
     private router: Router,
     private cartService: CartService,
-    private menuService: MenuService,
+    private menuService: CatalogService,
     private restaurantService: RestaurantService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     zip(
-      this.menuService.getMenu(this.menuId || ''),
+      this.menuService.getCatalog(this.menuId || ''),
       this.restaurantService.getRestaurantByMenu(this.menuId || '')
     ).subscribe({
-      next: ([menu, restaurant]) => {
-        this.menu = menu;
+      next: ([catalog, restaurant]) => {
+        this.catalog = catalog;
         this.restaurant = restaurant;
       },
       error: (e) => {
@@ -59,7 +59,7 @@ export class MenuComponent implements OnInit {
   viewCart() {
     this.router.navigate([`/cart/${this.cartService.getCartId(this.menuId)}`], {
       queryParams: {
-        menuId: this.menu.id
+        menuId: this.catalog.id
       }
     })
   }

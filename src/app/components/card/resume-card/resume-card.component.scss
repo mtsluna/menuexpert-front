@@ -27,6 +27,11 @@
 
   }
 
+  &__selector {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &__price {
     font-weight: 600;
     font-size: 0.875rem;

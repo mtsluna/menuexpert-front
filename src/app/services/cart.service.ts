@@ -95,7 +95,7 @@ export class CartService {
 
     if(items.length > 0) {
       // @ts-ignore
-      return items[0].product.price.currency;
+      return items[0].product.price.currency.code;
     }
     return ''
   }

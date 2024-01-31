@@ -14,7 +14,11 @@ export class ResumeComponent {
   tip: Tip = {
     price: {
       amount: 0,
-      currency: ''
+      currency: {
+        code: '',
+        symbol: '',
+        name: ''
+      }
     }
   };
 

@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
   get currency() {
     if(this.items.length > 0) {
       // @ts-ignore
-      return this.items[0].product.price.currency;
+      return this.items[0].product.price.currency.code;
     }
     return ''
   }
