@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Category} from "../../interfaces/category";
+import {Category} from "../../../../../interfaces/category";
 
 @Component({
   selector: 'app-section-selector',

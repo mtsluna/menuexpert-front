@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Answer} from "../../interfaces/answer";
+import {Answer} from "../../../../../interfaces/answer";
 import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Option} from "../../interfaces/option";
-import {CartItem} from "../../interfaces/cart-item";
+import {Option} from "../../../../../interfaces/option";
+import {CartItem} from "../../../../../interfaces/cart-item";
 
 @Component({
   selector: 'app-option-selector',

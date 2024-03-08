@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Product} from "../../../interfaces/product";
+import {Product} from "../../../../../../interfaces/product";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -11,7 +11,7 @@ export class SimpleCardComponent implements OnInit {
 
   @Input()
   product!: Product;
-  menuId: string | undefined = this.activatedRoute.snapshot.paramMap.get('menuId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.paramMap.get('catalogId') || undefined;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -19,7 +19,11 @@ export class SimpleCardComponent implements OnInit {
   }
 
   async redirectToDetail() {
-    await this.router.navigate([`/menu/${this.menuId}/detail/${this.product?.id}`])
+    await this.router.navigate([`/detail/${this.product?.id}`], {
+      queryParams: {
+        catalogId: this.catalogId
+      }
+    })
   }
 
   get primaryBadge() {
