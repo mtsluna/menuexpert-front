@@ -4,9 +4,11 @@ import {Product} from "../../../interfaces/product";
 import {CartService} from "../../../services/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../../services/product/product.service";
-import {Answer} from "../../../interfaces/answer";
+import {Customization} from "../../../interfaces/customization";
 import {CartItem} from "../../../interfaces/cart-item";
 import {Option} from "../../../interfaces/option";
+import {Store} from "../../../interfaces/store";
+import {StoreService} from "../../../services/store/store.service";
 
 @Component({
   selector: 'app-detail',
@@ -25,6 +27,7 @@ export class DetailComponent {
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalogId') || undefined;
   productId: string | undefined = this.activatedRoute.snapshot.paramMap.get('productId') || undefined;
   cartItem: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('cartItem') || undefined;
+  store: Store = {};
   product: Product = {
     id: '',
     title: '',
@@ -39,7 +42,7 @@ export class DetailComponent {
     description: '',
     badges: [],
     image: '',
-    answers: []
+    customizations: []
   };
 
   constructor(
@@ -47,12 +50,13 @@ export class DetailComponent {
     private cartService: CartService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private productService: ProductService
-  ) { }
+    private productService: ProductService,
+    private storeService: StoreService
+  ) {  }
 
   ngOnInit(): void {
 
-    console.log(this.catalogId, this.productId)
+    this.store = this.storeService.getStoreFromLocalStorage();
 
     if(!this.catalogId || !this.productId) {
       return;
@@ -83,14 +87,14 @@ export class DetailComponent {
   }
 
   initForm() {
-    const selected = (answer: Answer) => {
-      return answer.max === 1 ? {
+    const selected = (customization: Customization) => {
+      return customization.max === 1 ? {
         selected: this.formBuilder.control({
-          value: answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false),
+          value: customization.options.map((option, index) => (customization.max === 1 && index === customization.options.map((product) => product.isActive).indexOf(true)) ? option : false),
           disabled: false
         })
       } : {
-        selected: this.formBuilder.array(answer.options.map((option, index) => this.formBuilder.control({value: (answer.max === 1 && index == 0) ? option : false, disabled: false })))
+        selected: this.formBuilder.array(customization.options.map((option, index) => this.formBuilder.control({value: (customization.max === 1 && index == 0) ? option : false, disabled: !option.isActive })))
       }
     }
 
@@ -99,7 +103,7 @@ export class DetailComponent {
       quantity: [1],
       product: this.product,
       comment: [''],
-      selections: this.formBuilder.array(this.product?.answers?.map((answer) => {
+      selections: this.formBuilder.array(this.product?.customizations?.map((answer) => {
         return this.formBuilder.group({
           id: [answer?.id],
           ...selected(answer)

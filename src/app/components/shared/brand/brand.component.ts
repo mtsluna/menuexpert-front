@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Restaurant} from "../../../interfaces/restaurant";
+import {Store} from "../../../interfaces/store";
 
 @Component({
   selector: 'app-brand',
@@ -9,6 +9,6 @@ import {Restaurant} from "../../../interfaces/restaurant";
 export class BrandComponent {
 
   @Input()
-  restaurant!:Restaurant;
+  store!:Store;
 
 }

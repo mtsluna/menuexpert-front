@@ -1,42 +1,42 @@
 <div class="option-selector">
   <div class="option-selector__header">
     <div class="option-selector__header__title">
-      {{ answer.name }}
+      {{ customization.name }}
     </div>
-    <div (click)="show()" class="option-selector__header__description">
-      Elige hasta {{ answer.max }}
+    <div class="option-selector__header__description">
+      Elige hasta {{ customization.max }}
     </div>
   </div>
-  <div *ngIf="answer.max === 1" [formGroup]="form" class="option-selector__options">
+  <div *ngIf="customization.max === 1" [formGroup]="form" class="option-selector__options">
     <mat-radio-group formControlName="selected">
-      <div *ngFor="let option of answer?.options; index as i" class="option-selector__options__item  option-selector__options__divider">
+      <div *ngFor="let product of customization?.options; index as i" class="option-selector__options__item  option-selector__options__divider">
         <div>
-          <div class="option-selector__options__item__name">
-            {{ option?.name }}
+          <div class="option-selector__options__item__name" [ngClass]="{'option-selector__options__item__name__disabled': !product.isActive}">
+            {{product?.title}}<span class="option-selector__options__item__name__disabled__tag" *ngIf="!product.isActive">&nbsp;· No disponible</span>
           </div>
-          <div *ngIf="option?.price?.amount !== 0" class="option-selector__options__item__price">
-            + {{ option.price.amount | currency: option?.price?.currency?.code }}
+          <div *ngIf="product?.price?.amount !== 0 && product.isActive" class="option-selector__options__item__price">
+            + {{ product.price.amount | currency: product?.price?.currency?.code }}
           </div>
         </div>
-        <div class="option-selector__options__item__field">
-          <mat-radio-button [checked]="getChecked(i)" color="primary" [value]="makeOption(i, option)"></mat-radio-button>
+        <div [ngClass]="{'option-selector__options__item__not-display': enabled}" class="option-selector__options__item__field">
+          <mat-radio-button [disabled]="!product.isActive" [checked]="getChecked(i) " color="primary" [value]="makeProduct(i, product)"></mat-radio-button>
         </div>
       </div>
     </mat-radio-group>
   </div>
-  <div *ngIf="answer.max > 1" [formGroup]="form" class="option-selector__options">
+  <div *ngIf="customization.max > 1" [formGroup]="form" class="option-selector__options">
     <ng-container formArrayName="selected">
-      <div *ngFor="let option of answer?.options; index as i" class="option-selector__options__item  option-selector__options__divider">
+      <div *ngFor="let product of customization?.options; index as i" class="option-selector__options__item  option-selector__options__divider">
         <div>
-          <div class="option-selector__options__item__name">
-            {{ option?.name }}
+          <div class="option-selector__options__item__name" [ngClass]="{'option-selector__options__item__name__disabled': !product.isActive}">
+            {{product?.title}}<span class="option-selector__options__item__name__disabled__tag" *ngIf="!product.isActive">&nbsp;· No disponible</span>
           </div>
-          <div *ngIf="option?.price?.amount !== 0" class="option-selector__options__item__price">
-            + {{ option.price.amount | currency: option?.price?.currency?.code }}
+          <div *ngIf="product?.price?.amount !== 0 && product.isActive" class="option-selector__options__item__price">
+            + {{ product.price.amount | currency: product?.price?.currency?.code }}
           </div>
         </div>
-        <div class="option-selector__options__item__field">
-          <mat-checkbox color="primary" [formControlName]="i" (change)="changePick($event, i, option)"></mat-checkbox>
+        <div [ngClass]="{'option-selector__options__item__not-display': enabled}" class="option-selector__options__item__field">
+          <mat-checkbox color="primary" [formControlName]="i" (change)="changePick($event, i, product)"></mat-checkbox>
         </div>
       </div>
     </ng-container>

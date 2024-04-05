@@ -39,14 +39,32 @@
 
       &__name {
 
+        &__disabled {
+          color: #626262;
+          text-decoration: line-through;
+
+          &__tag {
+            text-decoration: none;
+            display: inline-block;
+          }
+        }
       }
 
       &__price {
         color: #626262;
+
+        &__disabled {
+          color: #626262;
+          text-decoration: line-through;
+        }
       }
 
       &__field {
 
+      }
+
+      &__not-display {
+        visibility: hidden;
       }
 
     }

@@ -9,6 +9,7 @@ import {FloatingButtonComponent} from "./floating-button/floating-button.compone
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {QuantitySelectorComponent} from "./quantity-selector/quantity-selector.component";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import {QuantitySelectorComponent} from "./quantity-selector/quantity-selector.c
     FloatingButtonComponent,
     QuantitySelectorComponent
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatProgressSpinnerModule
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatButtonModule
+    ],
   exports: [
     BrandComponent,
     LoaderComponent,

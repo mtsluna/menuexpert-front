@@ -1,1 +1,2 @@
-<img class="image" src="{{product.image}}" alt="photo of the product: {{product.title}}">
+<img *ngIf="product.image" class="image" src="{{product.image}}" alt="photo of the product: {{product.title}}">
+<div *ngIf="!product.image" class="image image__empty"></div>

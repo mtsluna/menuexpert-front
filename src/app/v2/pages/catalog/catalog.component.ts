@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {Catalog} from "../../../interfaces/catalog";
-import {Restaurant} from "../../../interfaces/restaurant";
+import {Store} from "../../../interfaces/store";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 import {CatalogService} from "../../../services/menu/catalog.service";
-import {RestaurantService} from "../../../services/restaurant/restaurant.service";
 import {zip} from "rxjs";
+import {StoreService} from "../../../services/store/store.service";
 
 @Component({
   selector: 'app-catalog',
@@ -13,7 +13,6 @@ import {zip} from "rxjs";
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent {
-  cartId: string = 'caf6647b-e32d-4629-9d29-e283a570ddfd';
   catalogId: string | undefined = this.activatedRoute.snapshot.paramMap.get('catalogId') || undefined;
 
   catalog: Catalog = {
@@ -23,7 +22,7 @@ export class CatalogComponent {
     products: []
   };
 
-  restaurant: Restaurant = {
+  store: Store = {
     id: '',
     name: '',
     description: '',
@@ -34,18 +33,18 @@ export class CatalogComponent {
     private router: Router,
     private cartService: CartService,
     private menuService: CatalogService,
-    private restaurantService: RestaurantService,
+    private storeService: StoreService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     zip(
       this.menuService.getCatalog(this.catalogId || ''),
-      this.restaurantService.getRestaurantByMenu(this.catalogId || '')
+      this.storeService.getStoreByCatalogId(this.catalogId || '')
     ).subscribe({
-      next: ([catalog, restaurant]) => {
+      next: ([catalog, store]) => {
         this.catalog = catalog;
-        this.restaurant = restaurant;
+        this.store = store;
       },
       error: (e) => {
         this.router.navigate(['not-found'])
@@ -62,6 +61,10 @@ export class CatalogComponent {
   }
 
   get hiddenCart() {
+    if(!this.store.cartEnabled) {
+      return true;
+    }
+
     return this.cartService.getItems(this.catalogId).length === 0;
   }
 }

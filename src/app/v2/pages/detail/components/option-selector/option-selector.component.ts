@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Answer} from "../../../../../interfaces/answer";
+import {Customization} from "../../../../../interfaces/customization";
 import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Option} from "../../../../../interfaces/option";
 import {CartItem} from "../../../../../interfaces/cart-item";
+import {Product} from "../../../../../interfaces/product";
 
 @Component({
   selector: 'app-option-selector',
@@ -12,24 +13,23 @@ import {CartItem} from "../../../../../interfaces/cart-item";
 export class OptionSelectorComponent implements OnInit {
 
   @Input()
-  answer!: Answer;
+  customization!: Customization;
 
   @Input()
   form!: FormGroup;
+
+  @Input()
+  enabled!: boolean;
 
   constructor() {}
 
   ngOnInit(): void {
   }
 
-  show() {
-    console.log(this.form?.getRawValue())
-  }
-
-  changePick(event: any, index: number, option: Option) {
+  changePick(event: any, index: number, product: Product) {
     const formArray = (this.form.get('selected') as FormArray)
 
-    const newValue = (event.checked) ? option : false;
+    const newValue = (event.checked) ? product : false;
     formArray.at(index).setValue(newValue)
 
     const array = formArray.getRawValue();
@@ -37,7 +37,12 @@ export class OptionSelectorComponent implements OnInit {
     const optionsSelected = array.filter((value) => value != false).length;
 
     array.forEach((value, index) => {
-      if(optionsSelected == this.answer.max && value == false) {
+      if(value !== false && !value.isActive) {
+        formArray.at(index).disable();
+        return;
+      }
+
+      if(((optionsSelected == this.customization.max && value == false) || !this.customization.options[index].isActive)) {
         formArray.at(index).disable();
       } else {
         formArray.at(index).enable();
@@ -45,13 +50,13 @@ export class OptionSelectorComponent implements OnInit {
     })
   }
 
-  makeOption(index: number, option: Option) {
-    return this.answer?.options.map((k, internalIndex) => {
-      return (internalIndex === index) ? option : false
+  makeProduct(index: number, product: Product) {
+    return this.customization?.options.map((k, internalIndex) => {
+      return (internalIndex === index) ? product : false
     })
   }
 
   getChecked(index: number) {
-    return !!this.form.getRawValue().selected[index]
+    return index === this.customization.options.map((product) => product.isActive).indexOf(true);
   }
 }

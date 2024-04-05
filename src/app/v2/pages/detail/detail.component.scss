@@ -1,0 +1,21 @@
+.detail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5rem;
+
+  &__image {
+    height: 12.5rem;
+
+    &__empty {
+      background-color: #FFFFFF;
+      height: 3.5rem;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

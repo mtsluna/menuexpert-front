@@ -1,14 +1,14 @@
 <div class="detail">
   <app-navigator></app-navigator>
   <ng-container *ngIf="!error">
-    <app-image *ngIf="product.image" class="detail__image" [product]="product"></app-image>
+    <app-image class="detail__image" [product]="product"></app-image>
     <div class="detail__image__empty" *ngIf="!product.image"></div>
     <div class="detail__content">
       <app-banner [product]="product"></app-banner>
-      <app-option-selector *ngFor="let answer of product.answers; index as i" [form]="getFormElement(i)" [answer]="answer"></app-option-selector>
-      <app-observation [form]="form"></app-observation>
-      <app-floating-button *ngIf="!this.cartItem" (click)="addItem()" title="agregar al pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
-      <app-floating-button *ngIf="this.cartItem" (click)="updateItem()" title="modificar pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
+      <app-option-selector *ngFor="let customization of product.customizations; index as i" [form]="getFormElement(i)" [enabled]="!store.cartEnabled" [customization]="customization"></app-option-selector>
+      <app-observation [hidden]="!store.cartEnabled" [form]="form"></app-observation>
+      <app-floating-button [hidden]="!store.cartEnabled" *ngIf="!this.cartItem" (click)="addItem()" title="agregar al pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
+      <app-floating-button [hidden]="!store.cartEnabled" *ngIf="this.cartItem" (click)="updateItem()" title="modificar pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
     </div>
   </ng-container>
 </div>

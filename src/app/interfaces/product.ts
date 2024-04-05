@@ -1,6 +1,6 @@
 import {Price} from "./price";
 import {Badge} from "./badge";
-import {Answer} from "./answer";
+import {Customization} from "./customization";
 import {Category} from "./category";
 
 export interface Product {
@@ -10,7 +10,9 @@ export interface Product {
   description: string;
   badges?: Array<Badge>;
   image?: string;
-  answers?: Array<Answer>;
+  isVisible?:boolean;
+  isActive?:boolean;
+  customizations?: Array<Customization>;
   sectionId?: string;
   category?: Category;
 }

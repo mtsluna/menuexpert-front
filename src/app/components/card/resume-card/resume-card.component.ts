@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CartItem} from "../../../interfaces/cart-item";
 import {Option} from "../../../interfaces/option";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Answer} from "../../../interfaces/answer";
+import {Customization} from "../../../interfaces/customization";
 import {CartService} from "../../../services/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -27,7 +27,7 @@ export class ResumeCardComponent implements OnInit {
   }
 
   initForm() {
-    const selected = (answer: Answer) => {
+    const selected = (answer: Customization) => {
       return answer.max === 1 ? {
         selected: this.formBuilder.control(answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false))
       } : {
@@ -40,7 +40,7 @@ export class ResumeCardComponent implements OnInit {
       quantity: [this.cartItem.quantity],
       product: this.cartItem.product,
       comment: [this.cartItem.comment],
-      selections: this.formBuilder.array(this.cartItem.product?.answers?.map((answer) => {
+      selections: this.formBuilder.array(this.cartItem.product?.customizations?.map((answer) => {
         return this.formBuilder.group({
           id: [answer?.id],
           ...selected(answer)

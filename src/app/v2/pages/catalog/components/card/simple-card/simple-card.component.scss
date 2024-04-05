@@ -46,7 +46,6 @@
     &__description {
       font-size: 12px;
       color: #989292;
-      height: 2.8125rem;
       @include max-3-lines;
     }
   }
@@ -60,6 +59,10 @@
       height: 104px;
       width: 104px;
       object-fit: cover;
+    }
+
+    &__no-image {
+      background-color: rgba(0, 0, 0, 0.02);
     }
   }
 }

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Category, SectionType} from "../../interfaces/category";
 import {Catalog} from "../../interfaces/catalog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../services/cart.service";
 import {CatalogService} from "../../services/menu/catalog.service";
-import {Product} from "../../interfaces/product";
-import {RestaurantService} from "../../services/restaurant/restaurant.service";
 import {zip} from "rxjs";
-import {Restaurant} from "../../interfaces/restaurant";
+import {Store} from "../../interfaces/store";
+import {StoreService} from "../../services/store/store.service";
 
 @Component({
   selector: 'app-menu',
@@ -26,7 +24,7 @@ export class MenuComponent implements OnInit {
     products: []
   };
 
-  restaurant: Restaurant = {
+  store: Store = {
     id: '',
     name: '',
     description: '',
@@ -37,18 +35,18 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private cartService: CartService,
     private menuService: CatalogService,
-    private restaurantService: RestaurantService,
+    private storeService: StoreService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     zip(
       this.menuService.getCatalog(this.menuId || ''),
-      this.restaurantService.getRestaurantByMenu(this.menuId || '')
+      this.storeService.getStoreByCatalogId(this.menuId || '')
     ).subscribe({
-      next: ([catalog, restaurant]) => {
+      next: ([catalog, store]) => {
         this.catalog = catalog;
-        this.restaurant = restaurant;
+        this.store = store;
       },
       error: (e) => {
         this.router.navigate(['not-found'])

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { Answer } from "../../interfaces/answer";
+import { Customization } from "../../interfaces/customization";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Product } from "../../interfaces/product";
 import { CartService } from "../../services/cart.service";
@@ -40,7 +40,7 @@ export class DetailComponent implements OnInit {
     description: '',
     badges: [],
     image: '',
-    answers: []
+    customizations: []
   };
 
   constructor(
@@ -81,7 +81,7 @@ export class DetailComponent implements OnInit {
   }
 
   initForm() {
-    const selected = (answer: Answer) => {
+    const selected = (answer: Customization) => {
       return answer.max === 1 ? {
         selected: this.formBuilder.control({
           value: answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false),
@@ -97,7 +97,7 @@ export class DetailComponent implements OnInit {
       quantity: [1],
       product: this.product,
       comment: [''],
-      selections: this.formBuilder.array(this.product?.answers?.map((answer) => {
+      selections: this.formBuilder.array(this.product?.customizations?.map((answer) => {
         return this.formBuilder.group({
           id: [answer?.id],
           ...selected(answer)

@@ -32,12 +32,15 @@ export class CatalogService {
           }, new Set)
 
           uniqueCategories.forEach((category) => {
-            category.products = catalog.products?.filter((value) => value.category?.id === category.id) as Product[]
+            category.products = catalog.products
+              ?.filter((value) => value.category?.id === category.id)
+              ?.filter((value) => value.isVisible)
+              ?.filter((value) => value.isActive) as Product[]
           })
 
           return  {
             ...catalog,
-            categories: uniqueCategories.sort((a, b) => a.order - b.order)
+            categories: uniqueCategories.filter((category) => category.products.length > 0).sort((a, b) => a.order - b.order)
           }
         }
       ));
