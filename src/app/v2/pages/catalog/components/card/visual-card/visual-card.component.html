@@ -1,6 +1,6 @@
 <div (click)="redirectToDetail()" class="visual-card">
   <div class="visual-card__resource">
-    <img class="visual-card__resource__image" alt="sarasa" src="{{ product.image }}">
+    <img *ngIf="product.image" class="visual-card__resource__image" alt="Image of {{ product.title }}" src="{{ product.image }}">
   </div>
   <div class="visual-card__data">
     <div class="visual-card__data__title">
