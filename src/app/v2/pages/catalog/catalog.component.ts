@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Catalog} from "../../../interfaces/catalog";
 import {Store} from "../../../interfaces/store";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -12,8 +12,9 @@ import {StoreService} from "../../../services/store/store.service";
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss']
 })
-export class CatalogComponent {
-  catalogId: string | undefined = this.activatedRoute.snapshot.paramMap.get('catalogId') || undefined;
+export class CatalogComponent implements OnInit {
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
+  storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
 
   catalog: Catalog = {
     id: '',
@@ -40,7 +41,7 @@ export class CatalogComponent {
   ngOnInit(): void {
     zip(
       this.menuService.getCatalog(this.catalogId || ''),
-      this.storeService.getStoreByCatalogId(this.catalogId || '')
+      this.storeService.getStoreById(this.storeId || '')
     ).subscribe({
       next: ([catalog, store]) => {
         this.catalog = catalog;

@@ -9,6 +9,7 @@ import {CartItem} from "../../../interfaces/cart-item";
 import {Option} from "../../../interfaces/option";
 import {Store} from "../../../interfaces/store";
 import {StoreService} from "../../../services/store/store.service";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-detail',
@@ -24,7 +25,7 @@ export class DetailComponent {
   });
 
   error: boolean = false;
-  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalogId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   productId: string | undefined = this.activatedRoute.snapshot.paramMap.get('productId') || undefined;
   cartItem: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('cartItem') || undefined;
   store: Store = {};
@@ -51,7 +52,8 @@ export class DetailComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private location: Location
   ) {  }
 
   ngOnInit(): void {
@@ -118,12 +120,12 @@ export class DetailComponent {
 
   addItem() {
     this.cartService.addItem(this.form.getRawValue(), this.catalogId);
-    this.router.navigate([`/catalog/${this.catalogId}`])
+    this.location.back();
   }
 
   updateItem() {
     this.cartService.updateItem(this.form.getRawValue(), this.catalogId)
-    this.router.navigate([`/catalog/${this.catalogId}`])
+    this.location.back();
   }
 
   get price() {

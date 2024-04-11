@@ -11,7 +11,7 @@ export class SimpleCardComponent implements OnInit {
 
   @Input()
   product!: Product;
-  catalogId: string | undefined = this.activatedRoute.snapshot.paramMap.get('catalogId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -21,7 +21,7 @@ export class SimpleCardComponent implements OnInit {
   async redirectToDetail() {
     await this.router.navigate([`/detail/${this.product?.id}`], {
       queryParams: {
-        catalogId: this.catalogId
+        catalog: this.catalogId
       }
     })
   }
