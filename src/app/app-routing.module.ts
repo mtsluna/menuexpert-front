@@ -7,8 +7,8 @@ import {ConfirmationComponent} from "./pages/checkout/confirmation/confirmation.
 import {NotFoundComponent} from "./components/shared/not-found/not-found.component";
 
 const routes: Routes = [
+  { path: '', loadChildren: () => import('./v2/pages/catalog/catalog.module').then(m => m.CatalogModule) },
   { path: 'detail', loadChildren: () => import('./v2/pages/detail/detail.module').then(m => m.DetailModule) },
-  { path: 'catalog', loadChildren: () => import('./v2/pages/catalog/catalog.module').then(m => m.CatalogModule) },
   { path: 'qr', loadChildren: () => import('./v2/pages/qr/qr.module').then(m => m.QrModule) },
   { path: 'cart/:cartId', component: CartComponent },
   { path: 'checkout/:cartId/confirmation', component: ConfirmationComponent },

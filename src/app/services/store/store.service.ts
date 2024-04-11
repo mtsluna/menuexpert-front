@@ -23,6 +23,17 @@ export class StoreService {
       )
   }
 
+  getStoreById(id: string): Observable<Store> {
+    return this.httpClient.get<Store>(`${backendConstants.baseUrl}/stores/${id}`)
+      .pipe(
+        map(store => {
+          localStorage.setItem("store", JSON.stringify(store));
+
+          return store;
+        })
+      )
+  }
+
   getStoreFromLocalStorage(): Store {
     const storeString = localStorage.getItem("store") || '';
     return JSON.parse(storeString);
