@@ -48,7 +48,7 @@ export class CatalogComponent implements OnInit {
         this.store = store;
       },
       error: (e) => {
-        //this.router.navigate(['not-found'])
+        this.router.navigate(['not-found'])
       }
     })
   }
