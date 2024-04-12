@@ -7,7 +7,7 @@
   justify-content: space-between;
   gap: 0.25rem;
   background-color: #FFFFFF;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.5rem;
 
   &__badge {
@@ -41,6 +41,11 @@
 
     &__price {
       font-size: 12px;
+    }
+
+    &__currency {
+      font-size: 13px;
+      font-weight: 500;
     }
 
     &__description {

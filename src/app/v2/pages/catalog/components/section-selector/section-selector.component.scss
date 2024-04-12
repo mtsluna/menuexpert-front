@@ -4,7 +4,6 @@
 
 .section-selector {
   z-index: 999999;
-  padding: 0 1rem;
   background-color: #FFFFFF;
   position: sticky;
   top: 0;
@@ -24,15 +23,15 @@
     white-space: nowrap;
 
     &__name {
-      padding: 0 1rem;
+      padding: 0 0.65rem;
     }
 
     &__line-active {
-      border-bottom: 5px solid #000000;
+      border-bottom: 3px solid #000000;
     }
 
     &__line-inactive {
-      border-bottom: 5px solid #E2E2E2;
+      border-bottom: 3px solid #E2E2E2;
     }
   }
 

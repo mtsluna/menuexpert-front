@@ -4,7 +4,10 @@
       {{ product.title }}
     </div>
     <div class="simple-card__data__price">
-      {{ product.price.amount | currency: product.price.currency.code }}
+      <span class="simple-card__data__currency">
+        {{ product.price.currency.code }}
+      </span>
+      {{ product.price.amount}}
     </div>
     <div class="simple-card__data__description">
       {{ product.description }}
