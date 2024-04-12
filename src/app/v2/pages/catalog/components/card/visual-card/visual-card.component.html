@@ -7,7 +7,8 @@
       {{ product.title }}
     </div>
     <div class="visual-card__data__price">
-      {{ product.price.amount | currency: product.price.currency.code }}
+      <span class="visual-card__data__currency">{{product.price.currency.code}}</span>
+      {{ product.price.amount }}
     </div>
   </div>
   <div *ngIf="primaryBadge != null" class="visual-card__badge">

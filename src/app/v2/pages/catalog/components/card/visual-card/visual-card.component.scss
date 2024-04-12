@@ -44,12 +44,18 @@
     &__price {
       font-size: 12px;
     }
+
+    &__currency {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
   }
 
   &__resource {
     &__image {
       object-fit: cover;
-      border-radius: 10px 10px 0 0;
+      border-radius: 5px 5px 0 0;
       height: 120px;
       width: 100%;
     }
