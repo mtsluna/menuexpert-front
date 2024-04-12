@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {BrandComponent} from "./brand/brand.component";
 import {LoaderComponent} from "./loader/loader.component";
 import {NavbarComponent} from "./navbar/navbar.component";
@@ -10,6 +10,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {QuantitySelectorComponent} from "./quantity-selector/quantity-selector.component";
 import {MatButtonModule} from "@angular/material/button";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,22 +20,25 @@ import {MatButtonModule} from "@angular/material/button";
     NavigatorComponent,
     NotFoundComponent,
     FloatingButtonComponent,
-    QuantitySelectorComponent
+    QuantitySelectorComponent,
+    FooterComponent
   ],
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatButtonModule
-    ],
-  exports: [
-    BrandComponent,
-    LoaderComponent,
-    NavbarComponent,
-    NavigatorComponent,
-    NotFoundComponent,
-    FloatingButtonComponent,
-    QuantitySelectorComponent
-  ]
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    NgOptimizedImage
+  ],
+    exports: [
+        BrandComponent,
+        LoaderComponent,
+        NavbarComponent,
+        NavigatorComponent,
+        NotFoundComponent,
+        FloatingButtonComponent,
+        QuantitySelectorComponent,
+        FooterComponent
+    ]
 })
 export class SharedModule { }
