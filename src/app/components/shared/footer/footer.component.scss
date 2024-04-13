@@ -1,0 +1,19 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 0 1rem;
+  gap: 1rem;
+  margin-bottom: 5.5rem;
+
+  &__social-media {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

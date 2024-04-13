@@ -5,3 +5,4 @@
   <app-section *ngFor="let category of catalog.categories" [category]="category"></app-section>
 </div>
 <app-floating-button [hidden]="hiddenCart" (click)="viewCart()" title="{{store.name}}" subtitle="Ver pedido"></app-floating-button>
+<app-footer></app-footer>
