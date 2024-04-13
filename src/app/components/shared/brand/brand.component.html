@@ -2,7 +2,10 @@
   <div class="brand__banner">
     <img *ngIf="store.image" class="brand__banner__image" src="{{store.image}}" alt="Banner of {{store.name}}">
   </div>
-  <div class="brand__header">
+  <div *ngIf="store.logo" class="brand__logo">
+    <img class="brand__logo__image" src="{{store.logo}}" alt="Logo of {{store.name}}">
+  </div>
+  <div class="brand__header" [ngClass]="store.logo ? 'brand__header__extra-padding' : 'brand__header'">
     <div class="brand__header__title">{{store.name}}</div>
     <div class="brand__header__subtitle">{{store.description}}</div>
   </div>

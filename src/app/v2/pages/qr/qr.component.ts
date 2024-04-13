@@ -13,7 +13,7 @@ export class QrComponent {
     this.qrService.getDefaultCatalogByQr(this.activatedRoute.snapshot.paramMap.get('id') || '')
       .subscribe({
         next: async value => {
-          await this.router.navigate([`/${value.store.url}`], {
+          await this.router.navigate([`/s/${value.store.url}`], {
             queryParams: {
               qr: value.id,
               catalog: value.defaultCatalog.id,

@@ -4,5 +4,6 @@ export interface Store {
   description?: string;
   url?:string;
   image?: string;
+  logo?:string;
   cartEnabled?: boolean;
 }
