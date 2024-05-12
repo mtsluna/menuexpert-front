@@ -11,6 +11,12 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {QuantitySelectorComponent} from "./quantity-selector/quantity-selector.component";
 import {MatButtonModule} from "@angular/material/button";
 import { FooterComponent } from './footer/footer.component';
+import { InformationComponent } from './information/information.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatInputModule} from "@angular/material/input";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -21,14 +27,20 @@ import { FooterComponent } from './footer/footer.component';
     NotFoundComponent,
     FloatingButtonComponent,
     QuantitySelectorComponent,
-    FooterComponent
+    FooterComponent,
+    InformationComponent
   ],
   imports: [
     CommonModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatExpansionModule,
+    TranslateModule
   ],
     exports: [
         BrandComponent,
