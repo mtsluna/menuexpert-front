@@ -16,7 +16,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import { CartComponent } from './pages/cart/cart.component';
 import {MatIconModule} from "@angular/material/icon";
 import { ResumeCardComponent } from './components/card/resume-card/resume-card.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { CheckoutComponent } from './pages/checkout/checkout.component';
@@ -28,6 +28,12 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import { ConfirmationComponent } from './pages/checkout/confirmation/confirmation.component';
 import { QrComponent } from './v2/pages/qr/qr.component';
 import {SharedModule} from "./components/shared/shared.module";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -63,6 +69,16 @@ import {SharedModule} from "./components/shared/shared.module";
     MatProgressSpinnerModule,
     MatSidenavModule,
     SharedModule,
+    TranslateModule.forRoot(
+      {
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [HttpClient]
+        },
+        defaultLanguage: 'es'
+      }
+    ),
   ],
   providers: [
     {

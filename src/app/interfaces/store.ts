@@ -1,3 +1,5 @@
+import {Schedule} from "./schedule";
+
 export interface Store {
   id?: string;
   name?: string;
@@ -6,4 +8,5 @@ export interface Store {
   image?: string;
   logo?:string;
   cartEnabled?: boolean;
+  schedule?: Array<Schedule>
 }

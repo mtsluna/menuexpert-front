@@ -1,0 +1,27 @@
+<div class="information">
+  <div class="information__header">
+    <button [mat-dialog-close]="true" class="information__header__close" mat-mini-fab color="accent">
+      <mat-icon class="information__header__button__icon">close</mat-icon>
+    </button>
+
+    <div class="information__header__title">Información</div>
+  </div>
+
+  <div class="information__schedule">
+    <div class="information__schedule__icon">
+      <mat-icon>schedule</mat-icon>
+    </div>
+    <div class="information__schedule__items">
+      <div class="information__schedule__items__title">
+        {{ 'schedule.title' | translate }}
+      </div>
+      <div class="information__schedule__items__content">
+        <div class="information__schedule__items__content__item" *ngFor="let schedule of store.schedule">
+          <div>{{ 'schedule.days.' + schedule.day | translate }}</div>
+          <div>{{ schedule.openAt | date: 'hh:mm a' }} a {{ schedule.closeAt | date: 'hh:mm a' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

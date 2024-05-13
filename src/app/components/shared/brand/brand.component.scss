@@ -38,6 +38,12 @@
       object-fit: cover;
     }
 
+    &__information {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
   }
 
   &__logo {
