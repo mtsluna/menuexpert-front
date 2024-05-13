@@ -3,4 +3,28 @@
 <!--    <mat-icon>menu</mat-icon>-->
 <!--  </button>-->
   <img class="navbar__logo" alt="menu expert icon" src="assets/images/logo.svg">
+  <div class="navbar__actions" [matMenuTriggerFor]="menu" >
+    <button class="navbar__login">
+      <ng-container *ngIf="!image && !loading">
+        <mat-icon class="navigator__button__icon">person</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="image && !loading">
+        <img src="{{image}}" class="navbar__login__icon">
+      </ng-container>
+    </button>
+  </div>
 </div>
+<mat-menu class="myMenu" #menu="matMenu">
+  <button *ngIf="!user" (click)="login()" mat-menu-item>
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+  </button>
+  <button *ngIf="user" (click)="login()" mat-menu-item>
+    <mat-icon>change</mat-icon>
+    <span>Cambiar de usuario</span>
+  </button>
+  <button *ngIf="user" (click)="logout()" mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
+  </button>
+</mat-menu>

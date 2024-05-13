@@ -30,6 +30,9 @@ import { QrComponent } from './v2/pages/qr/qr.component';
 import {SharedModule} from "./components/shared/shared.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {environment} from "../environments/environments";
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -69,6 +72,8 @@ export function createTranslateLoader(http: HttpClient) {
     MatProgressSpinnerModule,
     MatSidenavModule,
     SharedModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     TranslateModule.forRoot(
       {
         loader: {

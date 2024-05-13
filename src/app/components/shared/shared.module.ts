@@ -17,6 +17,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TranslateModule} from "@ngx-translate/core";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -30,18 +31,19 @@ import {TranslateModule} from "@ngx-translate/core";
     FooterComponent,
     InformationComponent
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    NgOptimizedImage,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatExpansionModule,
-    TranslateModule
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        NgOptimizedImage,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatExpansionModule,
+        TranslateModule,
+        MatMenuModule
+    ],
     exports: [
         BrandComponent,
         LoaderComponent,
