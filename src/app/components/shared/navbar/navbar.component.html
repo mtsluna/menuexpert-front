@@ -13,18 +13,18 @@
       </ng-container>
     </button>
   </div>
+  <mat-menu class="menu-custom" #menu="matMenu">
+    <button *ngIf="!user" (click)="login()" mat-menu-item>
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+    </button>
+    <button *ngIf="user" (click)="login()" mat-menu-item>
+      <mat-icon>sync</mat-icon>
+      <span>Cambiar de usuario</span>
+    </button>
+    <button *ngIf="user" (click)="logout()" mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
 </div>
-<mat-menu class="myMenu" #menu="matMenu">
-  <button *ngIf="!user" (click)="login()" mat-menu-item>
-    <mat-icon>login</mat-icon>
-    <span>Login</span>
-  </button>
-  <button *ngIf="user" (click)="login()" mat-menu-item>
-    <mat-icon>sync</mat-icon>
-    <span>Cambiar de usuario</span>
-  </button>
-  <button *ngIf="user" (click)="logout()" mat-menu-item>
-    <mat-icon>logout</mat-icon>
-    <span>Logout</span>
-  </button>
-</mat-menu>

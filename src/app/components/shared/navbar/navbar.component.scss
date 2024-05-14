@@ -1,7 +1,12 @@
+::ng-deep .mat-mdc-menu-panel {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
 .navbar {
   height: 4rem;
   background-color: #FFFFFF;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -17,6 +22,7 @@
 
   &__actions {
     height: 100%;
+    padding: 0 1rem 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
