@@ -25,9 +25,7 @@ export class BrandComponent {
       data: this.store
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
 }

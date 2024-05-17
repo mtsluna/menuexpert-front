@@ -57,6 +57,7 @@ export class OptionSelectorComponent implements OnInit {
   }
 
   getChecked(index: number) {
-    return index === this.customization.options.map((product) => product.isActive).indexOf(true);
+    return this.form.getRawValue().selected.findIndex((value: any) => value != false) === index;
+    //return index === this.customization.options.map((product) => product.isActive).indexOf(true);
   }
 }

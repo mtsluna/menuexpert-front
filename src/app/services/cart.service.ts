@@ -14,44 +14,44 @@ export class CartService {
 
   constructor() { }
 
-  addItem(cartItem: CartItem, menuId: string | undefined) {
-    this.getCartId(menuId);
-    this.items = this.getItems(menuId)
+  addItem(cartItem: CartItem, catalogId: string | undefined) {
+    this.getCartId(catalogId);
+    this.items = this.getItems(catalogId)
 
     cartItem.id = uuid.v4();
     this.items.push(cartItem);
     this.subject.next(cartItem);
 
-    this.persistCart(menuId);
+    this.persistCart(catalogId);
   }
 
-  persistCart(menuId: string | undefined) {
-    localStorage.setItem(`cart-content__${menuId}`, JSON.stringify(this.items));
+  persistCart(catalogId: string | undefined) {
+    localStorage.setItem(`cart-content__${catalogId}`, JSON.stringify(this.items));
   }
 
-  getCartId(menuId: string | undefined): string {
-    const cartId = localStorage.getItem(`cartId__${menuId}`);
+  getCartId(catalogId: string | undefined): string {
+    const cartId = localStorage.getItem(`cartId__${catalogId}`);
 
     if(!cartId) {
-      localStorage.setItem(`cartId__${menuId}`, uuid.v4());
+      localStorage.setItem(`cartId__${catalogId}`, uuid.v4());
     }
 
-    return localStorage.getItem(`cartId__${menuId}`) || '';
+    return localStorage.getItem(`cartId__${catalogId}`) || '';
   }
 
-  getItems(menuId: string | undefined): Array<CartItem> {
-    return JSON.parse(localStorage.getItem(`cart-content__${menuId}`) || '[]')
+  getItems(catalogId: string | undefined): Array<CartItem> {
+    return JSON.parse(localStorage.getItem(`cart-content__${catalogId}`) || '[]')
   }
 
-  getItem(cartItem: string, menuId: string | undefined): CartItem {
-    const items = this.getItems(menuId);
+  getItem(cartItem: string, catalogId: string | undefined): CartItem {
+    const items = this.getItems(catalogId);
 
     const index = items.findIndex((cart) => cart.id == cartItem);
     return items[index];
   }
 
-  getRawItems(menuId: string | undefined) {
-    const items = this.getItems(menuId);
+  getRawItems(catalogId: string | undefined) {
+    const items = this.getItems(catalogId);
 
     return items.map((cartItem) => ({
       ...cartItem,
@@ -62,24 +62,30 @@ export class CartService {
     }))
   }
 
-  updateItem(cartItem: CartItem, menuId: string | undefined) {
+  updateItem(cartItem: CartItem, catalogId: string | undefined) {
+
+    if(!this.items.length) {
+      this.items = this.getItems(catalogId);
+    }
+
     const index = this.items.findIndex((cart) => cart.id == cartItem.id);
+
     this.items[index] = cartItem;
 
-    this.persistCart(menuId);
+    this.persistCart(catalogId);
   }
 
-  removeItem(cartItem: CartItem, menuId: string | undefined) {
+  removeItem(cartItem: CartItem, catalogId: string | undefined) {
     const index = this.items.findIndex((cart) => cart.id == cartItem.id);
     if (index !== -1) {
       this.items.splice(index, 1);
     }
 
-    this.persistCart(menuId);
+    this.persistCart(catalogId);
   }
 
-  getTotal(menuId: string | undefined) {
-    return this.getItems(menuId).map((item) => {
+  getTotal(catalogId: string | undefined) {
+    return this.getItems(catalogId).map((item) => {
       const extras = item.selections.map((value) => {
         return (value.selected.filter((value) => value !== false) as Array<Option>)
           .map((value) => value.price)
@@ -90,8 +96,8 @@ export class CartService {
     }).reduce((acc, next) => acc + next, 0);
   }
 
-  getCurrency(menuId: string | undefined) {
-    const items = this.getItems(menuId);
+  getCurrency(catalogId: string | undefined) {
+    const items = this.getItems(catalogId);
 
     if(items.length > 0) {
       // @ts-ignore

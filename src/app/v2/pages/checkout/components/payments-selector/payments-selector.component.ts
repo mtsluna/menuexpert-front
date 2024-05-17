@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {Tip} from "../../../interfaces/tip";
-import {PaymentType} from "../../../interfaces/payment-type";
+import {PaymentType} from "../../../../../interfaces/payment-type";
 
 @Component({
   selector: 'app-payments-selector',

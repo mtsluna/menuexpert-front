@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Tip} from "../../interfaces/tip";
-import {CheckoutService} from "../../services/checkout/checkout.service";
-import {PaymentType} from "../../interfaces/payment-type";
-import {CartService} from "../../services/cart.service";
+import {PaymentType} from "../../../interfaces/payment-type";
+import {CheckoutService} from "../../../services/checkout/checkout.service";
+import {CartService} from "../../../services/cart.service";
+import {Tip} from "../../../interfaces/tip";
 
 @Component({
   selector: 'app-checkout',

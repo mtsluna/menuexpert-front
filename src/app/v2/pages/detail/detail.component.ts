@@ -79,6 +79,8 @@ export class DetailComponent {
 
       const cartItem = this.cartService.getItem(this.cartItem, this.catalogId);
 
+      console.log(cartItem)
+
       if(cartItem.product) {
         this.product = cartItem.product;
       }
@@ -105,10 +107,10 @@ export class DetailComponent {
       quantity: [1],
       product: this.product,
       comment: [''],
-      selections: this.formBuilder.array(this.product?.customizations?.map((answer) => {
+      selections: this.formBuilder.array(this.product?.customizations?.map((customization) => {
         return this.formBuilder.group({
-          id: [answer?.id],
-          ...selected(answer)
+          id: [customization?.id],
+          ...selected(customization)
         });
       }) || [])
     });

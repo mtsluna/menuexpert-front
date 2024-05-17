@@ -56,7 +56,7 @@ export class CatalogComponent implements OnInit {
   viewCart() {
     this.router.navigate([`/cart/${this.cartService.getCartId(this.catalogId)}`], {
       queryParams: {
-        menuId: this.catalog.id
+        catalog: this.catalog.id
       }
     })
   }

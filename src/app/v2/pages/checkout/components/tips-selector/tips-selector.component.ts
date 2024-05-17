@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FormGroup} from "@angular/forms";
-import {Tip} from "../../../interfaces/tip";
+import {Tip} from "../../../../../interfaces/tip";
 
 @Component({
   selector: 'app-tips-selector',

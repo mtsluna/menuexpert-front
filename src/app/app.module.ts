@@ -13,19 +13,12 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import { CartComponent } from './pages/cart/cart.component';
 import {MatIconModule} from "@angular/material/icon";
-import { ResumeCardComponent } from './components/card/resume-card/resume-card.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { CheckoutComponent } from './pages/checkout/checkout.component';
-import { PaymentsSelectorComponent } from './components/shared/payments-selector/payments-selector.component';
-import { TipsSelectorComponent } from './components/shared/tips-selector/tips-selector.component';
-import { ResumeComponent } from './components/shared/resume/resume.component';
 import {LoadingInterceptor} from "./middlewares/loading.interceptor";
 import {MatSidenavModule} from "@angular/material/sidenav";
-import { ConfirmationComponent } from './pages/checkout/confirmation/confirmation.component';
 import { QrComponent } from './v2/pages/qr/qr.component';
 import {SharedModule} from "./components/shared/shared.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
@@ -33,6 +26,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {environment} from "../environments/environments";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
+import {CartModule} from "./v2/pages/cart/cart.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,13 +37,6 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     MenuComponent,
     DetailComponent,
-    CartComponent,
-    ResumeCardComponent,
-    CheckoutComponent,
-    PaymentsSelectorComponent,
-    TipsSelectorComponent,
-    ResumeComponent,
-    ConfirmationComponent,
     QrComponent
   ],
   imports: [
@@ -84,6 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
         defaultLanguage: 'es'
       }
     ),
+    CartModule,
   ],
   providers: [
     {

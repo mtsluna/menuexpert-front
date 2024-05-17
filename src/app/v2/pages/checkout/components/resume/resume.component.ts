@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {CartService} from "../../../services/cart.service";
-import {Tip} from "../../../interfaces/tip";
 import {ActivatedRoute} from "@angular/router";
+import {Tip} from "../../../../../interfaces/tip";
+import {CartService} from "../../../../../services/cart.service";
 
 @Component({
   selector: 'app-resume',
@@ -22,17 +22,17 @@ export class ResumeComponent {
     }
   };
 
-  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
 
   constructor(private cartService: CartService, private activatedRoute: ActivatedRoute) {
   }
 
   get productsAmount() {
-    return this.cartService.getTotal(this.menuId);
+    return this.cartService.getTotal(this.catalogId);
   }
 
   get currency() {
-    return this.cartService.getCurrency(this.menuId);
+    return this.cartService.getCurrency(this.catalogId);
   }
 
 }

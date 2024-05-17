@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CartItem} from "../../../interfaces/cart-item";
-import {Option} from "../../../interfaces/option";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Customization} from "../../../interfaces/customization";
-import {CartService} from "../../../services/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {CartItem} from "../../../../../interfaces/cart-item";
+import {CartService} from "../../../../../services/cart.service";
+import {Customization} from "../../../../../interfaces/customization";
+import {Option} from "../../../../../interfaces/option";
 
 @Component({
   selector: 'app-resume-card',
@@ -15,7 +15,7 @@ export class ResumeCardComponent implements OnInit {
 
   @Input()
   cartItem!: CartItem;
-  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -74,21 +74,24 @@ export class ResumeCardComponent implements OnInit {
   }
 
   listenQuantityUpdate(formEvent: FormGroup) {
+
     const cartItem = this.form.getRawValue();
+
     if (cartItem.quantity == 0) {
-      this.cartService.removeItem(cartItem, this.menuId);
+      this.cartService.removeItem(cartItem, this.catalogId);
       return;
     }
 
     this.form = formEvent
     this.cartItem = this.form.getRawValue()
-    this.cartService.updateItem(cartItem, this.menuId);
+    this.cartService.updateItem(cartItem, this.catalogId);
   }
 
   async edit() {
-    await this.router.navigate([`/menu/${this.menuId}/detail/${this.cartItem?.product?.id}`], {
+    await this.router.navigate([`/detail/${this.cartItem?.product?.id}`], {
       queryParams: {
-        cartItem: this.cartItem.id
+        cartItem: this.cartItem.id,
+        catalog: this.catalogId
       }
     })
   }

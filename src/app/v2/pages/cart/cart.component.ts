@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CartService} from "../../services/cart.service";
-import {Option} from "../../interfaces/option";
 import {ActivatedRoute, Router} from "@angular/router";
+import {CartService} from "../../../services/cart.service";
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class CartComponent implements OnInit {
 
   cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('cartId') || undefined;
-  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
 
   constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -19,7 +18,7 @@ export class CartComponent implements OnInit {
   }
 
   get items() {
-    return this.cartService.getItems(this.menuId);
+    return this.cartService.getItems(this.catalogId);
   }
 
   get currency() {
@@ -31,13 +30,13 @@ export class CartComponent implements OnInit {
   }
 
   get price() {
-    return this.cartService.getTotal(this.menuId);
+    return this.cartService.getTotal(this.catalogId);
   }
 
   checkout() {
     this.router.navigate([`/checkout/${this.cartId}`], {
       queryParams: {
-        menuId: this.menuId
+        catalog: this.catalogId
       }
     })
   }
