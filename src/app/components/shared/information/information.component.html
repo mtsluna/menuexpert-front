@@ -18,7 +18,8 @@
       <div class="information__schedule__items__content">
         <div class="information__schedule__items__content__item" *ngFor="let schedule of store.schedule">
           <div>{{ 'schedule.days.' + schedule.day | translate }}</div>
-          <div>{{ schedule.openAt | date: 'hh:mm a' }} a {{ schedule.closeAt | date: 'hh:mm a' }}</div>
+          <div *ngIf="!schedule.closedAllDay">{{ schedule.openAt | date: 'hh:mm a' }} a {{ schedule.closeAt | date: 'hh:mm a' }}</div>
+          <div *ngIf="schedule.closedAllDay">Cerrado</div>
         </div>
       </div>
     </div>
