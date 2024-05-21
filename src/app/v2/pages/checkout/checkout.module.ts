@@ -5,7 +5,6 @@ import {CheckoutComponent} from "./checkout.component";
 import {ConfirmationComponent} from "./components/confirmation/confirmation.component";
 import {SharedModule} from "../../../components/shared/shared.module";
 import {PaymentsSelectorComponent} from "./components/payments-selector/payments-selector.component";
-import {TipsSelectorComponent} from "./components/tips-selector/tips-selector.component";
 import {ResumeComponent} from "./components/resume/resume.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatRadioModule} from "@angular/material/radio";
@@ -26,7 +25,6 @@ const routes: Routes = [
     CheckoutComponent,
     ConfirmationComponent,
     PaymentsSelectorComponent,
-    TipsSelectorComponent,
     ResumeComponent
   ],
   imports: [

@@ -9,7 +9,7 @@ import {CartService} from "../../../services/cart.service";
 })
 export class CartComponent implements OnInit {
 
-  cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('cartId') || undefined;
+  cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('id') || undefined;
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
 
   constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }

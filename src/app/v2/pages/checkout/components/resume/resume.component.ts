@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Tip} from "../../../../../interfaces/tip";
 import {CartService} from "../../../../../services/cart.service";
 
 @Component({
@@ -9,18 +8,6 @@ import {CartService} from "../../../../../services/cart.service";
   styleUrls: ['./resume.component.scss']
 })
 export class ResumeComponent {
-
-  @Input()
-  tip: Tip = {
-    price: {
-      amount: 0,
-      currency: {
-        code: '',
-        symbol: '',
-        name: ''
-      }
-    }
-  };
 
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
 
