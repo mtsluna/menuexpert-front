@@ -3,7 +3,15 @@
   flex-direction: column;
   padding: 0 1rem 0 1rem;
   gap: 1rem;
-  margin-bottom: 5.5rem;
+
+
+  &__white-space {
+    margin-bottom: 5.5rem;
+  }
+
+  &__none-white-space {
+    margin-bottom: 1rem;
+  }
 
   &__social-media {
     display: flex;

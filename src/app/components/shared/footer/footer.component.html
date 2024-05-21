@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="footer" [ngClass]="hasCartItems ? 'footer__white-space' : 'footer__none-white-space'">
   <section>
     <img ngSrc="assets/images/logo.svg" height="55" width="108" alt="menuexpert.app logo">
     <hr>
@@ -18,7 +18,6 @@
     <a>Contacto</a>
     <a>Integra tu negocio</a>
     <a>Términos Condiciones</a>
-    <a>Política de privacidad</a>
     <p>© 2024 QTech S.R.L.</p>
   </section>
 </div>
