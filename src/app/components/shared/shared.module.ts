@@ -18,6 +18,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TranslateModule} from "@ngx-translate/core";
 import {MatMenuModule} from "@angular/material/menu";
+import { AllowedDevicesComponent } from './allowed-devices/allowed-devices.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatMenuModule} from "@angular/material/menu";
     FloatingButtonComponent,
     QuantitySelectorComponent,
     FooterComponent,
-    InformationComponent
+    InformationComponent,
+    AllowedDevicesComponent
   ],
     imports: [
         CommonModule,
@@ -52,7 +54,8 @@ import {MatMenuModule} from "@angular/material/menu";
         NotFoundComponent,
         FloatingButtonComponent,
         QuantitySelectorComponent,
-        FooterComponent
+        FooterComponent,
+        AllowedDevicesComponent
     ]
 })
 export class SharedModule { }
