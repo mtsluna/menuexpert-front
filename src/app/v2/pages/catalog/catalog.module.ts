@@ -7,10 +7,15 @@ import {SectionComponent} from "./components/section/section.component";
 import {SectionSelectorComponent} from "./components/section-selector/section-selector.component";
 import {VisualCardComponent} from "./components/card/visual-card/visual-card.component";
 import {SimpleCardComponent} from "./components/card/simple-card/simple-card.component";
+import { CatalogNotAvailableComponent } from './catalog-not-available/catalog-not-available.component';
 
 const routes: Routes = [
   {
-    path: ':catalogId',
+    path: 'catalog/not-available',
+    component: CatalogNotAvailableComponent
+  },
+  {
+    path: 's/:catalogId',
     component: CatalogComponent
   }
 ];
@@ -21,7 +26,8 @@ const routes: Routes = [
     SectionComponent,
     SectionSelectorComponent,
     VisualCardComponent,
-    SimpleCardComponent
+    SimpleCardComponent,
+    CatalogNotAvailableComponent
   ],
   exports: [
     SectionComponent,

@@ -44,6 +44,12 @@ export class CatalogComponent implements OnInit {
       this.storeService.getStoreById(this.storeId || '')
     ).subscribe({
       next: ([catalog, store]) => {
+
+        if(!catalog.isActive) {
+          this.router.navigate(['catalog/not-available'])
+          return;
+        }
+
         this.catalog = catalog;
         this.store = store;
       },
