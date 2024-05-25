@@ -21,6 +21,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Add email github
+        run: git config --global user.email "mtsluna@gmail.com"
+
+      - name: Add username github
+        run: git config --global user.name "Matias Luna"
+
       - name: Build and deploy
         env:
           CI: true
