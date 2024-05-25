@@ -13,6 +13,12 @@ export class QrComponent {
     this.qrService.getDefaultCatalogByQr(this.activatedRoute.snapshot.paramMap.get('id') || '')
       .subscribe({
         next: async value => {
+
+          if(!value.isActive) {
+            await this.router.navigate(['qr/not-available'])
+            return;
+          }
+
           await this.router.navigate([`/s/${value.store.url}`], {
             queryParams: {
               qr: value.id,
