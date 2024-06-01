@@ -30,6 +30,7 @@ export class DetailComponent implements OnInit {
     id: '',
     title: '',
     price: {
+      discount: 0,
       amount: 0,
       currency: {
         code: '',

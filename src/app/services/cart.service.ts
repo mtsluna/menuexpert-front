@@ -89,10 +89,10 @@ export class CartService {
       const extras = item.selections.map((value) => {
         return (value.selected.filter((value) => value !== false) as Array<Option>)
           .map((value) => value.price)
-          .reduce((acc, next) => acc + next.amount, 0)
+          .reduce((acc, next) => acc + next.amount - (next.discount || 0), 0)
       }).reduce((acc, next) => acc + next, 0);
 
-      return ((item.product?.price.amount || 0) + extras) * item.quantity;
+      return ((item.product?.price.amount || 0) - (item.product?.price.discount || 0) + extras) * item.quantity;
     }).reduce((acc, next) => acc + next, 0);
   }
 

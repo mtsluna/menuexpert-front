@@ -33,6 +33,7 @@ export class DetailComponent {
     id: '',
     title: '',
     price: {
+      discount: 0,
       amount: 0,
       currency: {
         code: '',
@@ -136,9 +137,9 @@ export class DetailComponent {
     const extras = data?.selections?.map((value) => {
       return (value.selected.filter((value) => value !== false) as Array<Option>)
         .map((value) => value.price)
-        .reduce((acc, next) => acc + next.amount, 0)
+        .reduce((acc, next) => acc + next.amount - (next.discount || 0), 0)
     }).reduce((acc, next) => acc + next, 0);
-    return (this.product.price.amount + extras) * data.quantity;
+    return (this.product.price.amount - (this.product.price.discount || 0) + extras) * data.quantity;
   }
 
 }

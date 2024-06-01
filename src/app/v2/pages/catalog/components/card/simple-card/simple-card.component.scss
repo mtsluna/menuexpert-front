@@ -41,6 +41,13 @@
 
     &__price {
       font-size: 12px;
+
+      &__discount {
+        color: #989292;
+        font-size: 10px;
+        font-weight: 400;
+        text-decoration:line-through;
+      }
     }
 
     &__description {

@@ -6,6 +6,10 @@
     <div class="visual-card__data__title">
       {{ product.title }}
     </div>
+    <div *ngIf="product.price.discount && product.price.discount > 0" class="visual-card__data__price__discount">
+        {{ product.price.amount - (product.price.discount || 0) | currency: product.price.currency.code }}
+    </div>
+    <div *ngIf="!product.price.discount || product.price.discount === 0" class="visual-card__data__price__discount"></div>
     <div class="visual-card__data__price">
       {{ product.price.amount | currency: product.price.currency.code }}
     </div>

@@ -4,7 +4,8 @@
       {{ product.title }}
     </div>
     <div class="simple-card__data__price">
-      {{ product.price.amount | currency: product.price.currency.code }}
+      {{ product.price.amount - (product.price.discount || 0) | currency: product.price.currency.code }}
+      <span *ngIf="product.price.discount && product.price.discount > 0" class="simple-card__data__price__discount">{{ product.price.amount | currency: product.price.currency.code }}</span>
     </div>
     <div class="simple-card__data__description">
       {{ product.description }}

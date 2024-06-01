@@ -19,6 +19,13 @@
       font-size: 1rem;
       color: #363636;
       font-weight: 550;
+
+      &__discount {
+        color: #989292;
+        font-size: 12px;
+        font-weight: 400;
+        text-decoration:line-through;
+      }
     }
 
     &__description {

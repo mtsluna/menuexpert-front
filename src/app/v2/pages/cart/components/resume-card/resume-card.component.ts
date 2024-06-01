@@ -67,10 +67,10 @@ export class ResumeCardComponent implements OnInit {
     const extras = this.cartItem.selections.map((value) => {
       return (value.selected.filter((value) => value !== false) as Array<Option>)
         .map((value) => value.price)
-        .reduce((acc, next) => acc + next.amount, 0)
+        .reduce((acc, next) => acc + next.amount - (next.discount || 0), 0)
     }).reduce((acc, next) => acc + next, 0);
 
-    return ((this.cartItem.product?.price.amount || 0) + extras) * this.cartItem.quantity;
+    return (((this.cartItem.product?.price.amount || 0) - (this.cartItem.product?.price.discount || 0) || 0) + extras) * this.cartItem.quantity;
   }
 
   listenQuantityUpdate(formEvent: FormGroup) {
