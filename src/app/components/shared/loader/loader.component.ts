@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {LoaderService} from "../../../services/loader/loader.service";
 
 @Component({
@@ -8,11 +8,14 @@ import {LoaderService} from "../../../services/loader/loader.service";
 })
 export class LoaderComponent {
 
+  @Input()
+  loader: boolean | undefined = false;
+
   constructor(private loaderService: LoaderService) {
   }
 
-  get loader() {
-    return this.loaderService.getEvent();
+  get loaderValue() {
+    return this.loader || this.loaderService.getEvent();
   }
 
 }

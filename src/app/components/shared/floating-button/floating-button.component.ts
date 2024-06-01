@@ -14,6 +14,9 @@ export class FloatingButtonComponent implements OnInit {
   subtitle!: string;
 
   @Input()
+  loading!: boolean;
+
+  @Input()
   action: Function = () => {}
 
   constructor() { }

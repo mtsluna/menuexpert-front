@@ -26,6 +26,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "@types/scriptjs": "^0.0.4",
     "firebase": "^9.23.0",
+    "ngx-mask": "^15.2.3",
     "rxjs": "~7.8.0",
     "sass": "^1.64.2",
     "scriptjs": "^2.5.9",

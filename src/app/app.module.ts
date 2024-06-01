@@ -27,6 +27,7 @@ import {environment} from "../environments/environments";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {CartModule} from "./v2/pages/cart/cart.module";
+import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,6 +62,8 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
     TranslateModule.forRoot(
       {
         loader: {
@@ -78,7 +81,8 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true
-    }
+    },
+    provideNgxMask(),
   ],
   bootstrap: [AppComponent]
 })

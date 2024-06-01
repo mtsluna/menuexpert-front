@@ -46,16 +46,16 @@ import { AllowedDevicesComponent } from './allowed-devices/allowed-devices.compo
         TranslateModule,
         MatMenuModule
     ],
-    exports: [
-        BrandComponent,
-        LoaderComponent,
-        NavbarComponent,
-        NavigatorComponent,
-        NotFoundComponent,
-        FloatingButtonComponent,
-        QuantitySelectorComponent,
-        FooterComponent,
-        AllowedDevicesComponent
-    ]
+  exports: [
+    BrandComponent,
+    LoaderComponent,
+    NavbarComponent,
+    NavigatorComponent,
+    NotFoundComponent,
+    FloatingButtonComponent,
+    QuantitySelectorComponent,
+    FooterComponent,
+    AllowedDevicesComponent
+  ]
 })
 export class SharedModule { }

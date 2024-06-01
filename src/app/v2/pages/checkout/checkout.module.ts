@@ -8,6 +8,11 @@ import {PaymentsSelectorComponent} from "./components/payments-selector/payments
 import {ResumeComponent} from "./components/resume/resume.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatRadioModule} from "@angular/material/radio";
+import { UserCheckoutComponent } from './components/user-checkout/user-checkout.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {ReactiveFormsModule} from "@angular/forms";
+import {NgxMaskDirective} from "ngx-mask";
 
 const routes: Routes = [
   {
@@ -25,14 +30,19 @@ const routes: Routes = [
     CheckoutComponent,
     ConfirmationComponent,
     PaymentsSelectorComponent,
-    ResumeComponent
+    ResumeComponent,
+    UserCheckoutComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     MatIconModule,
-    MatRadioModule
+    MatRadioModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    NgxMaskDirective
   ]
 })
 export class CheckoutModule { }

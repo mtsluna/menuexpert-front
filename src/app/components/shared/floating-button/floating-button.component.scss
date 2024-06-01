@@ -4,6 +4,12 @@
   bottom: 1rem;
   width: calc(100% - 2rem);
 
+  &__spinner {
+    ::ng-deep circle {
+      stroke: #FFFFFF;
+    }
+  }
+
   &__element {
     background-color: #000000;
     color: #FFFFFF;

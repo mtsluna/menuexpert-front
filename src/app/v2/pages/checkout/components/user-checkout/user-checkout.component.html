@@ -1,0 +1,19 @@
+<div class="user-checkout">
+  <form [formGroup]="form">
+    <h2 class="user-checkout__title">Carga tus datos</h2>
+    <p class="user-checkout__subtitle">Para hacerte llegar el pedido correctamente, ingresa tus datos.</p>
+    <mat-form-field class="user-checkout__input" appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input formControlName="email" name="email" matInput placeholder="Ex. tu.email@mail.com">
+    </mat-form-field>
+    <mat-form-field class="user-checkout__input" appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input mask="+00 0 000 000-0000" formControlName="phone" name="phone" matInput placeholder="Ex. +54 9 2615109127">
+    </mat-form-field>
+    <mat-form-field class="user-checkout__input" appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input formControlName="address" name="address" matInput placeholder="Ex. Belgrano 815, Mendoza, Argentina">
+    </mat-form-field>
+    <button [disabled]="!form.valid" class="user-checkout__button" mat-flat-button color="primary">IR A MERCADOPAGO</button>
+  </form>
+</div>

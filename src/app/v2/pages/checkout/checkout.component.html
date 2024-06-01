@@ -13,6 +13,6 @@
     <app-payments-selector (paymentTypeEvent)="paymentTypeEvent($event)"></app-payments-selector>
     <app-resume></app-resume>
   </div>
-  <app-floating-button *ngIf="paymentType.id == '1'" title="llamar al mozo"></app-floating-button>
-  <app-floating-button *ngIf="paymentType.id == '2'" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
+  <app-floating-button *ngIf="paymentType.id == '1'" [loading]="loading" title="llamar al mozo"></app-floating-button>
+  <app-floating-button *ngIf="paymentType.id == '2'" [loading]="loading" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
 </div>
