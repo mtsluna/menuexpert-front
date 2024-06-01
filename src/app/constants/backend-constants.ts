@@ -1,3 +1,3 @@
 export default {
-  baseUrl: 'https://catalog-api.up.railway.app'
+  baseUrl: 'http://localhost:8080'
 }
