@@ -30,7 +30,6 @@
   &__data {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 0.25rem;
     padding: 0.5rem;
     height: 4.3125rem;
@@ -38,6 +37,8 @@
     &__title {
       font-size: 14px;
       font-weight: 500;
+      line-height: 1rem;
+      height: 2rem;
       @include max-2-lines;
     }
 
