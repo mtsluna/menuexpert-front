@@ -8,6 +8,7 @@ import {SectionSelectorComponent} from "./components/section-selector/section-se
 import {VisualCardComponent} from "./components/card/visual-card/visual-card.component";
 import {SimpleCardComponent} from "./components/card/simple-card/simple-card.component";
 import { CatalogNotAvailableComponent } from './catalog-not-available/catalog-not-available.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
     SectionSelectorComponent
   ],
   imports: [
+    MatSnackBarModule,
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule

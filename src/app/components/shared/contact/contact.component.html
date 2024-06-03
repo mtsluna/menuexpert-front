@@ -1,0 +1,43 @@
+<div class="contact">
+  <form [formGroup]="form">
+    <div class="contact__header">
+      <div class="contact__header__actions">
+        <button [mat-dialog-close]="true" class="contact__header__close" mat-mini-fab color="accent">
+          <mat-icon class="contact__header__button__icon">close</mat-icon>
+        </button>
+      </div>
+
+      <div class="contact__header__title">Contacto</div>
+      <p class="contact__header__subtitle">Ingresa tus datos y el motivo de tu consulta para poder ayudarte.</p>
+    </div>
+
+    <mat-form-field class="contact__input" appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input formControlName="email" name="email" matInput placeholder="Ex. tu.email@mail.com">
+      <mat-error *ngIf="form.get('email')?.hasError('email')">Email incorrecto</mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('required')">El email es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field class="contact__input" appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input mask="+00 0 000 000-0000" formControlName="phone" name="phone" matInput placeholder="Ex. +54 9 2615109127">
+      <mat-error *ngIf="form.get('phone')?.hasError('pattern')">Telefono incorrecto: +54 9 000 000-0000</mat-error>
+      <mat-error *ngIf="form.get('phone')?.hasError('required')">El teléfono es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field class="contact__input" appearance="outline">
+      <mat-label>Tipo de contacto</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="MY_CATALOG">Quiero sumar a mi local</mat-option>
+        <mat-option value="SUGGESTION">Sugerencia</mat-option>
+        <mat-option value="BUG">Reporte de bug</mat-option>
+        <mat-option value="OTHER">Otro</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('type')?.hasError('required')">El tipo de contacto es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field class="contact__input" appearance="outline">
+      <mat-label>Motivo</mat-label>
+      <textarea formControlName="observation" name="observation" matInput placeholder="Ex. Quiero sumar a mi local!"></textarea>
+      <mat-error *ngIf="form.get('observation')?.hasError('required')">El motivo es requerido</mat-error>
+    </mat-form-field>
+    <button (click)="send()" [disabled]="!form.valid" class="contact__button" mat-flat-button color="primary">ENVIAR</button>
+  </form>
+</div>

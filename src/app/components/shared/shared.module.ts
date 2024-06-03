@@ -19,6 +19,10 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {TranslateModule} from "@ngx-translate/core";
 import {MatMenuModule} from "@angular/material/menu";
 import { AllowedDevicesComponent } from './allowed-devices/allowed-devices.component';
+import { ContactComponent } from './contact/contact.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgxMaskDirective} from "ngx-mask";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -31,21 +35,26 @@ import { AllowedDevicesComponent } from './allowed-devices/allowed-devices.compo
     QuantitySelectorComponent,
     FooterComponent,
     InformationComponent,
-    AllowedDevicesComponent
+    AllowedDevicesComponent,
+    ContactComponent
   ],
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatButtonModule,
-        NgOptimizedImage,
-        MatDialogModule,
-        MatDatepickerModule,
-        MatInputModule,
-        MatExpansionModule,
-        TranslateModule,
-        MatMenuModule
-    ],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    NgOptimizedImage,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatExpansionModule,
+    TranslateModule,
+    MatMenuModule,
+    FormsModule,
+    NgxMaskDirective,
+    ReactiveFormsModule,
+    MatSelectModule
+  ],
   exports: [
     BrandComponent,
     LoaderComponent,
