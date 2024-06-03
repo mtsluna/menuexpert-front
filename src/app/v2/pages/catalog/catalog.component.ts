@@ -36,8 +36,7 @@ export class CatalogComponent implements OnInit {
     private cartService: CartService,
     private menuService: CatalogService,
     private storeService: StoreService,
-    private activatedRoute: ActivatedRoute,
-    private meta: Meta
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -54,18 +53,6 @@ export class CatalogComponent implements OnInit {
 
         this.catalog = catalog;
         this.store = store;
-
-        this.meta.updateTag({
-          property: 'og:title',
-          content: this.store.name || 'Menu Expert'
-        })
-
-        if(this.store.logo) {
-          this.meta.updateTag({
-            property: 'og:image',
-            content: this.store.logo
-          })
-        }
       },
       error: (e) => {
         this.router.navigate(['not-found'])
