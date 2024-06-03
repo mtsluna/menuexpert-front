@@ -6,7 +6,7 @@
   <div class="navbar__actions" [matMenuTriggerFor]="menu" >
     <button class="navbar__login">
       <ng-container *ngIf="!image && !loading">
-        <mat-icon class="navigator__button__icon">person</mat-icon>
+        <mat-icon color="primary" class="navigator__button__icon">person</mat-icon>
       </ng-container>
       <ng-container *ngIf="image && !loading">
         <img src="{{image}}" class="navbar__login__icon">
