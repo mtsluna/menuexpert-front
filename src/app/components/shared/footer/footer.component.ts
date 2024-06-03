@@ -33,6 +33,11 @@ export class FooterComponent {
     const userGoogle = await firstValueFrom(this.authService.getUser())
 
     const contactRef = this.matDialog.open(ContactComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       data: {
         userGoogle
       }

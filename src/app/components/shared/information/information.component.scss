@@ -7,6 +7,12 @@
     gap: 1rem;
     padding: 1rem 1rem 1rem 1rem;
 
+    &__actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+    }
+
     &__button {
 
       &__icon {
