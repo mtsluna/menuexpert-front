@@ -6,6 +6,7 @@ import {CartService} from "../../../services/cart.service";
 import {CatalogService} from "../../../services/menu/catalog.service";
 import {zip} from "rxjs";
 import {StoreService} from "../../../services/store/store.service";
+import {Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-catalog',
@@ -35,7 +36,8 @@ export class CatalogComponent implements OnInit {
     private cartService: CartService,
     private menuService: CatalogService,
     private storeService: StoreService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private meta: Meta
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,18 @@ export class CatalogComponent implements OnInit {
 
         this.catalog = catalog;
         this.store = store;
+
+        this.meta.updateTag({
+          property: 'og:title',
+          content: this.store.name || 'Menu Expert'
+        })
+
+        if(this.store.logo) {
+          this.meta.updateTag({
+            property: 'og:image',
+            content: this.store.logo
+          })
+        }
       },
       error: (e) => {
         this.router.navigate(['not-found'])
