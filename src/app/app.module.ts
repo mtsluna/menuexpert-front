@@ -28,6 +28,8 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {CartModule} from "./v2/pages/cart/cart.module";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
+import {AngularFireAnalyticsModule} from "@angular/fire/compat/analytics";
+import {ScreenTrackingService, UserTrackingService} from "@angular/fire/analytics";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -62,6 +64,7 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireAnalyticsModule,
     NgxMaskDirective,
     NgxMaskPipe,
     TranslateModule.forRoot(
@@ -83,6 +86,8 @@ export function createTranslateLoader(http: HttpClient) {
       multi: true
     },
     provideNgxMask(),
+    ScreenTrackingService,
+    UserTrackingService
   ],
   bootstrap: [AppComponent]
 })

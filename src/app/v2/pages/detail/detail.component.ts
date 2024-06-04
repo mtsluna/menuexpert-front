@@ -10,6 +10,7 @@ import {Option} from "../../../interfaces/option";
 import {Store} from "../../../interfaces/store";
 import {StoreService} from "../../../services/store/store.service";
 import {Location} from "@angular/common";
+import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 @Component({
   selector: 'app-detail',
@@ -54,8 +55,14 @@ export class DetailComponent {
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private storeService: StoreService,
-    private location: Location
-  ) {  }
+    private location: Location,
+    private analytics: AngularFireAnalytics
+  ) {
+    this.analytics.logEvent('detail_view', {
+      catalogId: this.catalogId,
+      productId: this.productId
+    })
+  }
 
   ngOnInit(): void {
 

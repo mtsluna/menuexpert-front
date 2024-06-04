@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {UserCheckoutComponent} from "./components/user-checkout/user-checkout.component";
 import {AuthService} from "../../../services/auth/auth.service";
 import {firstValueFrom, lastValueFrom} from "rxjs";
+import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 @Component({
   selector: 'app-checkout',
@@ -16,7 +17,7 @@ import {firstValueFrom, lastValueFrom} from "rxjs";
 export class CheckoutComponent {
 
   cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('cartId') || undefined;
-  menuId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('menuId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   loading: boolean = false;
 
   paymentType: PaymentType = {
@@ -28,10 +29,19 @@ export class CheckoutComponent {
     private checkoutService: CheckoutService,
     private cartService: CartService,
     private matDialog: MatDialog,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private analytics: AngularFireAnalytics
+  ) {
+    this.analytics.logEvent('checkout_view', {
+      catalog: this.catalogId
+    })
+  }
 
   async goToMercadoPago() {
+    await this.analytics.logEvent('checkout_go_to_pay', {
+      catalogId: this.catalogId
+    })
+
     this.loading = true;
     const userTemp = {
       id: "asdasdasd"
@@ -54,7 +64,7 @@ export class CheckoutComponent {
     } else {
       this.checkoutService.postCheckout(
         this.cartId || '',
-        this.cartService.getRawItems(this.menuId)
+        this.cartService.getRawItems(this.catalogId)
       ).subscribe({
         next: (checkout) => {
           window.location.href = checkout.initPoint;
