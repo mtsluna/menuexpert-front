@@ -2,7 +2,7 @@
   <div class="brand__banner">
     <img *ngIf="store.image" class="brand__banner__image" src="{{store.image}}" alt="Banner of {{store.name}}">
     <button class="brand__banner__information" (click)="openInformation()" mat-mini-fab color="accent">
-      <mat-icon class="navigator__button__icon">info_outline</mat-icon>
+      <mat-icon color="primary" class="navigator__button__icon">info_outline</mat-icon>
     </button>
   </div>
   <div *ngIf="store.logo" class="brand__logo">
