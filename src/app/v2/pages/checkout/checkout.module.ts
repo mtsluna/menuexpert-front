@@ -13,11 +13,16 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxMaskDirective} from "ngx-mask";
+import {MatDialogClose} from "@angular/material/dialog";
+import {checkoutStoreResolver} from "./resolvers/store/checkout-store-resolver.resolver";
 
 const routes: Routes = [
   {
     path: ':id',
-    component: CheckoutComponent
+    component: CheckoutComponent,
+    resolve: {
+      store: checkoutStoreResolver
+    }
   },
   {
     path: ':id/confirmation',
@@ -33,16 +38,17 @@ const routes: Routes = [
     ResumeComponent,
     UserCheckoutComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
-    MatIconModule,
-    MatRadioModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    NgxMaskDirective
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        SharedModule,
+        MatIconModule,
+        MatRadioModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        MatDialogClose
+    ]
 })
 export class CheckoutModule { }

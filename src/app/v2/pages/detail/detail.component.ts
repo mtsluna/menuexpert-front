@@ -87,8 +87,6 @@ export class DetailComponent {
 
       const cartItem = this.cartService.getItem(this.cartItem, this.catalogId);
 
-      console.log(cartItem)
-
       if(cartItem.product) {
         this.product = cartItem.product;
       }

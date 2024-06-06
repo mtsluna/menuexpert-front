@@ -3,6 +3,9 @@ import firebase from "firebase/compat";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {user} from "@angular/fire/auth";
+import {Client} from "../../../../../interfaces/client";
+import {ClientService} from "../../../../../services/client/client.service";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-user-checkout',
@@ -11,30 +14,40 @@ import {user} from "@angular/fire/auth";
 })
 export class UserCheckoutComponent implements OnInit {
 
-  userGoogle: firebase.User | undefined;
+  userGoogle: firebase.User;
+  client: Client;
   form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private readonly data: any) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private readonly data: { userGoogle: firebase.User, client: Client },
+    private readonly clientService: ClientService
+  ) {
     this.userGoogle = data.userGoogle;
+    this.client = data.client;
 
     this.form = new FormGroup<any>({
       email: new FormControl({
-        value: this.userGoogle?.email,
-        disabled: !!this.userGoogle?.email
+        value: this.client?.email,
+        disabled: !!this.client?.email
       }, {
         validators: [ Validators.required, Validators.email ],
       }),
-      phone: new FormControl({
-        value: this.userGoogle?.phoneNumber,
-        disabled: !!this.userGoogle?.phoneNumber
-      }, {
+      phone: new FormControl(this.client?.phone, {
         validators: [ Validators.required, Validators.pattern(/^\d{13}$/) ],
       }),
-      address: new FormControl('', {
+      address: new FormControl(this.client.address, {
         validators: [ Validators.required ],
       })
     });
   }
 
   async ngOnInit(): Promise<void> {}
+
+  async saveAndGo() {
+    await lastValueFrom(this.clientService.put(this.client.id || '', {
+      ...this.client,
+      ...this.form.getRawValue(),
+      id: undefined
+    }))
+  }
 }

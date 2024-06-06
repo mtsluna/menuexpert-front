@@ -11,6 +11,7 @@ export class CartComponent implements OnInit {
 
   cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('id') || undefined;
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
+  storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
 
   constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -36,7 +37,8 @@ export class CartComponent implements OnInit {
   checkout() {
     this.router.navigate([`/checkout/${this.cartId}`], {
       queryParams: {
-        catalog: this.catalogId
+        catalog: this.catalogId,
+        store: this.storeId
       }
     })
   }

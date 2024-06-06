@@ -6,7 +6,6 @@ import {CartService} from "../../../services/cart.service";
 import {CatalogService} from "../../../services/menu/catalog.service";
 import {zip} from "rxjs";
 import {StoreService} from "../../../services/store/store.service";
-import {Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-catalog',
@@ -63,7 +62,8 @@ export class CatalogComponent implements OnInit {
   viewCart() {
     this.router.navigate([`/cart/${this.cartService.getCartId(this.catalogId)}`], {
       queryParams: {
-        catalog: this.catalog.id
+        catalog: this.catalog.id,
+        store: this.storeId
       }
     })
   }

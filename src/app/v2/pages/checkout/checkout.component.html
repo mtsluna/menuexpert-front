@@ -1,18 +1,28 @@
-<div class="checkout">
-  <app-navigator></app-navigator>
-  <div class="checkout__holder"></div>
-  <div class="checkout__cards">
-    <div class="checkout__cards__header">
-      <div class="checkout__cards__header__title">
-        Checkout
+@if (store$ | async; as store) {
+  <div class="checkout">
+    <app-navigator></app-navigator>
+    <div class="checkout__holder"></div>
+    <div class="checkout__cards">
+      <div class="checkout__cards__header">
+        <div class="checkout__cards__header__title">
+          Checkout
+        </div>
+        <div class="checkout__cards__header__subtitle">
+          {{ store.name }}
+        </div>
       </div>
-      <div class="checkout__cards__header__subtitle">
-        Kebab Madrid
-      </div>
+      <app-payments-selector (paymentTypeEvent)="paymentTypeEvent($event)"></app-payments-selector>
+      <app-resume></app-resume>
     </div>
-    <app-payments-selector (paymentTypeEvent)="paymentTypeEvent($event)"></app-payments-selector>
-    <app-resume></app-resume>
+
+    @switch (paymentType.id) {
+      @case ('1') {
+        <app-floating-button [loading]="loading" title="llamar al mozo"></app-floating-button>
+      }
+      @case ('2') {
+        <app-floating-button [loading]="loading" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
+      }
+    }
   </div>
-  <app-floating-button *ngIf="paymentType.id == '1'" [loading]="loading" title="llamar al mozo"></app-floating-button>
-  <app-floating-button *ngIf="paymentType.id == '2'" [loading]="loading" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
-</div>
+}
+

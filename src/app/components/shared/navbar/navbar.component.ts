@@ -23,8 +23,6 @@ export class NavbarComponent implements OnInit {
   async login() {
     const auth = await this.authService.login();
 
-    console.log(auth)
-
     this.image = (auth.additionalUserInfo?.profile as any)['picture'];
   }
 

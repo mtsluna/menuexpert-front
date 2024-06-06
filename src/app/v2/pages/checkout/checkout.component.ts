@@ -6,8 +6,11 @@ import {CartService} from "../../../services/cart.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UserCheckoutComponent} from "./components/user-checkout/user-checkout.component";
 import {AuthService} from "../../../services/auth/auth.service";
-import {firstValueFrom, lastValueFrom} from "rxjs";
+import {firstValueFrom, lastValueFrom, Observable} from "rxjs";
 import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
+import {Store} from "../../../interfaces/store";
+import {map} from "rxjs/operators";
+import {ClientService} from "../../../services/client/client.service";
 
 @Component({
   selector: 'app-checkout',
@@ -20,6 +23,8 @@ export class CheckoutComponent {
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   loading: boolean = false;
 
+  store$: Observable<Store>;
+
   paymentType: PaymentType = {
     id: '1'
   };
@@ -30,11 +35,14 @@ export class CheckoutComponent {
     private cartService: CartService,
     private matDialog: MatDialog,
     private authService: AuthService,
-    private analytics: AngularFireAnalytics
+    private analytics: AngularFireAnalytics,
+    private clientService: ClientService
   ) {
     this.analytics.logEvent('checkout_view', {
       catalog: this.catalogId
     })
+
+    this.store$ = this.activatedRoute.data.pipe(map(data => data['store']))
   }
 
   async goToMercadoPago() {
@@ -43,22 +51,28 @@ export class CheckoutComponent {
     })
 
     this.loading = true;
-    const userTemp = {
-      id: "asdasdasd"
-    }
 
-    if(userTemp.id) {
+    const user = await firstValueFrom(this.authService.getSession());
 
-      const userGoogle = await firstValueFrom(this.authService.getUser())
+    const { content } = await firstValueFrom(this.clientService.search(user?.uid || '', 'google.com'));
+
+    const [client] = content;
+
+    if(!client.email || !client.address || !client.phone) {
 
       const dialogRef = this.matDialog.open(UserCheckoutComponent, {
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
         data: {
-          userGoogle
+          user,
+          client
         }
       })
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
         this.loading = false;
       });
     } else {

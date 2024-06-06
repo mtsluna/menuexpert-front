@@ -1,7 +1,14 @@
 <div class="user-checkout">
   <form [formGroup]="form">
-    <h2 class="user-checkout__title">Carga tus datos</h2>
-    <p class="user-checkout__subtitle">Para hacerte llegar el pedido correctamente, ingresa tus datos.</p>
+    <div class="user-checkout__header">
+      <div class="user-checkout__header__actions">
+        <button [mat-dialog-close]="true" class="contact__header__close" mat-mini-fab color="accent">
+          <mat-icon color="primary" class="contact__header__button__icon">close</mat-icon>
+        </button>
+      </div>
+      <h2 class="user-checkout__title">Carga tus datos</h2>
+      <p class="user-checkout__subtitle">Para hacerte llegar el pedido correctamente, ingresa tus datos.</p>
+    </div>
     <mat-form-field class="user-checkout__input" appearance="outline">
       <mat-label>E-mail</mat-label>
       <input formControlName="email" name="email" matInput placeholder="Ex. tu.email@mail.com">
@@ -19,6 +26,6 @@
       <input formControlName="address" name="address" matInput placeholder="Ex. Belgrano 815, Mendoza, Argentina">
         <mat-error *ngIf="form.get('address')?.hasError('required')">La dirección es requerida</mat-error>
     </mat-form-field>
-    <button [disabled]="!form.valid" class="user-checkout__button" mat-flat-button color="primary">IR A MERCADOPAGO</button>
+    <button (click)="saveAndGo()" [disabled]="!form.valid" class="user-checkout__button" mat-flat-button color="primary">IR A MERCADOPAGO</button>
   </form>
 </div>

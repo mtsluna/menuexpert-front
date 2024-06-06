@@ -9,6 +9,8 @@ import {VisualCardComponent} from "./components/card/visual-card/visual-card.com
 import {SimpleCardComponent} from "./components/card/simple-card/simple-card.component";
 import { CatalogNotAvailableComponent } from './catalog-not-available/catalog-not-available.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatIcon} from "@angular/material/icon";
+import {NotFoundComponent} from "../../../components/shared/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -18,7 +20,11 @@ const routes: Routes = [
   {
     path: 's/:catalogId',
     component: CatalogComponent
-  }
+  },
+  {
+    path: '',
+    component: NotFoundComponent
+  },
 ];
 
 @NgModule({
@@ -34,11 +40,12 @@ const routes: Routes = [
     SectionComponent,
     SectionSelectorComponent
   ],
-  imports: [
-    MatSnackBarModule,
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule
-  ]
+    imports: [
+        MatSnackBarModule,
+        CommonModule,
+        RouterModule.forChild(routes),
+        SharedModule,
+        MatIcon
+    ]
 })
 export class CatalogModule { }
