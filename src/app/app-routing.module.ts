@@ -5,6 +5,7 @@ import {NotFoundComponent} from "./components/shared/not-found/not-found.compone
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./v2/pages/catalog/catalog.module').then(m => m.CatalogModule) },
+  { path: 'profile', loadChildren: () => import('./v2/pages/profile/profile.module').then(m => m.ProfileModule) },
   { path: 'detail', loadChildren: () => import('./v2/pages/detail/detail.module').then(m => m.DetailModule) },
   { path: 'qr', loadChildren: () => import('./v2/pages/qr/qr.module').then(m => m.QrModule) },
   { path: 'cart', loadChildren: () => import('./v2/pages/cart/cart.module').then(m => m.CartModule) },

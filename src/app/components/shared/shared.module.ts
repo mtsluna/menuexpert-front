@@ -23,6 +23,7 @@ import { ContactComponent } from './contact/contact.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxMaskDirective} from "ngx-mask";
 import {MatSelectModule} from "@angular/material/select";
+import {RouterLink} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -38,23 +39,24 @@ import {MatSelectModule} from "@angular/material/select";
     AllowedDevicesComponent,
     ContactComponent
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    NgOptimizedImage,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatExpansionModule,
-    TranslateModule,
-    MatMenuModule,
-    FormsModule,
-    NgxMaskDirective,
-    ReactiveFormsModule,
-    MatSelectModule
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        NgOptimizedImage,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatExpansionModule,
+        TranslateModule,
+        MatMenuModule,
+        FormsModule,
+        NgxMaskDirective,
+        ReactiveFormsModule,
+        MatSelectModule,
+        RouterLink
+    ],
   exports: [
     BrandComponent,
     LoaderComponent,
