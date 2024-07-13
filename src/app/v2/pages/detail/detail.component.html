@@ -1,5 +1,6 @@
 <div class="detail">
   <app-navigator></app-navigator>
+  <app-gallery-viewer [images]="product.image ? [product.image] : []"></app-gallery-viewer>
   <ng-container *ngIf="!error">
     <app-image class="detail__image" [product]="product"></app-image>
     <div class="detail__image__empty" *ngIf="!product.image"></div>

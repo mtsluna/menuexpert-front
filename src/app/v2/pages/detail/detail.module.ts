@@ -11,6 +11,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatRadioModule} from "@angular/material/radio";
+import {GalleryViewerComponent} from "../../../components/shared/gallery-viewer/gallery-viewer.component";
 
 const routes: Routes = [
   {
@@ -27,14 +28,15 @@ const routes: Routes = [
     ObservationComponent,
     OptionSelectorComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
-    MatIconModule,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatRadioModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        SharedModule,
+        MatIconModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        GalleryViewerComponent
+    ]
 })
 export class DetailModule { }

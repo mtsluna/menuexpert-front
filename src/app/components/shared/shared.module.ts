@@ -23,6 +23,7 @@ import { ContactComponent } from './contact/contact.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxMaskDirective} from "ngx-mask";
 import {MatSelectModule} from "@angular/material/select";
+import {GalleryModule} from "@ks89/angular-modal-gallery";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {MatSelectModule} from "@angular/material/select";
     FormsModule,
     NgxMaskDirective,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    GalleryModule
   ],
   exports: [
     BrandComponent,

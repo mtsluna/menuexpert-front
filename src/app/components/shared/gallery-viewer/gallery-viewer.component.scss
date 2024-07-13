@@ -1,0 +1,13 @@
+.gallery-viewer {
+  position: fixed;
+  top: 1rem;
+  right: 4rem;
+
+  &__button {
+
+    &__icon {
+      transform: scale(0.80);
+    }
+
+  }
+}
