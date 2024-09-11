@@ -58,7 +58,9 @@ export class CheckoutComponent {
 
     const [client] = content;
 
-    if(!client.email || !client.address || !client.phone) {
+    console.log(client);
+
+    if(!client || (!client.email || !client.address || !client.phone)) {
 
       const dialogRef = this.matDialog.open(UserCheckoutComponent, {
         maxWidth: '100vw',

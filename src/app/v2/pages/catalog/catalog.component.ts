@@ -59,8 +59,8 @@ export class CatalogComponent implements OnInit {
     })
   }
 
-  viewCart() {
-    this.router.navigate([`/cart/${this.cartService.getCartId(this.catalogId)}`], {
+  async viewCart() {
+    this.router.navigate([`/cart/${await this.cartService.getCartId(this.catalogId)}`], {
       queryParams: {
         catalog: this.catalog.id,
         store: this.storeId

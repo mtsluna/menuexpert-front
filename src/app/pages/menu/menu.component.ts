@@ -62,8 +62,4 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  get hiddenCart() {
-    return this.cartService.getItems(this.menuId).length === 0;
-  }
-
 }

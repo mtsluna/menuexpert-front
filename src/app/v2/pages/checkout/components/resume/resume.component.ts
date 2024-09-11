@@ -1,21 +1,24 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../../../../../services/cart.service";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.scss']
 })
-export class ResumeComponent {
+export class ResumeComponent implements OnInit{
 
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
+  productsAmount: number = 0;
 
   constructor(private cartService: CartService, private activatedRoute: ActivatedRoute) {
   }
 
-  get productsAmount() {
-    return this.cartService.getTotal(this.catalogId);
+  async ngOnInit() {
+    const cart = await firstValueFrom(await this.cartService.getApiItems(this.catalogId))
+    this.productsAmount = cart.amount || 0;
   }
 
   get currency() {

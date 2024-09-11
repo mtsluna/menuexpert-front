@@ -126,8 +126,8 @@ export class DetailComponent {
     return (this.form.get('selections') as FormArray).at(index) as FormGroup;
   }
 
-  addItem() {
-    this.cartService.addItem(this.form.getRawValue(), this.catalogId);
+  async addItem() {
+    await this.cartService.addItem(this.form.getRawValue(), this.catalogId);
     this.location.back();
   }
 

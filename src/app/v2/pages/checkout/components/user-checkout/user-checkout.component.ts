@@ -35,7 +35,7 @@ export class UserCheckoutComponent implements OnInit {
       phone: new FormControl(this.client?.phone, {
         validators: [ Validators.required, Validators.pattern(/^\d{13}$/) ],
       }),
-      address: new FormControl(this.client.address, {
+      address: new FormControl(this.client?.address, {
         validators: [ Validators.required ],
       })
     });
@@ -44,7 +44,7 @@ export class UserCheckoutComponent implements OnInit {
   async ngOnInit(): Promise<void> {}
 
   async saveAndGo() {
-    await lastValueFrom(this.clientService.put(this.client.id || '', {
+    await lastValueFrom(this.clientService.put(this.client?.id || '', {
       ...this.client,
       ...this.form.getRawValue(),
       id: undefined

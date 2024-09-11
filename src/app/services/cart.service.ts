@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import {reduce, Subject} from "rxjs";
+import {debounceTime, distinctUntilChanged, firstValueFrom, reduce, Subject} from "rxjs";
 import {CartItem} from "../interfaces/cart-item";
 import * as uuid from 'uuid';
 import {Option} from "../interfaces/option";
+import {HttpClient} from "@angular/common/http";
+import {CartApiService} from "./cart-api/cart-api.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,35 +14,66 @@ export class CartService {
   private items: Array<CartItem> = [];
   private subject: Subject<CartItem> = new Subject();
 
-  constructor() { }
+  constructor(
+    private cartApiService: CartApiService
+  ) { }
 
-  addItem(cartItem: CartItem, catalogId: string | undefined) {
-    this.getCartId(catalogId);
+  async addItem(cartItem: CartItem, catalogId: string | undefined) {
+    let cartResponse;
+    if(!await this.getCartId(catalogId)) {
+      cartResponse =  await firstValueFrom(this.cartApiService.createCart());
+      this.setCartId(catalogId,cartResponse.id);
+    }
+    cartResponse = await this.getCartId(catalogId);
+
     this.items = this.getItems(catalogId)
 
-    cartItem.id = uuid.v4();
+    const persistanceResponse = await this.persistCartApi(cartResponse, cartItem);
+
+    cartItem.id = persistanceResponse.items[persistanceResponse.items.length - 1].id;
     this.items.push(cartItem);
     this.subject.next(cartItem);
 
     this.persistCart(catalogId);
   }
 
+  async persistCartApi(cartId: string, item: CartItem) {
+
+    const mappedItem = {
+      productId: item.product?.id,
+      quantity: item.quantity,
+      comment: item.comment,
+      selections: item.selections
+    }
+    return await firstValueFrom(this.cartApiService.addItem(cartId, mappedItem));
+  }
+
   persistCart(catalogId: string | undefined) {
     localStorage.setItem(`cart-content__${catalogId}`, JSON.stringify(this.items));
   }
 
-  getCartId(catalogId: string | undefined): string {
+  async getCartId(catalogId: string | undefined): Promise<string> {
     const cartId = localStorage.getItem(`cartId__${catalogId}`);
 
     if(!cartId) {
-      localStorage.setItem(`cartId__${catalogId}`, uuid.v4());
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart());
+      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
     }
 
     return localStorage.getItem(`cartId__${catalogId}`) || '';
   }
 
+  setCartId(catalogId: string | undefined, cartId: string) {
+    localStorage.setItem(`cartId__${catalogId}`, cartId);
+  }
+
   getItems(catalogId: string | undefined): Array<CartItem> {
     return JSON.parse(localStorage.getItem(`cart-content__${catalogId}`) || '[]')
+  }
+
+  async getApiItems(catalogId: string | undefined) {
+    const cartId = await this.getCartId(catalogId);
+    return this.cartApiService.getCart(cartId);
   }
 
   getItem(cartItem: string, catalogId: string | undefined): CartItem {
@@ -62,38 +95,33 @@ export class CartService {
     }))
   }
 
-  updateItem(cartItem: CartItem, catalogId: string | undefined) {
+  async updateItem(cartItem: CartItem, catalogId: string | undefined) {
 
-    if(!this.items.length) {
-      this.items = this.getItems(catalogId);
+    const mappedItem = {
+      id: cartItem.id,
+      productId: cartItem.product?.id,
+      quantity: cartItem.quantity,
+      comment: cartItem.comment,
+      selections: cartItem.selections
     }
 
-    const index = this.items.findIndex((cart) => cart.id == cartItem.id);
+    await firstValueFrom(
+      this.cartApiService.updateItem(await this.getCartId(catalogId), mappedItem).pipe(
+        distinctUntilChanged(),
+        debounceTime(500)
+      ));
 
-    this.items[index] = cartItem;
-
-    this.persistCart(catalogId);
   }
 
-  removeItem(cartItem: CartItem, catalogId: string | undefined) {
+  async removeItem(cartItem: CartItem, catalogId: string | undefined) {
+
+    await firstValueFrom(this.cartApiService.removeItem(await this.getCartId(catalogId), cartItem.id || ''));
+
     const index = this.items.findIndex((cart) => cart.id == cartItem.id);
     if (index !== -1) {
       this.items.splice(index, 1);
     }
 
-    this.persistCart(catalogId);
-  }
-
-  getTotal(catalogId: string | undefined) {
-    return this.getItems(catalogId).map((item) => {
-      const extras = item.selections.map((value) => {
-        return (value.selected.filter((value) => value !== false) as Array<Option>)
-          .map((value) => value.price)
-          .reduce((acc, next) => acc + next.amount - (next.discount || 0), 0)
-      }).reduce((acc, next) => acc + next, 0);
-
-      return ((item.product?.price.amount || 0) - (item.product?.price.discount || 0) + extras) * item.quantity;
-    }).reduce((acc, next) => acc + next, 0);
   }
 
   getCurrency(catalogId: string | undefined) {

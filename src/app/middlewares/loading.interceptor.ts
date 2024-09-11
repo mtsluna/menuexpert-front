@@ -8,6 +8,11 @@ import {
 import {finalize, Observable} from 'rxjs';
 import {LoaderService} from "../services/loader/loader.service";
 
+const ExcludedUrls = [
+  '.*/carts/.*/item',
+  '.*/carts'
+  ]
+
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
 
@@ -16,8 +21,10 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(private loaderService: LoaderService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if(!ExcludedUrls.some(url => new RegExp(url).test(request.url))) {
+      this.loaderService.setEvent(true);
+    }
     this.totalRequest++;
-    this.loaderService.setEvent(true);
     return next.handle(request).pipe(
       finalize(() => {
         this.totalRequest--;

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartItem} from "../../../../../interfaces/cart-item";
@@ -17,13 +17,14 @@ export class ResumeCardComponent implements OnInit {
   cartItem!: CartItem;
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   form!: FormGroup;
+  @Output() cartItemUpdated: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private formBuilder: FormBuilder, private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.form = this.initForm();
-    this.form.setValue(this.cartItem)
+    this.form.patchValue(this.cartItem)
   }
 
   initForm() {
@@ -73,18 +74,20 @@ export class ResumeCardComponent implements OnInit {
     return (((this.cartItem.product?.price.amount || 0) - (this.cartItem.product?.price.discount || 0) || 0) + extras) * this.cartItem.quantity;
   }
 
-  listenQuantityUpdate(formEvent: FormGroup) {
+  async listenQuantityUpdate(formEvent: FormGroup) {
 
     const cartItem = this.form.getRawValue();
 
     if (cartItem.quantity == 0) {
-      this.cartService.removeItem(cartItem, this.catalogId);
+      await this.cartService.removeItem(cartItem, this.catalogId);
+      this.cartItemUpdated.emit(cartItem);
       return;
     }
 
     this.form = formEvent
     this.cartItem = this.form.getRawValue()
-    this.cartService.updateItem(cartItem, this.catalogId);
+    await this.cartService.updateItem(cartItem, this.catalogId);
+    this.cartItemUpdated.emit(this.cartItem);
   }
 
   async edit() {

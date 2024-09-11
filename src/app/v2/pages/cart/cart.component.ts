@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
+import {firstValueFrom} from "rxjs";
+import {ICartApiCreateResponse} from "../../../services/cart-api/interfaces";
 
 @Component({
   selector: 'app-cart',
@@ -12,26 +14,27 @@ export class CartComponent implements OnInit {
   cartId: string | undefined = this.activatedRoute.snapshot.paramMap.get('id') || undefined;
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
+  itemResponse!: ICartApiCreateResponse;
+  price: number = 0;
 
   constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
-  }
-
-  get items() {
-    return this.cartService.getItems(this.catalogId);
+  async ngOnInit() {
+    this.itemResponse = await firstValueFrom(await this.cartService.getApiItems(this.catalogId));
+    this.price = this.itemResponse.amount || 0;
   }
 
   get currency() {
-    if(this.items.length > 0) {
+    if(this.itemResponse?.items?.length > 0) {
       // @ts-ignore
-      return this.items[0].product.price.currency.code;
+      return this.itemResponse?.items[0].product.price.currency.code;
     }
     return ''
   }
 
-  get price() {
-    return this.cartService.getTotal(this.catalogId);
+  async reloadItems() {
+    this.itemResponse = await firstValueFrom(await this.cartService.getApiItems(this.catalogId));
+    this.price = this.itemResponse.amount || 0;
   }
 
   checkout() {

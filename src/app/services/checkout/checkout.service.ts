@@ -8,7 +8,7 @@ import {CartItem} from "../../interfaces/cart-item";
 @Injectable({
   providedIn: 'root'
 })
-export class CheckoutService implements OnInit {
+export class CheckoutService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -19,9 +19,4 @@ export class CheckoutService implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    // get("https://sdk.mercadopago.com/js/v2", () => {
-    //
-    // });
-  }
 }
