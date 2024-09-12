@@ -73,6 +73,6 @@ export class CatalogComponent implements OnInit {
       return true;
     }
 
-    return this.cartService.getItems(this.catalogId).length === 0;
+    return this.cartService.getItems().length === 0;
   }
 }

@@ -17,7 +17,7 @@ export class ResumeComponent implements OnInit{
   }
 
   async ngOnInit() {
-    const cart = await firstValueFrom(await this.cartService.getApiItems(this.catalogId))
+    const cart = await this.cartService.getApiItems(this.catalogId);
     this.productsAmount = cart.amount || 0;
   }
 

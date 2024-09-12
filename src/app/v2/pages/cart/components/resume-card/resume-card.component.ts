@@ -5,6 +5,7 @@ import {CartItem} from "../../../../../interfaces/cart-item";
 import {CartService} from "../../../../../services/cart.service";
 import {Customization} from "../../../../../interfaces/customization";
 import {Option} from "../../../../../interfaces/option";
+import {debounceTime, Subject} from "rxjs";
 
 @Component({
   selector: 'app-resume-card',
@@ -19,7 +20,13 @@ export class ResumeCardComponent implements OnInit {
   form!: FormGroup;
   @Output() cartItemUpdated: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private formBuilder: FormBuilder, private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) {
+  private quantityUpdateSubject: Subject<FormGroup> = new Subject<FormGroup>();
+
+  constructor(private formBuilder: FormBuilder, private cartService: CartService, private router: Router,
+              private activatedRoute: ActivatedRoute) {
+    this.quantityUpdateSubject.pipe(
+      debounceTime(700)
+    ).subscribe(formEvent => this.handleQuantityUpdate(formEvent));
   }
 
   ngOnInit() {
@@ -74,8 +81,11 @@ export class ResumeCardComponent implements OnInit {
     return (((this.cartItem.product?.price.amount || 0) - (this.cartItem.product?.price.discount || 0) || 0) + extras) * this.cartItem.quantity;
   }
 
-  async listenQuantityUpdate(formEvent: FormGroup) {
+  listenQuantityUpdate(formEvent: FormGroup) {
+    this.quantityUpdateSubject.next(formEvent);
+  }
 
+  private async handleQuantityUpdate(formEvent: FormGroup) {
     const cartItem = this.form.getRawValue();
 
     if (cartItem.quantity == 0) {
@@ -84,11 +94,12 @@ export class ResumeCardComponent implements OnInit {
       return;
     }
 
-    this.form = formEvent
-    this.cartItem = this.form.getRawValue()
+    this.form = formEvent;
+    this.cartItem = this.form.getRawValue();
     await this.cartService.updateItem(cartItem, this.catalogId);
     this.cartItemUpdated.emit(this.cartItem);
   }
+
 
   async edit() {
     await this.router.navigate([`/detail/${this.cartItem?.product?.id}`], {

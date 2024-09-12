@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
-import {firstValueFrom} from "rxjs";
 import {ICartApiCreateResponse} from "../../../services/cart-api/interfaces";
+import {debounceTime, Subject} from "rxjs";
 
 @Component({
   selector: 'app-cart',
@@ -16,11 +16,18 @@ export class CartComponent implements OnInit {
   storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
   itemResponse!: ICartApiCreateResponse;
   price: number = 0;
+  private clickSubject = new Subject<void>();
 
-  constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.clickSubject.pipe(
+      debounceTime(100),
+    ).subscribe(() => {
+      this.reloadItems();
+    });
+  }
 
   async ngOnInit() {
-    this.itemResponse = await firstValueFrom(await this.cartService.getApiItems(this.catalogId));
+    this.itemResponse = await this.cartService.getApiItems(this.catalogId);
     this.price = this.itemResponse.amount || 0;
   }
 
@@ -33,8 +40,16 @@ export class CartComponent implements OnInit {
   }
 
   async reloadItems() {
-    this.itemResponse = await firstValueFrom(await this.cartService.getApiItems(this.catalogId));
+    this.itemResponse = await this.cartService.getApiItems(this.catalogId);
     this.price = this.itemResponse.amount || 0;
+  }
+
+  handleCartItemUpdate() {
+    this.clickSubject.next();
+  }
+
+  trackByFn(index: number, item:any) {
+    return item.id;
   }
 
   checkout() {
