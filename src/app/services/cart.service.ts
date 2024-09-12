@@ -34,8 +34,6 @@ export class CartService {
     cartItem.id = persistanceResponse.items[persistanceResponse.items.length - 1].id;
     this.items.push(cartItem);
     this.subject.next(cartItem);
-
-    this.persistCart(catalogId);
   }
 
   async persistCartApi(cartId: string, item: CartItem) {
@@ -47,10 +45,6 @@ export class CartService {
       selections: item.selections
     }
     return await firstValueFrom(this.cartApiService.addItem(cartId, mappedItem));
-  }
-
-  persistCart(catalogId: string | undefined) {
-    localStorage.setItem(`cart-content__${catalogId}`, JSON.stringify(this.items));
   }
 
   async getCartId(catalogId: string | undefined): Promise<string> {
