@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {RouterOutlet} from "@angular/router";
-import { MenuComponent } from './pages/menu/menu.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
@@ -19,14 +18,13 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingInterceptor} from "./middlewares/loading.interceptor";
 import {MatSidenavModule} from "@angular/material/sidenav";
-import { QrComponent } from './v2/pages/qr/qr.component';
 import {SharedModule} from "./components/shared/shared.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {environment} from "../environments/environments";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
-import {CartModule} from "./v2/pages/cart/cart.module";
+import {CartModule} from "./pages/cart/cart.module";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {AngularFireAnalyticsModule} from "@angular/fire/compat/analytics";
 import {ScreenTrackingService, UserTrackingService} from "@angular/fire/analytics";
@@ -38,9 +36,6 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    DetailComponent,
-    QrComponent
   ],
   imports: [
     BrowserModule,

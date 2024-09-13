@@ -5,6 +5,8 @@ import * as uuid from 'uuid';
 import {Option} from "../interfaces/option";
 import {HttpClient} from "@angular/common/http";
 import {CartApiService} from "./cart-api/cart-api.service";
+import {AuthService} from "./auth/auth.service";
+import {ICartApiCreateResponse} from "./cart-api/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +15,19 @@ export class CartService {
 
   private items: Array<CartItem> = [];
   private subject: Subject<CartItem> = new Subject();
+  private cartId!: ICartApiCreateResponse;
 
   constructor(
-    private cartApiService: CartApiService
+    private cartApiService: CartApiService,
+    private authService: AuthService
   ) {
   }
 
   async addItem(cartItem: CartItem, catalogId: string | undefined) {
     let cartResponse;
     if (!await this.getCartId(catalogId)) {
-      cartResponse = await firstValueFrom(this.cartApiService.createCart());
+      const auth = await firstValueFrom(this.authService.getUser());
+      cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
       this.setCartId(catalogId, cartResponse.id);
     }
     cartResponse = await this.getCartId(catalogId);
@@ -48,14 +53,24 @@ export class CartService {
   }
 
   async getCartId(catalogId: string | undefined): Promise<string> {
-    const cartId = localStorage.getItem(`cartId__${catalogId}`);
-
-    if (!cartId) {
-      const cartResponse = await firstValueFrom(this.cartApiService.createCart());
-      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
+    const auth = await firstValueFrom(this.authService.getUser());
+    if (!auth && localStorage.getItem(`cartId__${catalogId}`)) {
+      return localStorage.getItem(`cartId__${catalogId}`) || '';
     }
-
-    return localStorage.getItem(`cartId__${catalogId}`) || '';
+    if (!auth) {
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart(''));
+      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
+      return cartResponse.id;
+    }
+    localStorage.removeItem(`cartId__${catalogId}`);
+    this.cartId = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || ''));
+    if (!this.cartId?.id) {
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
+      this.cartId = cartResponse;
+      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
+      return cartResponse.id;
+    }
+    return this.cartId.id;
   }
 
   setCartId(catalogId: string | undefined, cartId: string) {
@@ -67,8 +82,12 @@ export class CartService {
   }
 
   async getApiItems(catalogId: string | undefined) {
-    const cartId = await this.getCartId(catalogId);
-    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId));
+    this.items = [];
+    let cartId;
+    if(!this.cartId){
+      cartId = await this.getCartId(catalogId);
+    }
+    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cartId.id));
     this.items = cartResponse.items || [];
     return cartResponse;
   }

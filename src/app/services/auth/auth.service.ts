@@ -5,6 +5,7 @@ import {Client} from "../../interfaces/client";
 import {ClientService} from "../client/client.service";
 import {lastValueFrom, Observable} from "rxjs";
 import firebase from "firebase/compat";
+import {CartService} from "../cart.service";
 
 @Injectable({
   providedIn: 'root'

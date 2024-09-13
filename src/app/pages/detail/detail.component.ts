@@ -1,20 +1,23 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { Customization } from "../../interfaces/customization";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { Product } from "../../interfaces/product";
-import { CartService } from "../../services/cart.service";
+import { Component } from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {Product} from "../../interfaces/product";
+import {CartService} from "../../services/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../services/product/product.service";
+import {Customization} from "../../interfaces/customization";
 import {CartItem} from "../../interfaces/cart-item";
 import {Option} from "../../interfaces/option";
+import {Store} from "../../interfaces/store";
+import {StoreService} from "../../services/store/store.service";
+import {Location} from "@angular/common";
+import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
-
+export class DetailComponent {
   form: FormGroup = this.formBuilder.group({
     quantity: [1],
     product: null,
@@ -23,9 +26,10 @@ export class DetailComponent implements OnInit {
   });
 
   error: boolean = false;
-  menuId: string | undefined = this.activatedRoute.snapshot.paramMap.get('menuId') || undefined;
+  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   productId: string | undefined = this.activatedRoute.snapshot.paramMap.get('productId') || undefined;
   cartItem: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('cartItem') || undefined;
+  store: Store = {};
   product: Product = {
     id: '',
     title: '',
@@ -49,16 +53,27 @@ export class DetailComponent implements OnInit {
     private cartService: CartService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private productService: ProductService
-  ) { }
+    private productService: ProductService,
+    private storeService: StoreService,
+    private location: Location,
+    private analytics: AngularFireAnalytics
+  ) {
+    this.analytics.logEvent('detail_view', {
+      catalogId: this.catalogId,
+      productId: this.productId
+    })
+  }
 
   ngOnInit(): void {
-    if(!this.menuId || !this.productId) {
+
+    this.store = this.storeService.getStoreFromLocalStorage();
+
+    if(!this.catalogId || !this.productId) {
       return;
     }
 
     if(!this.cartItem) {
-      this.productService.getProduct(this.menuId, this.productId)
+      this.productService.getProduct(this.catalogId, this.productId)
         .subscribe({
           next: (product) => {
             this.product = product;
@@ -70,7 +85,7 @@ export class DetailComponent implements OnInit {
         })
     } else {
 
-      const cartItem = this.cartService.getItem(this.cartItem, this.menuId);
+      const cartItem = this.cartService.getItem(this.cartItem, this.catalogId);
 
       if(cartItem.product) {
         this.product = cartItem.product;
@@ -82,14 +97,14 @@ export class DetailComponent implements OnInit {
   }
 
   initForm() {
-    const selected = (answer: Customization) => {
-      return answer.max === 1 ? {
+    const selected = (customization: Customization) => {
+      return customization.max === 1 ? {
         selected: this.formBuilder.control({
-          value: answer.options.map((option, index) => (answer.max === 1 && index == 0) ? option : false),
+          value: customization.options.map((option, index) => (customization.max === 1 && index === customization.options.map((product) => product.isActive).indexOf(true)) ? option : false),
           disabled: false
         })
       } : {
-        selected: this.formBuilder.array(answer.options.map((option, index) => this.formBuilder.control({value: (answer.max === 1 && index == 0) ? option : false, disabled: false })))
+        selected: this.formBuilder.array(customization.options.map((option, index) => this.formBuilder.control({value: (customization.max === 1 && index == 0) ? option : false, disabled: !option.isActive })))
       }
     }
 
@@ -98,10 +113,10 @@ export class DetailComponent implements OnInit {
       quantity: [1],
       product: this.product,
       comment: [''],
-      selections: this.formBuilder.array(this.product?.customizations?.map((answer) => {
+      selections: this.formBuilder.array(this.product?.customizations?.map((customization) => {
         return this.formBuilder.group({
-          id: [answer?.id],
-          ...selected(answer)
+          id: [customization?.id],
+          ...selected(customization)
         });
       }) || [])
     });
@@ -111,14 +126,14 @@ export class DetailComponent implements OnInit {
     return (this.form.get('selections') as FormArray).at(index) as FormGroup;
   }
 
-  addItem() {
-    this.cartService.addItem(this.form.getRawValue(), this.menuId);
-    this.router.navigate([`/menu/${this.menuId}`])
+  async addItem() {
+    await this.cartService.addItem(this.form.getRawValue(), this.catalogId);
+    this.location.back();
   }
 
-  updateItem() {
-    this.cartService.updateItem(this.form.getRawValue(), this.menuId)
-    this.router.navigate([`/menu/${this.menuId}`])
+  async updateItem() {
+    await this.cartService.updateItem(this.form.getRawValue(), this.catalogId)
+    this.location.back();
   }
 
   get price() {
@@ -127,9 +142,9 @@ export class DetailComponent implements OnInit {
     const extras = data?.selections?.map((value) => {
       return (value.selected.filter((value) => value !== false) as Array<Option>)
         .map((value) => value.price)
-        .reduce((acc, next) => acc + next.amount, 0)
+        .reduce((acc, next) => acc + next.amount - (next.discount || 0), 0)
     }).reduce((acc, next) => acc + next, 0);
-    return (this.product.price.amount + extras) * data.quantity;
+    return (this.product.price.amount - (this.product.price.discount || 0) + extras) * data.quantity;
   }
 
 }

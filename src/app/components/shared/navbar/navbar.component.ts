@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
+import {ActivatedRoute} from "@angular/router";
+import {CartService} from "../../../services/cart.service";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +14,11 @@ export class NavbarComponent implements OnInit {
   image: string | undefined;
   loading: boolean = true;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private cartService: CartService
+  ) { }
 
   async ngOnInit(): Promise<void> {
 
@@ -22,8 +28,12 @@ export class NavbarComponent implements OnInit {
 
   async login() {
     const auth = await this.authService.login();
-
     this.image = (auth.additionalUserInfo?.profile as any)['picture'];
+    const catalogId = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
+
+    if(catalogId) {
+      await this.cartService.getCartId(catalogId);
+    }
   }
 
   logout() {
