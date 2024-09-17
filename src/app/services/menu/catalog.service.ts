@@ -15,32 +15,29 @@ export class CatalogService {
   constructor(private httpClient: HttpClient) { }
 
   getCatalog(id: string): Observable<Catalog> {
+    // @ts-ignore
     return this.httpClient.get<Catalog>(`${backendConstants.baseUrl}/catalogs/${id}`)
       .pipe(
         map((catalog) => {
 
-          const categories = catalog.products?.map((product) => product.category) as Category[];
+          const categories = Array.from(
+            new Map(
+              // @ts-ignore
+              catalog.products?.map((product) => [product.category.id, { ...product.category, products: [] }])
+            ).values()
+          );
 
-          const uniqueCategoryId = new Set();
-
-          const uniqueCategories = categories.filter((value, index) => {
-            if(!uniqueCategoryId.has(value.id)) {
-              uniqueCategoryId.add(value.id);
-              return true;
-            }
-            return false;
-          }, new Set)
-
-          uniqueCategories.forEach((category) => {
+          categories.forEach((category) => {
+            // @ts-ignore
             category.products = catalog.products
-              ?.filter((value) => value.category?.id === category.id)
-              ?.filter((value) => value.isVisible)
-              ?.filter((value) => value.isActive) as Product[]
-          })
+              ?.filter((product) => product.category?.id === category.id)
+              ?.filter((product) => product.isVisible && product.isActive) as Product[];
+          });
 
           return  {
             ...catalog,
-            categories: uniqueCategories.filter((category) => category.products.length > 0).sort((a, b) => a.order - b.order)
+            // @ts-ignore
+            categories: categories.filter((category) => category.products.length > 0).sort((a, b) => a.order - b.order),
           }
         }
       ));
