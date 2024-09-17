@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.cartService.clearCart();
   }
 
   setAuthUserData() {

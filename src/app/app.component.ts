@@ -10,7 +10,9 @@ export class AppComponent implements OnInit {
   title = 'menuexpert-front';
   showBanner: boolean = false;
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+  ) {
     translate.setDefaultLang('es');
     translate.use('es');
   }

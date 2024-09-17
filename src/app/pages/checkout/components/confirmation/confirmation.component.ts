@@ -39,6 +39,7 @@ export class ConfirmationComponent implements OnInit{
   availableType = this.availableTypes['default'];
 
   status: string | null = this.activatedRoute.snapshot.queryParamMap.get('status');
+  base_url = localStorage.getItem('base_url');
 
   constructor(private activatedRoute: ActivatedRoute) {
   }
@@ -51,4 +52,5 @@ export class ConfirmationComponent implements OnInit{
 
   }
 
+  protected readonly localStorage = localStorage;
 }

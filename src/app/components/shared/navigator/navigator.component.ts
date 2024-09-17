@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Location} from '@angular/common';
 
 @Component({
@@ -8,11 +8,17 @@ import {Location} from '@angular/common';
 })
 export class NavigatorComponent {
 
+  @Input() customNavigation: string = '';
+
   constructor(private location: Location) {
   }
 
   back() {
     this.location.back();
+  }
+
+  navigateTo() {
+    window.location.href = this.customNavigation;
   }
 
 }

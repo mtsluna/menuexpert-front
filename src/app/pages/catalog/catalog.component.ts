@@ -35,10 +35,11 @@ export class CatalogComponent implements OnInit {
     private cartService: CartService,
     private menuService: CatalogService,
     private storeService: StoreService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    localStorage.setItem('base_url', this.router.url)
     if(!this.cartService.getItems().length) {
       this.cartService.getApiItems(this.catalogId || '')
     }

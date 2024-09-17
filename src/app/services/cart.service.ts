@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {debounceTime, distinctUntilChanged, firstValueFrom, reduce, Subject} from "rxjs";
+import {BehaviorSubject, debounceTime, distinctUntilChanged, firstValueFrom, reduce, Subject} from "rxjs";
 import {CartItem} from "../interfaces/cart-item";
 import * as uuid from 'uuid';
 import {Option} from "../interfaces/option";
@@ -15,7 +15,7 @@ export class CartService {
 
   private items: Array<CartItem> = [];
   private subject: Subject<CartItem> = new Subject();
-  private cartId!: ICartApiCreateResponse;
+  private cart!: ICartApiCreateResponse;
 
   constructor(
     private cartApiService: CartApiService,
@@ -63,14 +63,17 @@ export class CartService {
       return cartResponse.id;
     }
     localStorage.removeItem(`cartId__${catalogId}`);
-    this.cartId = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || ''));
-    if (!this.cartId?.id) {
+    this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || ''));
+    if (!this.cart?.id) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
-      this.cartId = cartResponse;
+      this.cart = cartResponse;
       localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
       return cartResponse.id;
     }
-    return this.cartId.id;
+    if(this.cart.items) {
+      this.items = this.cart.items;
+    }
+    return this.cart.id;
   }
 
   setCartId(catalogId: string | undefined, cartId: string) {
@@ -84,10 +87,10 @@ export class CartService {
   async getApiItems(catalogId: string | undefined) {
     this.items = [];
     let cartId;
-    if(!this.cartId){
+    if(!this.cart){
       cartId = await this.getCartId(catalogId);
     }
-    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cartId.id));
+    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cart.id));
     this.items = cartResponse.items || [];
     return cartResponse;
   }
@@ -132,6 +135,10 @@ export class CartService {
       this.items.splice(index, 1);
     }
 
+  }
+
+  clearCart() {
+    this.items = [];
   }
 
   getCurrency(catalogId: string | undefined) {
