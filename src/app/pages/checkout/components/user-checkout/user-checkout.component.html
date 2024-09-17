@@ -26,6 +26,6 @@
       <input formControlName="address" name="address" matInput placeholder="Ex. Belgrano 815, Mendoza, Argentina">
         <mat-error *ngIf="form.get('address')?.hasError('required')">La dirección es requerida</mat-error>
     </mat-form-field>
-    <button (click)="saveAndGo()" [disabled]="!form.valid" class="user-checkout__button" mat-flat-button color="primary">IR A MERCADOPAGO</button>
+    <button (click)="saveAndGo()" [disabled]="!form.valid" class="user-checkout__button" mat-flat-button color="primary" mat-dialog-close>IR A MERCADOPAGO</button>
   </form>
 </div>

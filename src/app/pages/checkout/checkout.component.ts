@@ -57,10 +57,17 @@ export class CheckoutComponent {
 
     const { content } = await firstValueFrom(this.clientService.search(user?.uid || '', 'google.com'));
 
-    const [client] = content;
+    let [client] = content;
 
-    if(!client || (!client.email || !client.address || !client.phone)) {
+    if(!client) {
+      const internalUser = await this.authService.login();
 
+      const { content } = await firstValueFrom(this.clientService.search(internalUser.user?.uid || '', 'google.com'));
+
+      [client] = content;
+    }
+
+    if(!client.email || !client.address || !client.phone) {
       const dialogRef = this.matDialog.open(UserCheckoutComponent, {
         maxWidth: '100vw',
         maxHeight: '100vh',
@@ -73,19 +80,18 @@ export class CheckoutComponent {
         }
       })
 
-      dialogRef.afterClosed().subscribe(result => {
-        this.loading = false;
-      });
-    } else {
-      this.checkoutService.postCheckout(
-        this.cartId || '',
-        this.storeId || ''
-      ).subscribe({
-        next: (checkout) => {
-          window.location.href = checkout.initPoint;
-        }
-      })
+      await firstValueFrom(dialogRef.afterClosed());
     }
+
+    this.checkoutService.postCheckout(
+      this.cartId || '',
+      this.storeId || ''
+    ).subscribe({
+      next: (checkout) => {
+        window.location.href = checkout.initPoint;
+      }
+    })
+    this.loading = false;
   }
 
   paymentTypeEvent(paymentType: PaymentType) {
