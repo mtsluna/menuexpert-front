@@ -15,7 +15,7 @@ export class CartService {
 
   private items: Array<CartItem> = [];
   private subject: Subject<CartItem> = new Subject();
-  private cart!: ICartApiCreateResponse;
+  private cart: ICartApiCreateResponse | null = null;
 
   constructor(
     private cartApiService: CartApiService,
@@ -63,11 +63,10 @@ export class CartService {
       return cartResponse.id;
     }
     localStorage.removeItem(`cartId__${catalogId}`);
-    this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || ''));
+    this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
     if (!this.cart?.id) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
       this.cart = cartResponse;
-      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
       return cartResponse.id;
     }
     if(this.cart.items) {
@@ -90,7 +89,7 @@ export class CartService {
     if(!this.cart){
       cartId = await this.getCartId(catalogId);
     }
-    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cart.id));
+    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cart?.id || ''));
     this.items = cartResponse.items || [];
     return cartResponse;
   }
