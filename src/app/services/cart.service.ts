@@ -3,7 +3,7 @@ import {BehaviorSubject, debounceTime, distinctUntilChanged, firstValueFrom, red
 import {CartItem} from "../interfaces/cart-item";
 import * as uuid from 'uuid';
 import {Option} from "../interfaces/option";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {CartApiService} from "./cart-api/cart-api.service";
 import {AuthService} from "./auth/auth.service";
 import {ICartApiCreateResponse} from "./cart-api/interfaces";

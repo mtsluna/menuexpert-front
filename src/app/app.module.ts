@@ -13,7 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingInterceptor} from "./middlewares/loading.interceptor";
@@ -33,57 +33,49 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterOutlet,
-    MatSelectModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    BrowserModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatSidenavModule,
-    SharedModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFireAnalyticsModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    TranslateModule.forRoot(
-      {
-        loader: {
-          provide: TranslateLoader,
-          useFactory: (createTranslateLoader),
-          deps: [HttpClient]
+@NgModule({ declarations: [
+        AppComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        RouterOutlet,
+        MatSelectModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        BrowserModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatSidenavModule,
+        SharedModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFireAnalyticsModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            },
+            defaultLanguage: 'es'
+        }),
+        CartModule], providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingInterceptor,
+            multi: true
         },
-        defaultLanguage: 'es'
-      }
-    ),
-    CartModule,
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true
-    },
-    provideNgxMask(),
-    ScreenTrackingService,
-    UserTrackingService
-  ],
-  bootstrap: [AppComponent]
-})
+        provideNgxMask(),
+        ScreenTrackingService,
+        UserTrackingService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

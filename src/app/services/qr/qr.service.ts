@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import backendConstants from "../../constants/backend-constants";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Qr} from "../../interfaces/qr";
 
 @Injectable({
