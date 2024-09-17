@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, debounceTime, distinctUntilChanged, firstValueFrom, reduce, Subject} from "rxjs";
+import { firstValueFrom, Subject} from "rxjs";
 import {CartItem} from "../interfaces/cart-item";
-import * as uuid from 'uuid';
-import {Option} from "../interfaces/option";
-import { HttpClient } from "@angular/common/http";
 import {CartApiService} from "./cart-api/cart-api.service";
 import {AuthService} from "./auth/auth.service";
 import {ICartApiCreateResponse} from "./cart-api/interfaces";
+import { LocalStorageService } from "./localStorage/local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +17,8 @@ export class CartService {
 
   constructor(
     private cartApiService: CartApiService,
-    private authService: AuthService
+    private authService: AuthService,
+    private localStorageService: LocalStorageService
   ) {
   }
 
@@ -54,15 +53,15 @@ export class CartService {
 
   async getCartId(catalogId: string | undefined): Promise<string> {
     const auth = await firstValueFrom(this.authService.getUser());
-    if (!auth && localStorage.getItem(`cartId__${catalogId}`)) {
-      return localStorage.getItem(`cartId__${catalogId}`) || '';
+    if (!auth && this.localStorageService.getItem(`cartId__${catalogId}`)) {
+      return this.localStorageService.getItem(`cartId__${catalogId}`) || '';
     }
     if (!auth) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(''));
-      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
+      this.localStorageService.setItem(`cartId__${catalogId}`, cartResponse.id);
       return cartResponse.id;
     }
-    localStorage.removeItem(`cartId__${catalogId}`);
+    this.localStorageService.removeItem(`cartId__${catalogId}`);
     this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
     if (!this.cart?.id) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
@@ -76,7 +75,7 @@ export class CartService {
   }
 
   setCartId(catalogId: string | undefined, cartId: string) {
-    localStorage.setItem(`cartId__${catalogId}`, cartId);
+    this.localStorageService.setItem(`cartId__${catalogId}`, cartId);
   }
 
   getItems(): Array<CartItem> {

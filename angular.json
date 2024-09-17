@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/menuexpert-front",
+            "outputPath": "dist/menuexpert-front/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -35,6 +35,12 @@
           },
           "configurations": {
             "production": {
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -99,6 +105,65 @@
         },
         "deploy": {
           "builder": "angular-cli-ghpages:deploy"
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/menuexpert-front/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "buildOptimizer": true,
+              "outputHashing": "media",
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
+              "vendorChunk": false
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "menuexpert-front:build:development",
+              "serverTarget": "menuexpert-front:server:development"
+            },
+            "production": {
+              "browserTarget": "menuexpert-front:build:production",
+              "serverTarget": "menuexpert-front:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "menuexpert-front:build:production",
+              "serverTarget": "menuexpert-front:server:production"
+            },
+            "development": {
+              "browserTarget": "menuexpert-front:build:development",
+              "serverTarget": "menuexpert-front:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

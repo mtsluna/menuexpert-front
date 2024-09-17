@@ -4,19 +4,21 @@ import backendConstants from "../../constants/backend-constants";
 import {Observable} from "rxjs";
 import {Store} from "../../interfaces/store";
 import {map} from "rxjs/operators";
+import { LocalStorageService } from "../localStorage/local-storage.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private localStorageService: LocalStorageService) { }
 
   getStoreByCatalogId(id: string): Observable<Store> {
     return this.httpClient.get<Store>(`${backendConstants.baseUrl}/stores/by-catalog/${id}`)
       .pipe(
         map(store => {
-          localStorage.setItem("store", JSON.stringify(store));
+          this.localStorageService.setItem("store", JSON.stringify(store));
 
           return store;
         })
@@ -27,7 +29,7 @@ export class StoreService {
     return this.httpClient.get<Store>(`${backendConstants.baseUrl}/stores/${id}`)
       .pipe(
         map(store => {
-          localStorage.setItem("store", JSON.stringify(store));
+          this.localStorageService.setItem("store", JSON.stringify(store));
 
           return store;
         })
@@ -35,7 +37,7 @@ export class StoreService {
   }
 
   getStoreFromLocalStorage(): Store {
-    const storeString = localStorage.getItem("store") || '';
+    const storeString = this.localStorageService.getItem("store") || '';
     return JSON.parse(storeString);
   }
 }

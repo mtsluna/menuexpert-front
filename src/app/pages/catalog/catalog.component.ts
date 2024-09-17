@@ -6,11 +6,12 @@ import {CartService} from "../../services/cart.service";
 import {CatalogService} from "../../services/menu/catalog.service";
 import {zip} from "rxjs";
 import {StoreService} from "../../services/store/store.service";
+import { LocalStorageService } from "../../services/localStorage/local-storage.service";
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.scss']
+  styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements OnInit {
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
@@ -36,10 +37,11 @@ export class CatalogComponent implements OnInit {
     private menuService: CatalogService,
     private storeService: StoreService,
     private activatedRoute: ActivatedRoute,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
-    localStorage.setItem('base_url', this.router.url)
+    this.localStorageService.setItem("base_url", this.router.url)
     if(!this.cartService.getItems().length) {
       this.cartService.getApiItems(this.catalogId || '')
     }

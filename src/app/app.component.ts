@@ -1,5 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
+import { WindowService } from "./services/window/window.service";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
+    private windowService: WindowService
   ) {
     translate.setDefaultLang('es');
     translate.use('es');
@@ -27,7 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   private checkResolution() {
-    const width = window.innerWidth;
+    const width = this.windowService.nativeWindow?.innerWidth || 0;
     const isMobileOrTablet = width <= 1024;
 
     this.showBanner = !isMobileOrTablet;

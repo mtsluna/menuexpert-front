@@ -1,5 +1,6 @@
-import {Component, HostListener, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, HostListener, Inject, Input, OnChanges, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import {Category} from "../../../../interfaces/category";
+import { isPlatformBrowser } from "@angular/common";
 
 @Component({
   selector: 'app-section-selector',
@@ -13,7 +14,7 @@ export class SectionSelectorComponent implements OnInit, OnChanges {
   sectionsPosition: { id: string, yValue: number }[] = [];
   selected: string = '';
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: any) { }
 
   ngOnInit(): void {
     if(this.sections && this.sections[0]) {
@@ -22,10 +23,12 @@ export class SectionSelectorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.sectionsPosition = (this.sections?.map((category) => ({
-      id: category.id,
-      yValue: document.getElementById(category.id)?.getClientRects()[0].y || 0
-    }))) || []
+    if (isPlatformBrowser(this.platformId)) {
+      this.sectionsPosition = (this.sections?.map((category) => ({
+        id: category.id,
+        yValue: document.getElementById(category.id)?.getClientRects()[0].y || 0
+      }))) || []
+    }
   }
 
   onClick(id: string) {
@@ -36,23 +39,25 @@ export class SectionSelectorComponent implements OnInit, OnChanges {
 
   @HostListener('window:scroll', ['$event'])
   detectPosition() {
-    this.sectionsPosition = (this.sections?.map((category) => ({
-      id: category.id,
-      yValue: window.scrollY + (document.getElementById(category.id)?.getBoundingClientRect().y || 0)
-    }))) || [];
+    if (isPlatformBrowser(this.platformId)) {
+      this.sectionsPosition = (this.sections?.map((category) => ({
+        id: category.id,
+        yValue: window.scrollY + (document.getElementById(category.id)?.getBoundingClientRect().y || 0)
+      }))) || [];
 
-    this.sectionsPosition.sort((a, b) => a.yValue - b.yValue)
+      this.sectionsPosition.sort((a, b) => a.yValue - b.yValue)
 
 
-    let [ actual] = this.sectionsPosition
-      .filter((elem) => elem.yValue - 170 < window.scrollY)
-      .slice(-1);
+      let [actual] = this.sectionsPosition
+        .filter((elem) => elem.yValue - 170 < window.scrollY)
+        .slice(-1);
 
-    if(!actual) {
-      [ actual ] = this.sectionsPosition.slice(0, 1);
+      if (!actual) {
+        [actual] = this.sectionsPosition.slice(0, 1);
+      }
+
+      this.selected = actual.id || ''
     }
-
-    this.selected = actual.id || ''
   }
 
 }

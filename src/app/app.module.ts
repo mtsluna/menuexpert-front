@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {RouterOutlet} from "@angular/router";
-import { DetailComponent } from './pages/detail/detail.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -13,7 +12,13 @@ import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LoadingInterceptor} from "./middlewares/loading.interceptor";
@@ -76,6 +81,8 @@ export function createTranslateLoader(http: HttpClient) {
         provideNgxMask(),
         ScreenTrackingService,
         UserTrackingService,
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withFetch()),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideClientHydration()
     ] })
 export class AppModule { }
