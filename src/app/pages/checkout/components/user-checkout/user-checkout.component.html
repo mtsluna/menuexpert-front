@@ -1,0 +1,31 @@
+<div class="user-checkout">
+  <form [formGroup]="form">
+    <div class="user-checkout__header">
+      <div class="user-checkout__header__actions">
+        <button [mat-dialog-close]="true" class="contact__header__close" mat-mini-fab color="accent">
+          <mat-icon color="primary" class="contact__header__button__icon">close</mat-icon>
+        </button>
+      </div>
+      <h2 class="user-checkout__title">Carga tus datos</h2>
+      <p class="user-checkout__subtitle">Para hacerte llegar el pedido correctamente, ingresa tus datos.</p>
+    </div>
+    <mat-form-field class="user-checkout__input" appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input formControlName="email" name="email" matInput placeholder="Ex. tu.email@mail.com">
+        <mat-error *ngIf="form.get('email')?.hasError('email')">Email incorrecto</mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">El email es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field class="user-checkout__input" appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input mask="+00 0 000 000-0000" formControlName="phone" name="phone" matInput placeholder="Ex. +54 9 2615109127">
+        <mat-error *ngIf="form.get('phone')?.hasError('pattern')">Telefono incorrecto: +54 9 000 000-0000</mat-error>
+        <mat-error *ngIf="form.get('phone')?.hasError('required')">El teléfono es requerido</mat-error>
+    </mat-form-field>
+    <mat-form-field class="user-checkout__input" appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input formControlName="address" name="address" matInput placeholder="Ex. Belgrano 815, Mendoza, Argentina">
+        <mat-error *ngIf="form.get('address')?.hasError('required')">La dirección es requerida</mat-error>
+    </mat-form-field>
+    <button (click)="saveAndGo()" [disabled]="!form.valid" class="user-checkout__button" mat-flat-button color="primary" mat-dialog-close>IR A MERCADOPAGO</button>
+  </form>
+</div>

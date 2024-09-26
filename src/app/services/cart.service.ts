@@ -1,8 +1,12 @@
-import { Injectable } from '@angular/core';
-import {reduce, Subject} from "rxjs";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, debounceTime, distinctUntilChanged, firstValueFrom, reduce, Subject} from "rxjs";
 import {CartItem} from "../interfaces/cart-item";
 import * as uuid from 'uuid';
 import {Option} from "../interfaces/option";
+import {HttpClient} from "@angular/common/http";
+import {CartApiService} from "./cart-api/cart-api.service";
+import {AuthService} from "./auth/auth.service";
+import {ICartApiCreateResponse} from "./cart-api/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -11,47 +15,94 @@ export class CartService {
 
   private items: Array<CartItem> = [];
   private subject: Subject<CartItem> = new Subject();
+  private cart: ICartApiCreateResponse | null = null;
 
-  constructor() { }
+  constructor(
+    private cartApiService: CartApiService,
+    private authService: AuthService
+  ) {
+  }
 
-  addItem(cartItem: CartItem, catalogId: string | undefined) {
-    this.getCartId(catalogId);
-    this.items = this.getItems(catalogId)
+  async addItem(cartItem: CartItem, catalogId: string | undefined) {
+    let cartResponse;
+    if (!await this.getCartId(catalogId)) {
+      const auth = await firstValueFrom(this.authService.getUser());
+      cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
+      this.setCartId(catalogId, cartResponse.id);
+    }
+    cartResponse = await this.getCartId(catalogId);
 
-    cartItem.id = uuid.v4();
+    this.items = this.getItems()
+
+    const persistanceResponse = await this.persistCartApi(cartResponse, cartItem);
+
+    cartItem.id = persistanceResponse.items[persistanceResponse.items.length - 1].id;
     this.items.push(cartItem);
     this.subject.next(cartItem);
-
-    this.persistCart(catalogId);
   }
 
-  persistCart(catalogId: string | undefined) {
-    localStorage.setItem(`cart-content__${catalogId}`, JSON.stringify(this.items));
-  }
+  async persistCartApi(cartId: string, item: CartItem) {
 
-  getCartId(catalogId: string | undefined): string {
-    const cartId = localStorage.getItem(`cartId__${catalogId}`);
-
-    if(!cartId) {
-      localStorage.setItem(`cartId__${catalogId}`, uuid.v4());
+    const mappedItem = {
+      productId: item.product?.id,
+      quantity: item.quantity,
+      comment: item.comment,
+      selections: item.selections
     }
-
-    return localStorage.getItem(`cartId__${catalogId}`) || '';
+    return await firstValueFrom(this.cartApiService.addItem(cartId, mappedItem));
   }
 
-  getItems(catalogId: string | undefined): Array<CartItem> {
-    return JSON.parse(localStorage.getItem(`cart-content__${catalogId}`) || '[]')
+  async getCartId(catalogId: string | undefined): Promise<string> {
+    const auth = await firstValueFrom(this.authService.getUser());
+    if (!auth && localStorage.getItem(`cartId__${catalogId}`)) {
+      return localStorage.getItem(`cartId__${catalogId}`) || '';
+    }
+    if (!auth) {
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart(''));
+      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
+      return cartResponse.id;
+    }
+    localStorage.removeItem(`cartId__${catalogId}`);
+    this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
+    if (!this.cart?.id) {
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
+      this.cart = cartResponse;
+      return cartResponse.id;
+    }
+    if(this.cart.items) {
+      this.items = this.cart.items;
+    }
+    return this.cart.id;
+  }
+
+  setCartId(catalogId: string | undefined, cartId: string) {
+    localStorage.setItem(`cartId__${catalogId}`, cartId);
+  }
+
+  getItems(): Array<CartItem> {
+    return this.items;
+  }
+
+  async getApiItems(catalogId: string | undefined) {
+    this.items = [];
+    let cartId;
+    if(!this.cart){
+      cartId = await this.getCartId(catalogId);
+    }
+    const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cart?.id || ''));
+    this.items = cartResponse.items || [];
+    return cartResponse;
   }
 
   getItem(cartItem: string, catalogId: string | undefined): CartItem {
-    const items = this.getItems(catalogId);
+    const items = this.getItems();
 
     const index = items.findIndex((cart) => cart.id == cartItem);
     return items[index];
   }
 
   getRawItems(catalogId: string | undefined) {
-    const items = this.getItems(catalogId);
+    const items = this.getItems();
 
     return items.map((cartItem) => ({
       ...cartItem,
@@ -62,44 +113,37 @@ export class CartService {
     }))
   }
 
-  updateItem(cartItem: CartItem, catalogId: string | undefined) {
+  async updateItem(cartItem: CartItem, catalogId: string | undefined) {
 
-    if(!this.items.length) {
-      this.items = this.getItems(catalogId);
+    const mappedItem = {
+      id: cartItem.id,
+      productId: cartItem.product?.id,
+      quantity: cartItem.quantity,
+      comment: cartItem.comment,
+      selections: cartItem.selections
     }
-
-    const index = this.items.findIndex((cart) => cart.id == cartItem.id);
-
-    this.items[index] = cartItem;
-
-    this.persistCart(catalogId);
+    await firstValueFrom(this.cartApiService.updateItem(await this.getCartId(catalogId), mappedItem));
   }
 
-  removeItem(cartItem: CartItem, catalogId: string | undefined) {
+  async removeItem(cartItem: CartItem, catalogId: string | undefined) {
+
+    await firstValueFrom(this.cartApiService.removeItem(await this.getCartId(catalogId), cartItem.id || ''));
+
     const index = this.items.findIndex((cart) => cart.id == cartItem.id);
     if (index !== -1) {
       this.items.splice(index, 1);
     }
 
-    this.persistCart(catalogId);
   }
 
-  getTotal(catalogId: string | undefined) {
-    return this.getItems(catalogId).map((item) => {
-      const extras = item.selections.map((value) => {
-        return (value.selected.filter((value) => value !== false) as Array<Option>)
-          .map((value) => value.price)
-          .reduce((acc, next) => acc + next.amount - (next.discount || 0), 0)
-      }).reduce((acc, next) => acc + next, 0);
-
-      return ((item.product?.price.amount || 0) - (item.product?.price.discount || 0) + extras) * item.quantity;
-    }).reduce((acc, next) => acc + next, 0);
+  clearCart() {
+    this.items = [];
   }
 
   getCurrency(catalogId: string | undefined) {
-    const items = this.getItems(catalogId);
+    const items = this.getItems();
 
-    if(items.length > 0) {
+    if (items.length > 0) {
       // @ts-ignore
       return items[0].product.price.currency.code;
     }

@@ -8,20 +8,15 @@ import {CartItem} from "../../interfaces/cart-item";
 @Injectable({
   providedIn: 'root'
 })
-export class CheckoutService implements OnInit {
+export class CheckoutService {
 
   constructor(private httpClient: HttpClient) { }
 
-  postCheckout(cartId: string, items: Array<CartItem>): Observable<Checkout> {
+  postCheckout(cartId: string, storeId: string): Observable<Checkout> {
     return this.httpClient.post<Checkout>(`${backendConstants.baseUrl}/checkout`, {
       cartId,
-      items
+      storeId
     })
   }
 
-  ngOnInit(): void {
-    // get("https://sdk.mercadopago.com/js/v2", () => {
-    //
-    // });
-  }
 }

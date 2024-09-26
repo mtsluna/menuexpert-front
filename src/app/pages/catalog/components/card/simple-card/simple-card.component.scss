@@ -1,0 +1,75 @@
+@import "../../../../../styles/text";
+
+.simple-card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.25rem;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 0.5rem;
+
+  &__badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    font-size: 12px;
+
+    &__item {
+      color: #FFFFFF;
+      border-radius: 0 10px 0 10px;
+      padding: 0.20rem 0.50rem;
+      background-color: #21A300;
+    }
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &__title {
+      font-size: 14px;
+      font-weight: 500;
+      @include max-2-lines;
+    }
+
+    &__price {
+      font-size: 12px;
+
+      &__discount {
+        color: #989292;
+        font-size: 10px;
+        font-weight: 400;
+        text-decoration:line-through;
+      }
+    }
+
+    &__description {
+      font-size: 12px;
+      color: #989292;
+      @include max-3-lines;
+    }
+  }
+
+  &__resource {
+    height: 104px;
+    width: 104px;
+
+    &__image {
+      border-radius: 10px;
+      height: 104px;
+      width: 104px;
+      object-fit: cover;
+    }
+
+    &__no-image {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+  }
+}

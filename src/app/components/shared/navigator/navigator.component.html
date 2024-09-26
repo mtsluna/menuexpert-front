@@ -1,5 +1,5 @@
 <div class="navigator">
-  <button (click)="back()" mat-mini-fab color="accent">
+  <button (click)="customNavigation ? navigateTo() : back()" mat-mini-fab color="accent">
     <mat-icon color="primary" class="navigator__button__icon">close</mat-icon>
   </button>
 </div>
