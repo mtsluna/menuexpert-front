@@ -11,6 +11,6 @@
       </div>
     </div>
   </div>
-  <app-resume-card *ngFor="let item of itemResponse?.items;trackBy: trackByFn" [cartItem]="item" (cartItemUpdated)="handleCartItemUpdate()"></app-resume-card>
+  <app-resume-card *ngFor="let item of itemResponse?.items;trackBy: trackByFn" [cartItem]="item" (cartItemUpdated)="handleCartItemUpdate($event)"></app-resume-card>
   <app-floating-button (click)="checkout()" *ngIf="price > 0" title="ir al checkout · {{ price | currency: currency }}"></app-floating-button>
 </div>

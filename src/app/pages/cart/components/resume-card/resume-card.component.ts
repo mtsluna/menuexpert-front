@@ -25,7 +25,7 @@ export class ResumeCardComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private cartService: CartService, private router: Router,
               private activatedRoute: ActivatedRoute) {
     this.quantityUpdateSubject.pipe(
-      debounceTime(700)
+      debounceTime(500)
     ).subscribe(formEvent => this.handleQuantityUpdate(formEvent));
   }
 
@@ -89,8 +89,10 @@ export class ResumeCardComponent implements OnInit {
     const cartItem = this.form.getRawValue();
 
     if (cartItem.quantity == 0) {
-      await this.cartService.removeItem(cartItem, this.catalogId);
-      this.cartItemUpdated.emit(cartItem);
+      this.cartItemUpdated.emit({
+        cartItem,
+        action: 'remove'
+      });
       return;
     }
 
