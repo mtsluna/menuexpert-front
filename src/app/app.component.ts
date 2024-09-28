@@ -7,7 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'menuexpert-front';
+  title = 'shopexpert-front';
   showBanner: boolean = false;
 
   constructor(

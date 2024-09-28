@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'menuexpert-front'`, () => {
+  it(`should have as title 'shopexpert-front'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('menuexpert-front');
+    expect(app.title).toEqual('shopexpert-front');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('menuexpert-front app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('shopexpert-front app is running!');
   });
 });

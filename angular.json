@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "menuexpert-front": {
+    "shopexpert-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/menuexpert-front",
+            "outputPath": "dist/shopexpert-front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "menuexpert-front:build:production"
+              "buildTarget": "shopexpert-front:build:production"
             },
             "development": {
-              "buildTarget": "menuexpert-front:build:development"
+              "buildTarget": "shopexpert-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "menuexpert-front:build"
+            "buildTarget": "shopexpert-front:build"
           }
         },
         "test": {
