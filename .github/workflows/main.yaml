@@ -33,4 +33,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           export NODE_OPTIONS="--max-old-space-size=4096"
-          npm run deploy -- --base-href=https://menuexpert.app --cname=menuexpert.app
+          npm run deploy -- --base-href=https://www.shopexpert.app --cname=www.shopexpert.app
