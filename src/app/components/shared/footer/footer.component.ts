@@ -6,6 +6,7 @@ import {ContactComponent} from "../contact/contact.component";
 import {AuthService} from "../../../services/auth/auth.service";
 import {firstValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TermsAndConditionsComponent} from "../terms-and-conditions/terms-and-conditions.component";
 
 @Component({
   selector: 'app-footer',
@@ -27,6 +28,16 @@ export class FooterComponent {
 
   get hasCartItems() {
     return this.cartService.getItems().length !== 0;
+  }
+
+  openTermsAndConditions() {
+    this.matDialog.open(TermsAndConditionsComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal'
+    })
   }
 
   async openContact() {
