@@ -62,6 +62,11 @@ export class CartService {
       localStorage.setItem(`cartId`, cartResponse.id);
       return cartResponse.id;
     }
+    if(auth && localStorage.getItem(`cartId`)) {
+      this.cart = await firstValueFrom(this.cartApiService.updateCartOwner(localStorage.getItem(`cartId`) || '', auth.uid || ''));
+      localStorage.removeItem(`cartId`);
+      return this.cart.id;
+    }
     localStorage.removeItem(`cartId`);
     this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
     if (!this.cart?.id) {

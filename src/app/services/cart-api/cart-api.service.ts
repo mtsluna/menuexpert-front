@@ -37,6 +37,10 @@ export class CartApiService {
     return this.http.delete<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/item/${itemId}`);
   }
 
+  updateCartOwner(cartId: string, userId: string): Observable<ICartApiCreateResponse> {
+    return this.http.put<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/update-cart-owner/${userId}`,{});
+  }
+
   updateItem(cartId: string, cartItem: any): Observable<ICartApiCreateResponse> {
     return this.http.put<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/item`, cartItem);
   }
