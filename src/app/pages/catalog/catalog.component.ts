@@ -41,7 +41,7 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('base_url', this.router.url)
     if(!this.cartService.getItems().length) {
-      this.cartService.getApiItems(this.catalogId || '')
+      this.cartService.getApiItems()
     }
     zip(
       this.menuService.getCatalog(this.catalogId || ''),
@@ -64,7 +64,7 @@ export class CatalogComponent implements OnInit {
   }
 
   async viewCart() {
-    this.router.navigate([`/cart/${await this.cartService.getCartId(this.catalogId)}`], {
+    this.router.navigate([`/cart/${await this.cartService.getCartId()}`], {
       queryParams: {
         catalog: this.catalog.id,
         store: this.storeId

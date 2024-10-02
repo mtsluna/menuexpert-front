@@ -43,6 +43,8 @@ export class CheckoutComponent {
       catalog: this.catalogId
     })
 
+    this.cartService.getApiItems();
+
     this.store$ = this.activatedRoute.data.pipe(map(data => data['store']))
   }
 

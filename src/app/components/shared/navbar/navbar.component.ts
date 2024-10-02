@@ -16,7 +16,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute,
     private cartService: CartService
   ) { }
 
@@ -29,11 +28,8 @@ export class NavbarComponent implements OnInit {
   async login() {
     const auth = await this.authService.login();
     this.image = (auth.additionalUserInfo?.profile as any)['picture'];
-    const catalogId = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
+    await this.cartService.getCartId();
 
-    if(catalogId) {
-      await this.cartService.getCartId(catalogId);
-    }
   }
 
   logout() {

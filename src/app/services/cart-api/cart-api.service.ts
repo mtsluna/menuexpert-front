@@ -40,4 +40,8 @@ export class CartApiService {
   updateItem(cartId: string, cartItem: any): Observable<ICartApiCreateResponse> {
     return this.http.put<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/item`, cartItem);
   }
+
+  markAsPaid(cartId: string): Observable<ICartApiCreateResponse> {
+    return this.http.put<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/mark-as-paid`, {});
+  }
 }

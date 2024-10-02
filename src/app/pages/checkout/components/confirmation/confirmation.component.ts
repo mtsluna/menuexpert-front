@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {CartService} from "../../../../services/cart.service";
 
 @Component({
   selector: 'app-confirmation',
@@ -41,16 +42,23 @@ export class ConfirmationComponent implements OnInit{
   status: string | null = this.activatedRoute.snapshot.queryParamMap.get('status');
   base_url = localStorage.getItem('base_url');
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private cartService: CartService,
+  ) {
+
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
     if(this.status !== null && this.availableTypes[this.status]) {
       this.availableType = this.availableTypes[this.status]
     }
 
-  }
+    if (this.status === 'success') {
+      await this.cartService.getApiItems()
+      await this.cartService.markCartAsPaid();
+    }
 
-  protected readonly localStorage = localStorage;
+  }
 }

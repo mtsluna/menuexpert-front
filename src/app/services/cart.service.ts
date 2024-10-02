@@ -25,12 +25,12 @@ export class CartService {
 
   async addItem(cartItem: CartItem, catalogId: string | undefined) {
     let cartResponse;
-    if (!await this.getCartId(catalogId)) {
+    if (!await this.getCartId()) {
       const auth = await firstValueFrom(this.authService.getUser());
       cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
       this.setCartId(catalogId, cartResponse.id);
     }
-    cartResponse = await this.getCartId(catalogId);
+    cartResponse = await this.getCartId();
 
     this.items = this.getItems()
 
@@ -52,17 +52,18 @@ export class CartService {
     return await firstValueFrom(this.cartApiService.addItem(cartId, mappedItem));
   }
 
-  async getCartId(catalogId: string | undefined): Promise<string> {
+  async getCartId(): Promise<string> {
+    const randomUUID = uuid.v4();
     const auth = await firstValueFrom(this.authService.getUser());
-    if (!auth && localStorage.getItem(`cartId__${catalogId}`)) {
-      return localStorage.getItem(`cartId__${catalogId}`) || '';
+    if (!auth && localStorage.getItem(`cartId__${randomUUID}`)) {
+      return localStorage.getItem(`cartId__${randomUUID}`) || '';
     }
     if (!auth) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(''));
-      localStorage.setItem(`cartId__${catalogId}`, cartResponse.id);
+      localStorage.setItem(`cartId__${randomUUID}`, cartResponse.id);
       return cartResponse.id;
     }
-    localStorage.removeItem(`cartId__${catalogId}`);
+    localStorage.removeItem(`cartId__${randomUUID}`);
     this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
     if (!this.cart?.id) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
@@ -83,14 +84,15 @@ export class CartService {
     return this.items;
   }
 
-  async getApiItems(catalogId: string | undefined) {
+  async getApiItems() {
     this.items = [];
     let cartId;
     if(!this.cart){
-      cartId = await this.getCartId(catalogId);
+      cartId = await this.getCartId();
     }
     const cartResponse = await firstValueFrom(this.cartApiService.getCart(cartId || this.cart?.id || ''));
     this.items = cartResponse.items || [];
+    this.cart = cartResponse;
     return cartResponse;
   }
 
@@ -101,19 +103,7 @@ export class CartService {
     return items[index];
   }
 
-  getRawItems(catalogId: string | undefined) {
-    const items = this.getItems();
-
-    return items.map((cartItem) => ({
-      ...cartItem,
-      selections: cartItem.selections.map((selection) => ({
-        ...selection,
-        selected: selection.selected.filter((selected) => selected != false)
-      }))
-    }))
-  }
-
-  async updateItem(cartItem: CartItem, catalogId: string | undefined) {
+  async updateItem(cartItem: CartItem) {
 
     const mappedItem = {
       id: cartItem.id,
@@ -122,12 +112,12 @@ export class CartService {
       comment: cartItem.comment,
       selections: cartItem.selections
     }
-    await firstValueFrom(this.cartApiService.updateItem(await this.getCartId(catalogId), mappedItem));
+    await firstValueFrom(this.cartApiService.updateItem(await this.getCartId(), mappedItem));
   }
 
-  async removeItem(cartItem: CartItem, catalogId: string | undefined) {
+  async removeItem(cartItem: CartItem) {
 
-    await firstValueFrom(this.cartApiService.removeItem(await this.getCartId(catalogId), cartItem.id || ''));
+    await firstValueFrom(this.cartApiService.removeItem(await this.getCartId(), cartItem.id || ''));
 
     const index = this.items.findIndex((cart) => cart.id == cartItem.id);
     if (index !== -1) {
@@ -148,5 +138,11 @@ export class CartService {
       return items[0].product.price.currency.code;
     }
     return ''
+  }
+
+  async markCartAsPaid() {
+    await firstValueFrom(this.cartApiService.markAsPaid(this.cart?.id || ''));
+    this.cart = null;
+    this.items = [];
   }
 }

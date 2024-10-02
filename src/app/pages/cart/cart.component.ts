@@ -30,7 +30,7 @@ export class CartComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.itemResponse = await this.cartService.getApiItems(this.catalogId);
+    this.itemResponse = await this.cartService.getApiItems();
     this.price = this.itemResponse.amount || 0;
   }
 
@@ -43,14 +43,14 @@ export class CartComponent implements OnInit {
   }
 
   async reloadItems() {
-    this.itemResponse = await this.cartService.getApiItems(this.catalogId);
+    this.itemResponse = await this.cartService.getApiItems();
     this.price = this.itemResponse.amount || 0;
   }
 
   async handleCartItemUpdate(event: { cartItem: CartItem, action: string }) {
     if(event.action === 'remove') {
       this.itemResponse.items = this.itemResponse.items.filter((item) => item.id !== event.cartItem.id);
-      await this.cartService.removeItem(event.cartItem, this.catalogId);
+      await this.cartService.removeItem(event.cartItem);
       this.clickSubject.next('skip')
     } else {
       this.clickSubject.next('proceed');

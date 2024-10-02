@@ -98,7 +98,7 @@ export class ResumeCardComponent implements OnInit {
 
     this.form = formEvent;
     this.cartItem = this.form.getRawValue();
-    await this.cartService.updateItem(cartItem, this.catalogId);
+    await this.cartService.updateItem(cartItem);
     this.cartItemUpdated.emit(this.cartItem);
   }
 

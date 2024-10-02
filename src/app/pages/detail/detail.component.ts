@@ -132,8 +132,8 @@ export class DetailComponent {
   }
 
   async updateItem() {
-    await this.cartService.updateItem(this.form.getRawValue(), this.catalogId)
-    this.location.back();
+    await this.cartService.updateItem(this.form.getRawValue())
+      this.location.back();
   }
 
   get price() {
