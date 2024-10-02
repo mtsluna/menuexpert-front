@@ -10,7 +10,6 @@ import {SimpleCardComponent} from "./components/card/simple-card/simple-card.com
 import { CatalogNotAvailableComponent } from './catalog-not-available/catalog-not-available.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatIcon} from "@angular/material/icon";
-import {NotFoundComponent} from "../../../components/shared/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -22,8 +21,8 @@ const routes: Routes = [
     component: CatalogComponent
   },
   {
-    path: '',
-    component: NotFoundComponent
+    path: ':storeName',
+    component: CatalogComponent
   },
 ];
 

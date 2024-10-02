@@ -15,6 +15,11 @@ import {StoreService} from "../../../services/store/store.service";
 export class CatalogComponent implements OnInit {
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
+  storeName: string | undefined = this.activatedRoute.snapshot.paramMap.get('storeName') || undefined;
+
+  storeMap = new Map<string, { catalogId: string, storeId: string }>([
+    ['equipatehogar', { catalogId: 'abe631e2-b424-4080-b959-e686c496751c', storeId: 'c12fc837-27ef-4cc7-bffe-5c738e788b78' }],
+  ]);
 
   catalog: Catalog = {
     id: '',
@@ -39,6 +44,15 @@ export class CatalogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    if (this.storeName && this.storeMap.has(this.storeName)) {
+      const storeData = this.storeMap.get(this.storeName);
+      if (storeData) {
+        this.catalogId = storeData.catalogId;
+        this.storeId = storeData.storeId;
+      }
+    }
+
     zip(
       this.menuService.getCatalog(this.catalogId || ''),
       this.storeService.getStoreById(this.storeId || '')
