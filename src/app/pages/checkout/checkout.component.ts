@@ -67,6 +67,8 @@ export class CheckoutComponent {
       const { content } = await firstValueFrom(this.clientService.search(internalUser.user?.uid || '', 'google.com'));
 
       [client] = content;
+
+      await this.cartService.getCartId()
     }
 
     if(!client.email || !client.address || !client.phone) {
