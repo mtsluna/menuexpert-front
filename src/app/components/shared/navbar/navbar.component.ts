@@ -32,9 +32,10 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  logout() {
-    this.authService.logout();
+  async logout() {
+    await this.authService.logout();
     this.cartService.clearCart();
+    await this.cartService.getCartId();
   }
 
   setAuthUserData() {

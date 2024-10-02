@@ -43,8 +43,8 @@ export class AuthService {
     return user;
   }
 
-  logout() {
-    this.angularFireAuth.signOut()
+  async logout() {
+    await this.angularFireAuth.signOut()
   }
 
   getSession(): Observable<firebase.User | null> {

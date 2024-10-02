@@ -53,17 +53,16 @@ export class CartService {
   }
 
   async getCartId(): Promise<string> {
-    const randomUUID = uuid.v4();
     const auth = await firstValueFrom(this.authService.getUser());
-    if (!auth && localStorage.getItem(`cartId__${randomUUID}`)) {
-      return localStorage.getItem(`cartId__${randomUUID}`) || '';
+    if (!auth && localStorage.getItem(`cartId`)) {
+      return localStorage.getItem(`cartId`) || '';
     }
     if (!auth) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(''));
-      localStorage.setItem(`cartId__${randomUUID}`, cartResponse.id);
+      localStorage.setItem(`cartId`, cartResponse.id);
       return cartResponse.id;
     }
-    localStorage.removeItem(`cartId__${randomUUID}`);
+    localStorage.removeItem(`cartId`);
     this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
     if (!this.cart?.id) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
