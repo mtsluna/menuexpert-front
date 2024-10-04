@@ -26,7 +26,7 @@ export class DetailComponent {
   });
 
   error: boolean = false;
-  catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
+  catalogId: string | undefined = localStorage.getItem('catalogId') || undefined;
   productId: string | undefined = this.activatedRoute.snapshot.paramMap.get('productId') || undefined;
   cartItem: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('cartItem') || undefined;
   store: Store = {};

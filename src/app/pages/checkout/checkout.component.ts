@@ -1,12 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {PaymentType} from "../../interfaces/payment-type";
 import {CheckoutService} from "../../services/checkout/checkout.service";
 import {CartService} from "../../services/cart.service";
 import {MatDialog} from "@angular/material/dialog";
-import {UserCheckoutComponent} from "./components/user-checkout/user-checkout.component";
 import {AuthService} from "../../services/auth/auth.service";
-import {firstValueFrom, lastValueFrom, Observable} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 import {Store} from "../../interfaces/store";
 import {map} from "rxjs/operators";

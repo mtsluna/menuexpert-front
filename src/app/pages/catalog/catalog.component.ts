@@ -48,6 +48,8 @@ export class CatalogComponent implements OnInit {
     if (this.storeName && this.storeMap.has(this.storeName)) {
       const storeData = this.storeMap.get(this.storeName);
       if (storeData) {
+        localStorage.setItem('catalogId', storeData.catalogId);
+        localStorage.setItem('storeId', storeData.storeId);
         this.catalogId = storeData.catalogId;
         this.storeId = storeData.storeId;
       }
