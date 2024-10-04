@@ -22,6 +22,10 @@ const routes: Routes = [
     component: CatalogComponent
   },
   {
+    path: ':storeName',
+    component: CatalogComponent
+  },
+  {
     path: '',
     component: NotFoundComponent
   },
