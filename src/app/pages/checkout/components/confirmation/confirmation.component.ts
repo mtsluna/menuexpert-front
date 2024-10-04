@@ -56,8 +56,8 @@ export class ConfirmationComponent implements OnInit{
     }
 
     if (this.status === 'success') {
-      await this.cartService.getApiItems()
-      await this.cartService.markCartAsPaid();
+      await this.cartService.getApiItems();
+      this.cartService.deleteCart();
     }
 
   }

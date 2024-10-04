@@ -80,6 +80,10 @@ export class CartService {
     return this.cart.id;
   }
 
+  deleteCart() {
+    localStorage.removeItem(`cartId`);
+  }
+
   setCartId(catalogId: string | undefined, cartId: string) {
     localStorage.setItem(`cartId__${catalogId}`, cartId);
   }
@@ -145,7 +149,8 @@ export class CartService {
   }
 
   async markCartAsPaid() {
-    await firstValueFrom(this.cartApiService.markAsPaid(this.cart?.id || ''));
+    // TODO: Que haces criminal de guerra, paso cybersec y dijo no daaaaa
+    // await firstValueFrom(this.cartApiService.markAsPaid(this.cart?.id || ''));
     this.cart = null;
     this.items = [];
   }

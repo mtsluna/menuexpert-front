@@ -61,31 +61,31 @@ export class CheckoutComponent {
 
     let [client] = content;
 
-    if(!client) {
-      const internalUser = await this.authService.login();
-
-      const { content } = await firstValueFrom(this.clientService.search(internalUser.user?.uid || '', 'google.com'));
-
-      [client] = content;
-
-      await this.cartService.getCartId()
-    }
-
-    if(!client.email || !client.address || !client.phone) {
-      const dialogRef = this.matDialog.open(UserCheckoutComponent, {
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        height: '100%',
-        width: '100%',
-        panelClass: 'full-screen-modal',
-        data: {
-          user,
-          client
-        }
-      })
-
-      await firstValueFrom(dialogRef.afterClosed());
-    }
+    // if(!client) {
+    //   const internalUser = await this.authService.login();
+    //
+    //   const { content } = await firstValueFrom(this.clientService.search(internalUser.user?.uid || '', 'google.com'));
+    //
+    //   [client] = content;
+    //
+    //   await this.cartService.getCartId()
+    // }
+    //
+    // if(!client.email || !client.address || !client.phone) {
+    //   const dialogRef = this.matDialog.open(UserCheckoutComponent, {
+    //     maxWidth: '100vw',
+    //     maxHeight: '100vh',
+    //     height: '100%',
+    //     width: '100%',
+    //     panelClass: 'full-screen-modal',
+    //     data: {
+    //       user,
+    //       client
+    //     }
+    //   })
+    //
+    //   await firstValueFrom(dialogRef.afterClosed());
+    // }
 
     this.checkoutService.postCheckout(
       this.cartId || '',

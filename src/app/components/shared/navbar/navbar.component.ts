@@ -25,12 +25,12 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  async login() {
-    const auth = await this.authService.login();
-    this.image = (auth.additionalUserInfo?.profile as any)['picture'];
-    await this.cartService.getCartId();
-
-  }
+  // async login() {
+  //   const auth = await this.authService.login();
+  //   this.image = (auth.additionalUserInfo?.profile as any)['picture'];
+  //   await this.cartService.getCartId();
+  //
+  // }
 
   async logout() {
     await this.authService.logout();
