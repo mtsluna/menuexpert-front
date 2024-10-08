@@ -13,11 +13,6 @@ export class PaymentsSelectorComponent {
 
   paymentTypes: Array<PaymentType> = [
     {
-      id: '1',
-      name: 'Efectivo',
-      icon: 'assets/icons/efectivo.png'
-    },
-    {
       id: '2',
       name: 'Mercadopago',
       icon: 'assets/icons/mercado-pago.png'

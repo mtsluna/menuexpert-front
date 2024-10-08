@@ -16,9 +16,6 @@
     </div>
 
     @switch (paymentType.id) {
-      @case ('1') {
-        <app-floating-button [loading]="loading" title="llamar al mozo"></app-floating-button>
-      }
       @case ('2') {
         <app-floating-button [loading]="loading" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
       }
