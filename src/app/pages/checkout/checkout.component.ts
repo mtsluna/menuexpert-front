@@ -26,7 +26,7 @@ export class CheckoutComponent {
   store$: Observable<Store>;
 
   paymentType: PaymentType = {
-    id: '1'
+    id: '2'
   };
 
   constructor(
