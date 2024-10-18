@@ -15,13 +15,17 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {NgxMaskDirective} from "ngx-mask";
 import {MatDialogClose} from "@angular/material/dialog";
 import {checkoutStoreResolver} from "./resolvers/store/checkout-store-resolver.resolver";
+import {cartResolver} from "../cart/resolvers/cart.resolver";
+import {currencyResolver} from "./resolvers/currency/currency.resolver";
 
 const routes: Routes = [
   {
     path: ':id',
     component: CheckoutComponent,
     resolve: {
-      store: checkoutStoreResolver
+      store: checkoutStoreResolver,
+      cart: cartResolver,
+      currency: currencyResolver
     }
   },
   {
