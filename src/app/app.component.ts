@@ -18,18 +18,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.checkResolution();
+    // this.checkResolution();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.checkResolution();
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: Event) {
+  //   this.checkResolution();
+  // }
 
-  private checkResolution() {
-    const width = window.innerWidth;
-    const isMobileOrTablet = width <= 1024;
-
-    this.showBanner = !isMobileOrTablet;
-  }
+  // private checkResolution() {
+  //   const width = window.innerWidth;
+  //   const isMobileOrTablet = width <= 1024;
+  //
+  //   this.showBanner = !isMobileOrTablet;
+  // }
 }

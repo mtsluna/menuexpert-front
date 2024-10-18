@@ -1,15 +1,18 @@
 <div class="detail">
   <app-navigator></app-navigator>
   <app-gallery-viewer [images]="product.image ? [product.image] : []"></app-gallery-viewer>
+  <div class="detail__holder"></div>
   <ng-container *ngIf="!error">
-    <app-image class="detail__image" [product]="product"></app-image>
-    <div class="detail__image__empty" *ngIf="!product.image"></div>
-    <div class="detail__content">
-      <app-banner [product]="product"></app-banner>
-      <app-option-selector *ngFor="let customization of product.customizations; index as i" [form]="getFormElement(i)" [enabled]="!store.cartEnabled" [customization]="customization"></app-option-selector>
-      <app-observation [hidden]="!store.cartEnabled" [form]="form"></app-observation>
-      <app-floating-button [hidden]="!store.cartEnabled" *ngIf="!this.cartItem" (click)="addItem()" title="agregar al pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
-      <app-floating-button [hidden]="!store.cartEnabled" *ngIf="this.cartItem" (click)="updateItem()" title="modificar pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
+    <div class="detail__layout">
+      <app-image class="detail__image" [product]="product"></app-image>
+      <div class="detail__image__empty" *ngIf="!product.image"></div>
+      <div class="detail__content">
+        <app-banner [product]="product"></app-banner>
+        <app-option-selector *ngFor="let customization of product.customizations; index as i" [form]="getFormElement(i)" [enabled]="!store.cartEnabled" [customization]="customization"></app-option-selector>
+        <app-observation [hidden]="!store.cartEnabled" [form]="form"></app-observation>
+        <app-floating-button [hidden]="!store.cartEnabled" *ngIf="!this.cartItem" (click)="addItem()" title="agregar al pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
+        <app-floating-button [hidden]="!store.cartEnabled" *ngIf="this.cartItem" (click)="updateItem()" title="modificar pedido · {{ price | currency: product.price.currency.code }}"></app-floating-button>
+      </div>
     </div>
   </ng-container>
 </div>

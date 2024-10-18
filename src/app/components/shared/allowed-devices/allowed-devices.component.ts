@@ -10,18 +10,18 @@ export class AllowedDevicesComponent implements OnInit {
   showBanner: boolean = false;
 
   ngOnInit() {
-    this.checkResolution();
+    // this.checkResolution();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(_: Event) {
-    this.checkResolution();
+    // this.checkResolution();
   }
 
-  private checkResolution() {
-    const width = window.innerWidth;
-    const isMobileOrTablet = width <= 1024;
-    this.showBanner = !isMobileOrTablet;
-  }
+  // private checkResolution() {
+  //   const width = window.innerWidth;
+  //   const isMobileOrTablet = width <= 1024;
+  //   this.showBanner = !isMobileOrTablet;
+  // }
 
 }

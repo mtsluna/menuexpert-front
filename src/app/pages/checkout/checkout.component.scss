@@ -1,20 +1,33 @@
 .checkout {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   &__holder {
     background: #FFFFFF;
     height: 3.75rem;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 
   &__cards {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      width: 60%;
+    }
 
     &__header {
       padding: 1rem;
       background-color: #FFFFFF;
+
+      @media (min-width: 768px) {
+        border-radius: 10px 10px 0 0;
+      }
 
       &__title {
         font-size: 1.5rem;
@@ -23,6 +36,17 @@
 
       &__subtitle {
 
+      }
+    }
+
+    &__footer {
+      height: 1.75rem;
+      background-color: #FFFFFF;
+      width: 100%;
+
+      @media (min-width: 768px) {
+        border-radius: 0 0 10px 10px;
+        width: 60%;
       }
     }
   }
