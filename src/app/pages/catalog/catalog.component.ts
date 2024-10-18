@@ -19,6 +19,7 @@ export class CatalogComponent implements OnInit {
 
   storeMap = new Map<string, { catalogId: string, storeId: string }>([
     ['equipatehogar', { catalogId: 'abe631e2-b424-4080-b959-e686c496751c', storeId: 'c12fc837-27ef-4cc7-bffe-5c738e788b78' }],
+    ['ignaciamadryn', { catalogId: 'b02e7db7-8e1f-4917-9598-ffddf68f07d4', storeId: '7100f107-eef4-4acb-bc8e-3bf2bd2e0201' }],
   ]);
 
   catalog: Catalog = {
