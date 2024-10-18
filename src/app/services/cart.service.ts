@@ -16,6 +16,7 @@ export class CartService {
   private items: Array<CartItem> = [];
   private subject: Subject<CartItem> = new Subject();
   private cart: ICartApiCreateResponse | null = null;
+  private _storeId: string | null = null;
 
   constructor(
     private cartApiService: CartApiService,
@@ -27,7 +28,7 @@ export class CartService {
     let cartResponse;
     if (!await this.getCartId()) {
       const auth = await firstValueFrom(this.authService.getUser());
-      cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
+      cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
       this.setCartId(catalogId, cartResponse.id);
     }
     cartResponse = await this.getCartId();
@@ -58,7 +59,7 @@ export class CartService {
       return localStorage.getItem(`cartId`) || '';
     }
     if (!auth) {
-      const cartResponse = await firstValueFrom(this.cartApiService.createCart(''));
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart('', this.storeId || ''));
       localStorage.setItem(`cartId`, cartResponse.id);
       return cartResponse.id;
     }
@@ -70,7 +71,7 @@ export class CartService {
     localStorage.removeItem(`cartId`);
     this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
     if (!this.cart?.id) {
-      const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth));
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
       this.cart = cartResponse;
       return cartResponse.id;
     }
@@ -148,10 +149,11 @@ export class CartService {
     return ''
   }
 
-  async markCartAsPaid() {
-    // TODO: Que haces criminal de guerra, paso cybersec y dijo no daaaaa
-    // await firstValueFrom(this.cartApiService.markAsPaid(this.cart?.id || ''));
-    this.cart = null;
-    this.items = [];
+  get storeId(): string | null {
+    return this._storeId;
+  }
+
+  set storeId(value: string | null) {
+    this._storeId = value;
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import backendConstants from "../../constants/backend-constants";
 import {Observable} from "rxjs";
 import {ICartApiCreateResponse} from "./interfaces";
@@ -10,13 +10,14 @@ import {ICartApiCreateResponse} from "./interfaces";
 export class CartApiService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
-  createCart(client: any): Observable<ICartApiCreateResponse> {
+  createCart(client: any, storeId: string): Observable<ICartApiCreateResponse> {
     return this.http.get<ICartApiCreateResponse>(backendConstants.baseUrl + '/carts/create', {
       params: {
-        userId: client.uid || ''
+        userId: client.uid || '',
+        storeId: storeId
       }
     });
   }
@@ -43,9 +44,5 @@ export class CartApiService {
 
   updateItem(cartId: string, cartItem: any): Observable<ICartApiCreateResponse> {
     return this.http.put<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/item`, cartItem);
-  }
-
-  markAsPaid(cartId: string): Observable<ICartApiCreateResponse> {
-    return this.http.put<ICartApiCreateResponse>(backendConstants.baseUrl + `/carts/${cartId}/mark-as-paid`, {});
   }
 }
