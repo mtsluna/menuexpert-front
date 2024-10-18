@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="cart__cards__items">
-    <app-resume-card *ngFor="let item of itemResponse?.items;trackBy: trackByFn" [cartItem]="item" (cartItemUpdated)="handleCartItemUpdate($event)"></app-resume-card>
+    <app-resume-card *ngFor="let item of cart?.items;trackBy: trackByFn" [cartItem]="item" (cartItemUpdated)="handleCartItemUpdate($event)"></app-resume-card>
   </div>
   <div class="cart__cards__footer"></div>
   <app-floating-button (click)="checkout()" *ngIf="price > 0" title="ir al checkout · {{ price | currency: currency }}"></app-floating-button>

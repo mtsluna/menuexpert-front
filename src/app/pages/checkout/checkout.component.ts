@@ -32,8 +32,6 @@ export class CheckoutComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private checkoutService: CheckoutService,
-    private cartService: CartService,
-    private matDialog: MatDialog,
     private authService: AuthService,
     private analytics: AngularFireAnalytics,
     private clientService: ClientService
@@ -42,7 +40,7 @@ export class CheckoutComponent {
       catalog: this.catalogId
     })
 
-    this.cartService.getApiItems();
+    this.activatedRoute.data.pipe(map(data => data['cart']))
 
     this.store$ = this.activatedRoute.data.pipe(map(data => data['store']))
   }
