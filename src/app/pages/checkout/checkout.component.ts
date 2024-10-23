@@ -10,6 +10,9 @@ import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 import {Store} from "../../interfaces/store";
 import {map} from "rxjs/operators";
 import {ClientService} from "../../services/client/client.service";
+import {AuthComponent} from "../auth/auth.component";
+import {LoginComponent} from "../auth/login/login.component";
+import {RegisterComponent} from "../auth/register/register.component";
 
 @Component({
   selector: 'app-checkout',
@@ -34,7 +37,9 @@ export class CheckoutComponent {
     private checkoutService: CheckoutService,
     private authService: AuthService,
     private analytics: AngularFireAnalytics,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private matDialog: MatDialog,
+    private cartService: CartService
   ) {
     this.analytics.logEvent('checkout_view', {
       catalog: this.catalogId
@@ -54,35 +59,27 @@ export class CheckoutComponent {
 
     const user = await firstValueFrom(this.authService.getSession());
 
-    const { content } = await firstValueFrom(this.clientService.search(user?.uid || '', 'google.com'));
+    if(!user){
+      const matDialogRef = this.matDialog.open(AuthComponent, {
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
+        data: {
+          displayForm: 'register',
+          modal: true
+        },
+      })
 
-    let [client] = content;
+      const currentUser = await firstValueFrom(matDialogRef.afterClosed());
 
-    // if(!client) {
-    //   const internalUser = await this.authService.login();
-    //
-    //   const { content } = await firstValueFrom(this.clientService.search(internalUser.user?.uid || '', 'google.com'));
-    //
-    //   [client] = content;
-    //
-    //   await this.cartService.getCartId()
-    // }
-    //
-    // if(!client.email || !client.address || !client.phone) {
-    //   const dialogRef = this.matDialog.open(UserCheckoutComponent, {
-    //     maxWidth: '100vw',
-    //     maxHeight: '100vh',
-    //     height: '100%',
-    //     width: '100%',
-    //     panelClass: 'full-screen-modal',
-    //     data: {
-    //       user,
-    //       client
-    //     }
-    //   })
-    //
-    //   await firstValueFrom(dialogRef.afterClosed());
-    // }
+      if (!currentUser) {
+        this.loading = false;
+        return;
+      }
+
+    }
 
     this.checkoutService.postCheckout(
       this.cartId || '',

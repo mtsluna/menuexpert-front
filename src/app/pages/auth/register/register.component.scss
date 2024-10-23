@@ -1,0 +1,45 @@
+.form-container {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
+
+  &__title {
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 0.75rem;
+
+  &__item {
+    width: 60%;
+  }
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .register-form {
+    &__item {
+      width: 100%;
+    }
+  }
+}

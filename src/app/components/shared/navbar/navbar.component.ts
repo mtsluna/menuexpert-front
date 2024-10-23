@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 
 @Component({
@@ -16,21 +16,17 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) { }
 
   async ngOnInit(): Promise<void> {
-
     this.setAuthUserData();
-
   }
 
-  // async login() {
-  //   const auth = await this.authService.login();
-  //   this.image = (auth.additionalUserInfo?.profile as any)['picture'];
-  //   await this.cartService.getCartId();
-  //
-  // }
+  async login() {
+    await this.router.navigate(['/auth/login']);
+  }
 
   async logout() {
     await this.authService.logout();
@@ -46,4 +42,7 @@ export class NavbarComponent implements OnInit {
     })
   }
 
+  navigateToBaseUrl() {
+    return localStorage.getItem('base_url');
+  }
 }

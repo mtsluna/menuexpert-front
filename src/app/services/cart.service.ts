@@ -64,7 +64,8 @@ export class CartService {
       return cartResponse.id;
     }
     if(auth && localStorage.getItem(`cartId`)) {
-      this.cart = await firstValueFrom(this.cartApiService.updateCartOwner(localStorage.getItem(`cartId`) || '', auth.uid || ''));
+      this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth.uid || ''));
+      //TODO: delete old cart
       localStorage.removeItem(`cartId`);
       return this.cart.id;
     }

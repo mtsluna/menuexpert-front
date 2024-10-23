@@ -1,0 +1,41 @@
+<div class="main-container" *ngIf="!modal else modalTemplate">
+  <app-navbar></app-navbar>
+  <ng-container>
+    <div class="auth auth__white-space" [ngSwitch]="displayForm">
+      <ng-container *ngSwitchCase="'login'">
+        <app-login (handleSwitchForm)="displayForm=$event"></app-login>
+      </ng-container>
+      <ng-container *ngSwitchCase="'register'">
+        <app-register (handleSwitchForm)="displayForm=$event"></app-register>
+      </ng-container>
+    </div>
+  </ng-container>
+  <app-footer></app-footer>
+</div>
+<ng-template #modalTemplate>
+  <div class="auth auth__white-space" [ngSwitch]="displayForm">
+    <div class="close">
+      <button [mat-dialog-close]="null" class="contact__header__close" mat-mini-fab color="accent">
+        <mat-icon color="primary" class="contact__header__button__icon">close</mat-icon>
+      </button>
+    </div>
+    <ng-container *ngSwitchCase="'login'">
+      <app-login
+        [modalMode]="modal"
+        [ngStyle]="{'margin-top': modal ? '2rem': ''}"
+        (handleSwitchForm)="displayForm=$event"
+        (handleLogin)="handleEvent($event)"
+      ></app-login>
+    </ng-container>
+    <ng-container *ngSwitchCase="'register'">
+      <app-register
+        [modalMode]="modal"
+        [ngStyle]="{'margin-top': modal ? '2rem': ''}"
+        (handleSwitchForm)="displayForm=$event"
+        (handleRegister)="handleEvent($event)"
+      ></app-register>
+    </ng-container>
+  </div>
+</ng-template>
+
+

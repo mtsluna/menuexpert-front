@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-import {Client} from "../../interfaces/client";
 import {ClientService} from "../client/client.service";
-import {lastValueFrom, Observable} from "rxjs";
-import firebase from "firebase/compat";
-import {CartService} from "../cart.service";
+import {Observable} from "rxjs";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +14,8 @@ export class AuthService {
     private angularFireAuth: AngularFireAuth,
     private clientService: ClientService
   ) {}
+
+
 
   async login() {
     // const user = await this.angularFireAuth.signInWithPopup(new GoogleAuthProvider());
@@ -42,6 +42,26 @@ export class AuthService {
     //
     // return user;
     return undefined;
+  }
+
+  async loginWithEmail(email: string, password: string) {
+    try {
+      const userCredential = await this.angularFireAuth.signInWithEmailAndPassword(email, password);
+      return userCredential.user;
+    } catch (error) {
+      console.error('Error logging in with email and password', error);
+      throw error;
+    }
+  }
+
+  async registerWithEmail(email: string, password: string) {
+    try {
+      const userCredential = await this.angularFireAuth.createUserWithEmailAndPassword(email, password);
+      return userCredential.user;
+    } catch (error) {
+      console.error('Error registering with email and password', error);
+      throw error;
+    }
   }
 
   async logout() {

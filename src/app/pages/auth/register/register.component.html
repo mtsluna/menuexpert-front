@@ -1,0 +1,30 @@
+<div class="form-container">
+  <div class="form-container__title">
+    <h2>Registrate</h2>
+    <p>Dejanos tus datos para poder seguir disfrutando de nuestra experiencia</p>
+  </div>
+  <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
+    <mat-form-field appearance="outline" class="register-form__item">
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="register-form__item">
+      <mat-label>Teléfono/celular</mat-label>
+      <input mask="+00 0 000 000-0000" matInput formControlName="phone" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="register-form__item">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="register-form__item">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="register-form__item" type="submit"
+            [disabled]="registerForm.invalid">Iniciar sesión
+    </button>
+  </form>
+</div>
+<div class="login-container">
+  <small>Si ya tienes tu cuenta: <span class="link" (click)="goToLogin()">Inicia sesión</span></small>
+</div>

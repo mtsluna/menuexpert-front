@@ -24,6 +24,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxMaskDirective} from "ngx-mask";
 import {MatSelectModule} from "@angular/material/select";
 import {GalleryModule} from "@ks89/angular-modal-gallery";
+import {RouterLink} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -39,24 +40,25 @@ import {GalleryModule} from "@ks89/angular-modal-gallery";
     AllowedDevicesComponent,
     ContactComponent
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    NgOptimizedImage,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatExpansionModule,
-    TranslateModule,
-    MatMenuModule,
-    FormsModule,
-    NgxMaskDirective,
-    ReactiveFormsModule,
-    MatSelectModule,
-    GalleryModule
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        NgOptimizedImage,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatExpansionModule,
+        TranslateModule,
+        MatMenuModule,
+        FormsModule,
+        NgxMaskDirective,
+        ReactiveFormsModule,
+        MatSelectModule,
+        GalleryModule,
+        RouterLink
+    ],
   exports: [
     BrandComponent,
     LoaderComponent,

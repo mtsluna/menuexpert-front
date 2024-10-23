@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {NotFoundComponent} from "./components/shared/not-found/not-found.component";
+import {authGuard} from "./pages/auth/guards/auth.guard";
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./pages/catalog/catalog.module').then(m => m.CatalogModule) },
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: 'qr', loadChildren: () => import('./pages/qr/qr.module').then(m => m.QrModule) },
   { path: 'cart', loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule) },
   { path: 'checkout', loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule) },
+  { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule) },
   { path: '**', component: NotFoundComponent },
 ]
 
