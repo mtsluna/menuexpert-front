@@ -2,10 +2,27 @@
   z-index: 999999;
   padding: 1rem;
 
+  &__content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__form {
+    @media (min-width: 768px) {
+      width: 60%;
+    }
+  }
+
   &__header {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    @media (min-width: 768px) {
+      width: 60%;
+    }
 
     &__actions {
       display: flex;
