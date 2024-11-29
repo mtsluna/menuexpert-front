@@ -3,7 +3,6 @@ import {CartService} from "../../../services/cart.service";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {ContactComponent} from "../contact/contact.component";
-import {AuthService} from "../../../services/auth/auth.service";
 import {firstValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TermsAndConditionsComponent} from "../terms-and-conditions/terms-and-conditions.component";
@@ -21,7 +20,6 @@ export class FooterComponent {
     private cartService: CartService,
     private activatedRoute: ActivatedRoute,
     private matDialog: MatDialog,
-    private authService: AuthService,
     private snackBar: MatSnackBar
     ) {
   }
@@ -41,7 +39,9 @@ export class FooterComponent {
   }
 
   async openContact() {
-    const userGoogle = await firstValueFrom(this.authService.getUser())
+    // TODO: Replace
+    // const userGoogle = await firstValueFrom(this.authService.getUser())
+    const userGoogle = {}
 
     const contactRef = this.matDialog.open(ContactComponent, {
       maxWidth: '100vw',

@@ -47,16 +47,16 @@ export class CatalogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.storeName && this.storeMap.has(this.storeName)) {
-      const storeData = this.storeMap.get(this.storeName);
-      if (storeData) {
-        localStorage.setItem('catalogId', storeData.catalogId);
-        localStorage.setItem(' ', storeData.storeId);
-        this.cartService.storeId = storeData.storeId;
-        this.catalogId = storeData.catalogId;
-        this.storeId = storeData.storeId;
-      }
-    }
+    // if (this.storeName && this.storeMap.has(this.storeName)) {
+    //   const storeData = this.storeMap.get(this.storeName);
+    //   if (storeData) {
+    //     localStorage.setItem('catalogId', storeData.catalogId);
+    //     localStorage.setItem(' ', storeData.storeId);
+    //     this.cartService.storeId = storeData.storeId;
+    //     this.catalogId = storeData.catalogId;
+    //     this.storeId = storeData.storeId;
+    //   }
+    // }
 
     localStorage.setItem('base_url', this.router.url)
     if(!this.cartService.getItems().length) {

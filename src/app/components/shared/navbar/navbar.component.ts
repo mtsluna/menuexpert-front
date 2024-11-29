@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../services/auth/auth.service";
-import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-navbar',
@@ -15,35 +14,42 @@ export class NavbarComponent implements OnInit {
   loading: boolean = true;
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private cartService: CartService
   ) { }
 
   async ngOnInit(): Promise<void> {
 
-    this.setAuthUserData();
+    this.authService.user$.subscribe({
+      next: (data) => {
+        console.log(data)
+      }
+    })
 
   }
 
-  // async login() {
-  //   const auth = await this.authService.login();
-  //   this.image = (auth.additionalUserInfo?.profile as any)['picture'];
-  //   await this.cartService.getCartId();
-  //
-  // }
+  async login() {
+
+    console.log(window.location.origin + '/login/redirect')
+
+    this.authService.loginWithRedirect({
+      authorizationParams: {
+        screen_hint: 'login',
+        prompt: 'select_account',
+        display: 'page',
+      }
+    })
+  }
 
   async logout() {
-    await this.authService.logout();
+    this.authService.logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      }
+    });
     this.cartService.clearCart();
     await this.cartService.getCartId();
   }
 
-  setAuthUserData() {
-    this.authService.getSession().subscribe((data) => {
-      this.loading = false;
-      this.image = data?.photoURL || undefined;
-      this.user = data;
-    })
-  }
-
+  protected readonly document = document;
 }

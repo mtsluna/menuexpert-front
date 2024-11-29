@@ -4,7 +4,6 @@ import {PaymentType} from "../../interfaces/payment-type";
 import {CheckoutService} from "../../services/checkout/checkout.service";
 import {CartService} from "../../services/cart.service";
 import {MatDialog} from "@angular/material/dialog";
-import {AuthService} from "../../services/auth/auth.service";
 import {firstValueFrom, Observable} from "rxjs";
 import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 import {Store} from "../../interfaces/store";
@@ -32,7 +31,6 @@ export class CheckoutComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private checkoutService: CheckoutService,
-    private authService: AuthService,
     private analytics: AngularFireAnalytics,
     private clientService: ClientService
   ) {
@@ -52,8 +50,12 @@ export class CheckoutComponent {
 
     this.loading = true;
 
-    const user = await firstValueFrom(this.authService.getSession());
+    const user = {
+      uid: ''
+    }
+    // const user = await firstValueFrom(this.authService.getSession());
 
+    // TODO: Replace
     const { content } = await firstValueFrom(this.clientService.search(user?.uid || '', 'google.com'));
 
     let [client] = content;

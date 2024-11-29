@@ -8,5 +8,12 @@ export const environment = {
     messagingSenderId: "468043283064",
     appId: "1:468043283064:web:8b3ea3a2de0bab10da4b8d",
     measurementId: "G-35K0WRE04R"
+  },
+  auth: {
+    domain: 'mtsluna.auth0.com',
+    clientId: 'VwhZhDmHCqZYR4coXtKq7Qxn2ZVoC69L',
+    authorizationParams: {
+      redirect_uri: window.location.origin + '/login/redirect'
+    }
   }
 };

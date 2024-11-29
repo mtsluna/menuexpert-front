@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'qr', loadChildren: () => import('./pages/qr/qr.module').then(m => m.QrModule) },
   { path: 'cart', loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule) },
   { path: 'checkout', loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule) },
+  { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: '**', component: NotFoundComponent },
 ]
 

@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {RouterOutlet} from "@angular/router";
-import { DetailComponent } from './pages/detail/detail.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -28,6 +27,7 @@ import {CartModule} from "./pages/cart/cart.module";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {AngularFireAnalyticsModule} from "@angular/fire/compat/analytics";
 import {ScreenTrackingService, UserTrackingService} from "@angular/fire/analytics";
+import {AuthModule, provideAuth0} from "@auth0/auth0-angular";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -72,6 +72,7 @@ export function createTranslateLoader(http: HttpClient) {
         defaultLanguage: 'es'
       }
     ),
+    AuthModule.forRoot(environment.auth),
     CartModule,
   ],
   providers: [

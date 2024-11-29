@@ -19,6 +19,7 @@ export class QrComponent {
   ) {
 
     const id= this.activatedRoute.snapshot.paramMap.get('id') || ''
+    localStorage.setItem('qr', id);
 
     this.qrService.getDefaultCatalogByQr(id)
       .subscribe({

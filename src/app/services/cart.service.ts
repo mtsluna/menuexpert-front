@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, firstValueFrom, reduce, Subject} from "rxjs";
 import {CartItem} from "../interfaces/cart-item";
-import * as uuid from 'uuid';
-import {Option} from "../interfaces/option";
-import {HttpClient} from "@angular/common/http";
 import {CartApiService} from "./cart-api/cart-api.service";
-import {AuthService} from "./auth/auth.service";
 import {ICartApiCreateResponse} from "./cart-api/interfaces";
 
 @Injectable({
@@ -19,16 +15,17 @@ export class CartService {
   private _storeId: string | null = null;
 
   constructor(
-    private cartApiService: CartApiService,
-    private authService: AuthService
+    private cartApiService: CartApiService
   ) {
   }
 
   async addItem(cartItem: CartItem, catalogId: string | undefined) {
     let cartResponse;
     if (!await this.getCartId()) {
-      const auth = await firstValueFrom(this.authService.getUser());
-      cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
+      // TODO: Replace
+      //const auth = await firstValueFrom(this.authService.getUser());
+      // cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
+      cartResponse = await firstValueFrom(this.cartApiService.createCart(undefined, this.storeId || ''));
       this.setCartId(catalogId, cartResponse.id);
     }
     cartResponse = await this.getCartId();
@@ -54,7 +51,11 @@ export class CartService {
   }
 
   async getCartId(): Promise<string> {
-    const auth = await firstValueFrom(this.authService.getUser());
+    //const auth = await firstValueFrom(this.authService.getUser());\
+    // TODO: Replace
+    const auth: {uid: string} = {
+      uid: ''
+    }
     if (!auth && localStorage.getItem(`cartId`)) {
       return localStorage.getItem(`cartId`) || '';
     }
