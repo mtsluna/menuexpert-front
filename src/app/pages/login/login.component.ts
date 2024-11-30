@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-login',
@@ -9,9 +10,15 @@ import {Router} from "@angular/router";
 export class LoginComponent {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
-    this.router.navigate(['qr', localStorage.getItem('qr')])
+
+    this.authService.user$.subscribe((data) => {
+      console.log(data)
+    });
+
+    //this.router.navigate(['qr', localStorage.getItem('qr')])
   }
 
 }

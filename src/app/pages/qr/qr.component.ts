@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QrService} from "../../services/qr/qr.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Meta} from "@angular/platform-browser";
 import {AngularFireAnalytics} from "@angular/fire/compat/analytics";
 
 @Component({

@@ -19,32 +19,30 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-
     this.authService.user$.subscribe({
       next: (data) => {
         console.log(data)
+        this.user = data;
+        this.image = data?.picture
+        this.loading = false;
       }
     })
-
   }
 
   async login() {
-
-    console.log(window.location.origin + '/login/redirect')
-
-    this.authService.loginWithRedirect({
-      authorizationParams: {
-        screen_hint: 'login',
-        prompt: 'select_account',
-        display: 'page',
-      }
-    })
+    // this.authService.loginWithRedirect({
+    //   authorizationParams: {
+    //     screen_hint: 'login',
+    //     prompt: 'select_account',
+    //     display: 'page',
+    //   }
+    // })
   }
 
   async logout() {
     this.authService.logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: window.location.origin + '/qr',
       }
     });
     this.cartService.clearCart();
