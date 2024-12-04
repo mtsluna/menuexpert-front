@@ -3,7 +3,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <img class="navbar__logo" alt="shop expert icon" src="assets/images/logo.svg">
-  <div class="navbar__actions" [matMenuTriggerFor]="menu" >
+  <div class="navbar__actions" [matMenuTriggerFor]="menu" (menuOpened)="loadButtons()">
     <button class="navbar__login">
       <ng-container *ngIf="!image && !loading">
         <mat-icon color="primary" class="navigator__button__icon">person</mat-icon>
@@ -14,8 +14,48 @@
     </button>
   </div>
 
+  {{ isAuthenticated }}
+
+  <ng-container *ngIf="!isAuthenticated">
+    <div id="g_id_onload"
+         data-client_id="52106838606-nepv3nvq93uctr0bglmna5mik69bnfug.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-login_uri="http://localhost:4200/qr"
+         data-auto_select="false"
+         data-itp_support="true">
+    </div>
+
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="rectangular"
+         data-theme="outline"
+         data-text="signin_with"
+         data-size="large"
+         data-logo_alignment="left">
+    </div>
+  </ng-container>
 
   <mat-menu class="menu-custom" #menu="matMenu">
+    <button *ngIf="!isAuthenticated" mat-menu-item>
+<!--      <div id="g_id_onload"-->
+<!--           data-client_id="52106838606-nepv3nvq93uctr0bglmna5mik69bnfug.apps.googleusercontent.com"-->
+<!--           data-context="signin"-->
+<!--           data-ux_mode="popup"-->
+<!--           data-login_uri="http://localhost:4200/qr"-->
+<!--           data-auto_select="false"-->
+<!--           data-itp_support="true">-->
+<!--      </div>-->
+
+<!--      <div class="g_id_signin"-->
+<!--           data-type="standard"-->
+<!--           data-shape="rectangular"-->
+<!--           data-theme="outline"-->
+<!--           data-text="signin_with"-->
+<!--           data-size="large"-->
+<!--           data-logo_alignment="left">-->
+<!--      </div>-->
+    </button>
     <button *ngIf="!user" (click)="login()" mat-menu-item>
       <mat-icon>login</mat-icon>
       <span>Login</span>
