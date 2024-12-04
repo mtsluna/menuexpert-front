@@ -1,20 +1,21 @@
 <div class="navbar">
   <img class="navbar__logo" alt="shop expert icon" src="assets/images/logo.svg">
-  <div class="navbar__actions" [matMenuTriggerFor]="menu">
+  <div class="navbar__actions" *ngIf="loggedIn" [matMenuTriggerFor]="menu">
     <button class="navbar__login">
       <ng-container *ngIf="!user?.photoUrl && !loggedIn">
         <mat-icon color="primary" class="navigator__button__icon">person</mat-icon>
       </ng-container>
       <ng-container *ngIf="user">
-        <img src="{{user?.photoUrl}}" />
+        <img src="{{user?.photoUrl}}"/>
       </ng-container>
     </button>
-    <asl-google-signin-button *ngIf="!loggedIn" class="navbar__login" type='icon' size='large' shape="circle" [width]="40-40">
-    </asl-google-signin-button>
   </div>
 
+  <asl-google-signin-button *ngIf="!loggedIn" class="navbar__actions" type='icon' size='large' shape="circle" [width]="40-40">
+  </asl-google-signin-button>
+
   <mat-menu class="menu-custom" #menu="matMenu">
-    <button *ngIf="!user" (click)="logout()" mat-menu-item>
+    <button *ngIf="user" (click)="logout()" mat-menu-item>
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>

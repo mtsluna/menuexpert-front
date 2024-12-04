@@ -9,7 +9,6 @@ import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
 })
 export class NavbarComponent implements OnInit {
 
-  isAuthenticated: boolean = false;
   user: SocialUser | undefined;
   image: string | undefined;
   loggedIn: boolean = false;
@@ -18,15 +17,10 @@ export class NavbarComponent implements OnInit {
     private cartService: CartService,
     private authService: SocialAuthService
   ) {
+    const localUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-    console.log(this.user)
-    if(!this.user) {
-
-      console.log('No user found');
-
-      this.user = JSON.parse(localStorage.getItem('user') || '')
-
-      console.log(this.user)
+    if(!this.user && Object.keys(localUser).length) {
+      this.user = localUser;
     }
 
   }
@@ -40,6 +34,8 @@ export class NavbarComponent implements OnInit {
   }
 
   async logout() {
+    this.user = undefined;
+    localStorage.removeItem('user')
     await this.authService.signOut()
     this.cartService.clearCart();
     await this.cartService.getCartId();
