@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {AuthService} from "@auth0/auth0-angular";
+import {SocialAuthService} from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-navbar',
@@ -15,17 +16,23 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   loading: boolean = true;
 
   constructor(
-    public authService: AuthService,
-    private cartService: CartService
+    // public authService: AuthService,
+    private cartService: CartService,
+    private authService: SocialAuthService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.authService.user$.subscribe({
+    // this.authService.user$.subscribe({
+    //   next: (data) => {
+    //     console.log(data)
+    //     this.user = data;
+    //     this.image = data?.picture
+    //     this.loading = false;
+    //   }
+    // })
+    this.authService.authState.subscribe({
       next: (data) => {
         console.log(data)
-        this.user = data;
-        this.image = data?.picture
-        this.loading = false;
       }
     })
   }
@@ -35,6 +42,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   loadButtons() {
+    console.log("load")
     this.loadGoogleLogin();
   }
 
@@ -44,7 +52,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       window.google.accounts.id.initialize({
         client_id: '52106838606-nepv3nvq93uctr0bglmna5mik69bnfug.apps.googleusercontent.com',
         callback: this.handleCredentialResponse,
-        auto_select: false
+        auto_select: false,
+        login_uri: 'https://youtube.com',
       });
       // Renderizar el botón
       window.google.accounts.id.renderButton(

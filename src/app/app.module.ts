@@ -28,6 +28,10 @@ import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {AngularFireAnalyticsModule} from "@angular/fire/compat/analytics";
 import {ScreenTrackingService, UserTrackingService} from "@angular/fire/analytics";
 import {AuthModule, provideAuth0} from "@auth0/auth0-angular";
+import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -80,6 +84,23 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '52106838606-nepv3nvq93uctr0bglmna5mik69bnfug.apps.googleusercontent.com'
+            )
+          }
+        ],
+        onError: (error) => {
+          console.error(error);
+        }
+      } as SocialAuthServiceConfig,
     },
     provideNgxMask(),
     ScreenTrackingService,
