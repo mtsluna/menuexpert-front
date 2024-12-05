@@ -63,6 +63,27 @@ export class CatalogComponent implements OnInit {
     if(!this.cartService.getItems().length) {
       this.cartService.getApiItems()
     }
+
+    if(this.catalogId && this.storeId) {
+      zip(
+        this.menuService.getCatalog(this.catalogId || ''),
+        this.storeService.getStoreById(this.storeId || ''),
+      ).subscribe({
+        next: ([catalog, store]) => {
+
+          if(!catalog.isActive) {
+            this.router.navigate(['catalog/not-available'])
+            return;
+          }
+
+          this.catalog = catalog;
+          this.store = store;
+        },
+        error: (e) => {
+          this.router.navigate(['not-found'])
+        }
+      })
+    }
   }
 
   async viewCart() {
