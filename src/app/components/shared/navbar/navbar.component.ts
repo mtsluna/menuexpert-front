@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-navbar',
@@ -15,12 +16,16 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private snackBar: MatSnackBar
   ) {
-    const localUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-    if(!this.user && Object.keys(localUser).length) {
-      this.user = localUser;
+    if(localStorage.getItem('user')){
+      const localUser = JSON.parse(localStorage.getItem('user') || '');
+      if (localUser != null) {
+        this.user = localUser
+        this.loggedIn = true;
+      }
     }
 
   }
@@ -34,6 +39,13 @@ export class NavbarComponent implements OnInit {
   }
 
   async logout() {
+    this.snackBar.open(
+      'Cerraste sesión',
+      'Cerrar',
+      {
+        duration: 3000,
+      }
+    )
     this.user = undefined;
     localStorage.removeItem('user')
     await this.authService.signOut()

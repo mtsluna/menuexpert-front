@@ -21,10 +21,10 @@ const routes: Routes = [
     path: 's/:catalogId',
     component: CatalogComponent
   },
-  // {
-  //   path: ':storeName',
-  //   component: CatalogComponent
-  // },
+  {
+    path: ':storeName',
+    component: CatalogComponent
+  },
   {
     path: '',
     component: NotFoundComponent

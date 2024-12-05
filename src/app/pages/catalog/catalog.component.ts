@@ -17,12 +17,6 @@ export class CatalogComponent implements OnInit {
   storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
   storeName: string | undefined = this.activatedRoute.snapshot.paramMap.get('storeName') || undefined;
 
-  storeMap = new Map<string, { catalogId: string, storeId: string }>([
-    ['equipatehogar', { catalogId: 'abe631e2-b424-4080-b959-e686c496751c', storeId: 'c12fc837-27ef-4cc7-bffe-5c738e788b78' }],
-    ['ignaciamadryn', { catalogId: 'b02e7db7-8e1f-4917-9598-ffddf68f07d4', storeId: '7100f107-eef4-4acb-bc8e-3bf2bd2e0201' }],
-    ['thegarrison', { catalogId: '8b09fe7d-4a9d-4a5c-af0a-b3275eb0030d', storeId: '8b09fe7d-4a9d-4a5c-af0a-b3275eb0030d' }]
-  ]);
-
   catalog: Catalog = {
     id: '',
     name: '',
@@ -47,39 +41,28 @@ export class CatalogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // if (this.storeName && this.storeMap.has(this.storeName)) {
-    //   const storeData = this.storeMap.get(this.storeName);
-    //   if (storeData) {
-    //     localStorage.setItem('catalogId', storeData.catalogId);
-    //     localStorage.setItem(' ', storeData.storeId);
-    //     this.cartService.storeId = storeData.storeId;
-    //     this.catalogId = storeData.catalogId;
-    //     this.storeId = storeData.storeId;
-    //   }
-    // }
+    if (this.storeName) {
+      this.storeService.getStoreByName(this.storeName).subscribe({
+        next: (store) => {
+          this.storeId = store.id;
+          this.store = store;
+          this.menuService.getCatalogByStoreId(this.storeId || '').subscribe({
+            next: (catalog) => {
+              this.catalog = catalog;
+            }
+          })
+        },
+        error: (e) => {
+          this.router.navigate(['not-found'])
+        }
+      })
+
+    }
 
     localStorage.setItem('base_url', this.router.url)
     if(!this.cartService.getItems().length) {
       this.cartService.getApiItems()
     }
-    zip(
-      this.menuService.getCatalog(this.catalogId || ''),
-      this.storeService.getStoreById(this.storeId || ''),
-    ).subscribe({
-      next: ([catalog, store]) => {
-
-        if(!catalog.isActive) {
-          this.router.navigate(['catalog/not-available'])
-          return;
-        }
-
-        this.catalog = catalog;
-        this.store = store;
-      },
-      error: (e) => {
-        this.router.navigate(['not-found'])
-      }
-    })
   }
 
   async viewCart() {
