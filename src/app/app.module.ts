@@ -94,7 +94,7 @@ export function createTranslateLoader(http: HttpClient) {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               '52106838606-nepv3nvq93uctr0bglmna5mik69bnfug.apps.googleusercontent.com'
-            )
+            ),
           }
         ],
         onError: (error) => {

@@ -3,6 +3,7 @@ import {BehaviorSubject, debounceTime, distinctUntilChanged, firstValueFrom, red
 import {CartItem} from "../interfaces/cart-item";
 import {CartApiService} from "./cart-api/cart-api.service";
 import {ICartApiCreateResponse} from "./cart-api/interfaces";
+import {UserService} from "./auth/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +16,19 @@ export class CartService {
   private _storeId: string | null = null;
 
   constructor(
-    private cartApiService: CartApiService
+    private cartApiService: CartApiService,
+    private userService: UserService
   ) {
   }
 
   async addItem(cartItem: CartItem, catalogId: string | undefined) {
     let cartResponse;
     if (!await this.getCartId()) {
-      // TODO: Replace
-      //const auth = await firstValueFrom(this.authService.getUser());
-      // cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
-      cartResponse = await firstValueFrom(this.cartApiService.createCart(undefined, this.storeId || ''));
-      this.setCartId(catalogId, cartResponse.id);
+      if(this.userService.user){
+        const auth = this.userService.user;
+        cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
+        this.setCartId(catalogId, cartResponse.id);
+      }
     }
     cartResponse = await this.getCartId();
 
@@ -51,26 +53,22 @@ export class CartService {
   }
 
   async getCartId(): Promise<string> {
-    //const auth = await firstValueFrom(this.authService.getUser());\
-    // TODO: Replace
-    const auth: {uid: string} = {
-      uid: ''
-    }
+    const auth = this.userService.user;
     if (!auth && localStorage.getItem(`cartId`)) {
       return localStorage.getItem(`cartId`) || '';
     }
     if (!auth) {
-      const cartResponse = await firstValueFrom(this.cartApiService.createCart('', this.storeId || ''));
+      const cartResponse = await firstValueFrom(this.cartApiService.createCart(null, this.storeId || ''));
       localStorage.setItem(`cartId`, cartResponse.id);
       return cartResponse.id;
     }
     if(auth && localStorage.getItem(`cartId`)) {
-      this.cart = await firstValueFrom(this.cartApiService.updateCartOwner(localStorage.getItem(`cartId`) || '', auth.uid || ''));
+      this.cart = await firstValueFrom(this.cartApiService.updateCartOwner(localStorage.getItem(`cartId`) || '', auth.id || ''));
       localStorage.removeItem(`cartId`);
       return this.cart.id;
     }
     localStorage.removeItem(`cartId`);
-    this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.uid || '')).catch(() => {return null});
+    this.cart = await firstValueFrom(this.cartApiService.getCartByUser(auth?.id || '')).catch(() => {return null});
     if (!this.cart?.id) {
       const cartResponse = await firstValueFrom(this.cartApiService.createCart(auth, this.storeId || ''));
       this.cart = cartResponse;

@@ -12,6 +12,7 @@
   flex-direction: row;
   overflow: hidden;
   overflow-x: scroll;
+  cursor: pointer;
   -ms-overflow-style: none;
 
   @media (min-width: 768px) {

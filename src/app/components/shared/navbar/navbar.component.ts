@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../../../services/auth/user.service";
 
 @Component({
   selector: 'app-navbar',
@@ -9,21 +10,20 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  user: SocialUser | undefined;
   image: string | undefined;
   loggedIn: boolean = false;
 
   constructor(
     private cartService: CartService,
     private authService: SocialAuthService,
+    protected userService: UserService,
     private snackBar: MatSnackBar
   ) {
 
     if(localStorage.getItem('user')){
       const localUser = JSON.parse(localStorage.getItem('user') || '');
       if (localUser != null) {
-        this.user = localUser
+        this.userService.user = localUser
         this.loggedIn = true;
       }
     }
@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.authService.authState.subscribe((user) => {
-      this.user = user;
+      this.userService.user = user;
       this.loggedIn = (user != null);
       localStorage.setItem('user', JSON.stringify(user))
     });
@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit {
         duration: 3000,
       }
     )
-    this.user = undefined;
+    this.userService.user = null;
     localStorage.removeItem('user')
     await this.authService.signOut()
     this.cartService.clearCart();

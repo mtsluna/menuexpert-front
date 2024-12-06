@@ -30,7 +30,7 @@ export class SectionSelectorComponent implements OnInit, OnChanges {
 
   onClick(id: string) {
     const elem = document.getElementById(id);
-
+    this.selected= id;
     elem?.scrollIntoView();
   }
 

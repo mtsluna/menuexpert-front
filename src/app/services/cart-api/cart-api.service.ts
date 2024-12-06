@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import backendConstants from "../../constants/backend-constants";
 import {Observable} from "rxjs";
 import {ICartApiCreateResponse} from "./interfaces";
+import {SocialUser} from "@abacritt/angularx-social-login";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,10 @@ export class CartApiService {
     private http: HttpClient,
   ) { }
 
-  createCart(client: any, storeId: string): Observable<ICartApiCreateResponse> {
+  createCart(client: SocialUser | null, storeId: string): Observable<ICartApiCreateResponse> {
     return this.http.get<ICartApiCreateResponse>(backendConstants.baseUrl + '/carts/create', {
       params: {
-        userId: client.uid || '',
+        userId: client?.id || '',
         storeId: storeId
       }
     });

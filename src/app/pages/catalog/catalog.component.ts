@@ -45,7 +45,11 @@ export class CatalogComponent implements OnInit {
       this.storeService.getStoreByName(this.storeName).subscribe({
         next: (store) => {
           this.storeId = store.id;
+          this.cartService.storeId = store.id || null;
           this.store = store;
+          if(!this.cartService.getItems().length) {
+            this.cartService.getApiItems()
+          }
           this.menuService.getCatalogByStoreId(this.storeId || '').subscribe({
             next: (catalog) => {
               this.catalog = catalog;
@@ -60,9 +64,7 @@ export class CatalogComponent implements OnInit {
     }
 
     localStorage.setItem('base_url', this.router.url)
-    if(!this.cartService.getItems().length) {
-      this.cartService.getApiItems()
-    }
+
 
     if(this.catalogId && this.storeId) {
       zip(
@@ -76,6 +78,11 @@ export class CatalogComponent implements OnInit {
             return;
           }
 
+          this.cartService.storeId = store.id || null;
+
+          if(!this.cartService.getItems().length) {
+            this.cartService.getApiItems()
+          }
           this.catalog = catalog;
           this.store = store;
         },
