@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Catalog} from "../../interfaces/catalog";
 import {Store} from "../../interfaces/store";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -6,6 +6,8 @@ import {CartService} from "../../services/cart.service";
 import {CatalogService} from "../../services/menu/catalog.service";
 import {zip} from "rxjs";
 import {StoreService} from "../../services/store/store.service";
+import {UserService} from "../../services/auth/user.service";
+import {SocialUser} from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-catalog',
@@ -16,6 +18,9 @@ export class CatalogComponent implements OnInit {
   catalogId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('catalog') || undefined;
   storeId: string | undefined = this.activatedRoute.snapshot.queryParamMap.get('store') || undefined;
   storeName: string | undefined = this.activatedRoute.snapshot.paramMap.get('storeName') || undefined;
+
+  @ViewChild("googleId", { static: false })
+  googleButton!: ElementRef<HTMLDivElement>;
 
   catalog: Catalog = {
     id: '',
@@ -31,12 +36,15 @@ export class CatalogComponent implements OnInit {
     image: undefined
   }
 
+  socialUser!: SocialUser;
+
   constructor(
     private router: Router,
     private cartService: CartService,
     private menuService: CatalogService,
     private storeService: StoreService,
     private activatedRoute: ActivatedRoute,
+    public userService: UserService,
   ) {}
 
   ngOnInit(): void {

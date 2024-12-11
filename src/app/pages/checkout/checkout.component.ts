@@ -38,10 +38,10 @@ export class CheckoutComponent {
     private checkoutService: CheckoutService,
     private analytics: AngularFireAnalytics,
     private clientService: ClientService,
-    private userService: UserService,
+    public userService: UserService,
     private cartService: CartService,
     private matDialog: MatDialog,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
   ) {
     this.analytics.logEvent('checkout_view', {
       catalog: this.catalogId

@@ -7,5 +7,9 @@
     <div *ngIf="!loading" class="floating-button__element__title">
       {{ title }}
     </div>
+    @if (loginRequired) {
+      <asl-google-signin-button style="opacity: 0; pointer-events: auto; width: 100%; position: absolute" class="navbar__actions" type='icon' size='large' shape="circle" [width]="40-40">
+      </asl-google-signin-button>
+    }
   </div>
 </div>

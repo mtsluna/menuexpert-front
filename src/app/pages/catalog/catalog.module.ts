@@ -11,6 +11,7 @@ import { CatalogNotAvailableComponent } from './catalog-not-available/catalog-no
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatIcon} from "@angular/material/icon";
 import {NotFoundComponent} from "../../components/shared/not-found/not-found.component";
+import {GoogleSigninButtonModule} from "@abacritt/angularx-social-login";
 
 const routes: Routes = [
   {
@@ -44,12 +45,13 @@ const routes: Routes = [
     SectionComponent,
     SectionSelectorComponent
   ],
-    imports: [
-        MatSnackBarModule,
-        CommonModule,
-        RouterModule.forChild(routes),
-        SharedModule,
-        MatIcon
-    ]
+  imports: [
+    MatSnackBarModule,
+    CommonModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    MatIcon,
+    GoogleSigninButtonModule
+  ]
 })
 export class CatalogModule { }
