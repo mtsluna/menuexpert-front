@@ -52,7 +52,7 @@ export class SectionSelectorComponent implements OnInit, OnChanges {
       [ actual ] = this.sectionsPosition.slice(0, 1);
     }
 
-    this.selected = actual.id || ''
+    this.selected = actual?.id || ''
   }
 
 }
