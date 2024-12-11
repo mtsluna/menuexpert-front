@@ -5,5 +5,5 @@
   <app-section *ngFor="let category of catalog.categories" [category]="category"></app-section>
 </div>
 <app-floating-button *ngIf="userService.user"  [hidden]="hiddenCart" (click)="viewCart()" title="{{store.name}}" subtitle="Ver pedido"></app-floating-button>
-<app-floating-button *ngIf="!userService.user" [loginRequired]="true" [hidden]="hiddenCart" (click)="viewCart()" title="Inicia sesion" subtitle="Para ver el pedido"></app-floating-button>
+<app-floating-button *ngIf="!userService.user" [loginRequired]="true" title="Inicia sesion" subtitle="Para ver el pedido"></app-floating-button>
 <app-footer></app-footer>
