@@ -27,7 +27,6 @@ import {CartModule} from "./pages/cart/cart.module";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {AngularFireAnalyticsModule} from "@angular/fire/compat/analytics";
 import {ScreenTrackingService, UserTrackingService} from "@angular/fire/analytics";
-import {AuthModule, provideAuth0} from "@auth0/auth0-angular";
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import {
   GoogleLoginProvider,
@@ -76,7 +75,6 @@ export function createTranslateLoader(http: HttpClient) {
         defaultLanguage: 'es'
       }
     ),
-    AuthModule.forRoot(environment.auth),
     CartModule,
   ],
   providers: [
