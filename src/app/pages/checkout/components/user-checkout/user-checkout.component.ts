@@ -6,6 +6,7 @@ import {user} from "@angular/fire/auth";
 import {Client} from "../../../../interfaces/client";
 import {ClientService} from "../../../../services/client/client.service";
 import {lastValueFrom} from "rxjs";
+import {SocialUser} from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-user-checkout',
@@ -14,21 +15,21 @@ import {lastValueFrom} from "rxjs";
 })
 export class UserCheckoutComponent implements OnInit {
 
-  userGoogle: firebase.User;
+  user: SocialUser;
   client: Client;
   form: FormGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private readonly data: { userGoogle: firebase.User, client: Client },
+    @Inject(MAT_DIALOG_DATA) private readonly data: { user: SocialUser, client: Client },
     private readonly clientService: ClientService
   ) {
-    this.userGoogle = data.userGoogle;
+    this.user = data.user;
     this.client = data.client;
 
     this.form = new FormGroup<any>({
       email: new FormControl({
-        value: this.client?.email,
-        disabled: !!this.client?.email
+        value: this.user?.email,
+        disabled: !!this.user?.email
       }, {
         validators: [ Validators.required, Validators.email ],
       }),
@@ -44,10 +45,13 @@ export class UserCheckoutComponent implements OnInit {
   async ngOnInit(): Promise<void> {}
 
   async saveAndGo() {
-    await lastValueFrom(this.clientService.put(this.client?.id || '', {
-      ...this.client,
-      ...this.form.getRawValue(),
-      id: undefined
+    await lastValueFrom(this.clientService.post({
+      email: this.form?.get('email')?.value || '',
+      phone: this.form?.get('phone')?.value || '',
+      address: this.form?.get('address')?.value || '',
+      source: this.user.provider,
+      externalId: this.user.id,
+      name: this.user.name
     }))
   }
 }
