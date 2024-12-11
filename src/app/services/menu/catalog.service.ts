@@ -19,6 +19,7 @@ export class CatalogService {
     return this.httpClient.get<Catalog>(`${backendConstants.baseUrl}/catalogs/${id}`)
       .pipe(
         map((catalog) => {
+          localStorage.setItem('catalogId', catalog.id || '');
 
             const categories = catalog.products?.map((product) => product.category) as Category[];
 

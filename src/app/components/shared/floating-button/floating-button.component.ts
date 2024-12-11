@@ -17,6 +17,9 @@ export class FloatingButtonComponent implements OnInit {
   loading!: boolean;
 
   @Input()
+  loginRequired!: boolean;
+
+  @Input()
   action: Function = () => {}
 
   constructor() { }

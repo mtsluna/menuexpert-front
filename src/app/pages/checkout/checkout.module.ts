@@ -17,6 +17,7 @@ import {MatDialogClose} from "@angular/material/dialog";
 import {checkoutStoreResolver} from "./resolvers/store/checkout-store-resolver.resolver";
 import {cartResolver} from "../cart/resolvers/cart.resolver";
 import {currencyResolver} from "./resolvers/currency/currency.resolver";
+import {GoogleSigninButtonModule} from "@abacritt/angularx-social-login";
 
 const routes: Routes = [
   {
@@ -42,17 +43,18 @@ const routes: Routes = [
     ResumeComponent,
     UserCheckoutComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        SharedModule,
-        MatIconModule,
-        MatRadioModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        NgxMaskDirective,
-        MatDialogClose
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    MatIconModule,
+    MatRadioModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    MatDialogClose,
+    GoogleSigninButtonModule
+  ]
 })
 export class CheckoutModule { }

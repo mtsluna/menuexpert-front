@@ -8,6 +8,7 @@ import {CartItem} from "../../interfaces/cart-item";
 import {Store} from "../../interfaces/store";
 import {map} from "rxjs/operators";
 import {cartResolver} from "./resolvers/cart.resolver";
+import {UserService} from "../../services/auth/user.service";
 
 @Component({
   selector: 'app-cart',
@@ -23,7 +24,12 @@ export class CartComponent implements OnInit {
   price: number = 0;
   private clickSubject = new Subject<any>();
 
-  constructor(private cartService: CartService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public userService: UserService
+  ) {
     this.clickSubject.pipe(
       skipWhile(event => event === 'skip'),
       debounceTime(500)

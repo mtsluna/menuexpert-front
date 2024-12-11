@@ -15,11 +15,18 @@
       <app-resume></app-resume>
     </div>
     <div class="checkout__cards__footer"></div>
-
     @switch (paymentType.id) {
       @case ('2') {
-        <app-floating-button [loading]="loading" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
+        <app-floating-button *ngIf="userService.user" [loading]="loading" (click)="goToMercadoPago()" title="ir a mercadopago"></app-floating-button>
+        <app-floating-button *ngIf="!userService.user" [loginRequired]="true" title="Inicia sesion" subtitle="Para ver el pedido"></app-floating-button>
       }
+    }
+
+    @if (shouldLogin) {
+      <div style="margin-top: 1rem">
+        <asl-google-signin-button type='standard' size='large' shape="pill" [width]="200-120">
+        </asl-google-signin-button>
+      </div>
     }
   </div>
 }
